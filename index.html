@@ -60,64 +60,14 @@
 
   .tab-content { margin-top: 20px; }
 
-  .sorteos-grid {
+  .boletos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    max-width: 1000px;
     margin: auto;
   }
 
-  .sorteo {
-    background: #fff;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-
-  .sorteo h2 { text-align: center; margin-bottom: 5px; color: #333; }
-
-  .fecha { text-align: center; color: #555; margin-bottom: 15px; font-size: 0.95rem; }
-
-  .premios-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-  }
-
-  .tarjeta-premio {
-    position: relative;
-    width: 100%;
-    max-width: 280px;
-    height: 180px;
-    border-radius: 15px;
-    overflow: hidden;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 15px;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.6s ease;
-  }
-  .tarjeta-premio.visible { opacity: 1; transform: scale(1); }
-
-  .label-premio {
-    font-size: 1rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-  }
-  .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
-
-  .primer-premio::before { background: rgba(255,215,0,0.4); }
-  .segundo-premio::before { background: rgba(192,192,192,0.4); }
-  .tercer-premio::before { background: rgba(205,127,50,0.4); }
-
-  .boletos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1000px; margin:auto; }
   .tarjeta-boleto {
     background: white;
     border-radius: 12px;
@@ -138,7 +88,6 @@
     display: inline-block;
   }
 
-  /* Buscador */
   .buscador {
     display: flex;
     justify-content: center;
@@ -146,22 +95,49 @@
     flex-wrap: wrap;
     gap: 10px;
   }
-  .buscador input {
+  .buscador input, .buscador select {
     padding: 8px 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1rem;
-    width: 200px;
   }
-  .buscador button {
-    padding: 8px 15px;
-    background: #b22222;
+
+  .sorteos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .sorteo {
+    background: #fff;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .sorteo h2 { text-align: center; margin-bottom: 5px; color: #333; }
+  .fecha { text-align: center; color: #555; margin-bottom: 15px; font-size: 0.95rem; }
+
+  .tarjeta-premio {
+    width: 100%;
+    max-width: 280px;
+    height: 180px;
+    border-radius: 15px;
+    overflow: hidden;
     color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 15px;
+    background-size: cover;
+    background-position: center;
+    margin: auto;
   }
+
+  .label-premio { font-size: 1rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
+  .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
   @media (max-width: 600px) {
     body { padding: 200px 10px 10px 10px; }
@@ -176,149 +152,112 @@
   <div class="tabs">
     <div class="tab active" data-tab="inicio">Inicio</div>
     <div class="tab" data-tab="boletos">Boletos Disponibles</div>
-    <div class="tab" data-tab="premios">Boletos premiados</div>
-  </div>
-  <div class="filtro-container">
-    <label for="fechaSelect">Selecciona Fecha: </label>
-    <select id="fechaSelect">
-      <option value="todas">Todas las fechas</option>
-    </select>
+    <div class="tab" data-tab="premios">Boletos Premiados</div>
   </div>
 </div>
 
-<!-- INICIO -->
+<!-- 🏠 INICIO -->
 <div class="tab-content" id="inicioContent" style="display:block;">
-  <h2 style="color:white; text-align:center; text-shadow:1px 1px 3px black;">Bienvenido a la página de rifas</h2>
-  <p style="color:white; text-align:center;">Consulta tus boletos disponibles y los premiados fácilmente.</p>
+  <h2 style="color:white; text-align:center; text-shadow:1px 1px 3px black;">🎁 Producto en Rifa</h2>
+  <div style="text-align:center; margin-top:20px;">
+    <img src="img/producto.jpg" alt="Producto a rifar" style="max-width:90%; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.4);">
+  </div>
+</div>
 
+<!-- 🎟️ BOLETOS DISPONIBLES -->
+<div class="tab-content" id="boletosContent" style="display:none;">
   <h3 style="color:white; text-align:center;">🎟️ Boletos Disponibles</h3>
   <div class="buscador">
-    <input type="text" id="buscarBoleto" placeholder="Buscar boleto...">
-    <button onclick="filtrarBoletos()">Buscar</button>
+    <input type="text" id="buscarBoletoDisponibles" placeholder="Buscar boleto...">
+    <select id="fechaBoletos">
+      <option value="todas">Todas las fechas</option>
+      <option value="24 de Octubre 2025">24 de Octubre 2025</option>
+    </select>
   </div>
-  <div class="boletos-grid" id="inicioBoletos"></div>
-
-  <h3 style="color:white; text-align:center; margin-top:40px;">🏆 Boletos Premiados</h3>
-  <div class="sorteos-grid" id="inicioPremios"></div>
-</div>
-
-<!-- Boletos -->
-<div class="tab-content" id="boletosContent">
   <div class="boletos-grid" id="boletosGrid"></div>
 </div>
 
-<!-- Premios -->
-<div class="tab-content" id="premiosContent">
+<!-- 🏆 BOLETOS PREMIADOS -->
+<div class="tab-content" id="premiosContent" style="display:none;">
+  <h3 style="color:white; text-align:center;">🏆 Boletos Premiados</h3>
+  <div class="buscador">
+    <input type="text" id="buscarPremio" placeholder="Buscar boleto...">
+    <select id="fechaPremio">
+      <option value="todas">Todas las fechas</option>
+      <option value="24 de Octubre 2025">24 de Octubre 2025</option>
+    </select>
+  </div>
   <div class="sorteos-grid" id="sorteosContainer"></div>
 </div>
 
 <script>
-// === Datos ===
+// ==== Datos de ejemplo ====
 const boletos = [
-  { numero: "12345" },
-  { numero: "67890" },
-  { numero: "54321" },
-  { numero: "11223" },
-  { numero: "77777" },
-  { numero: "88888" }
+  { numero: "12345", fecha: "24 de Octubre 2025" },
+  { numero: "67890", fecha: "24 de Octubre 2025" },
+  { numero: "54321", fecha: "24 de Octubre 2025" },
+  { numero: "11223", fecha: "24 de Octubre 2025" }
 ];
 
-// ==== Generar boletos ====
-function generarBoletos(contenedorId, filtro = "") {
-  const cont = document.getElementById(contenedorId);
+const premios = [
+  { numero: "12345", tipo: "Primer Premio", fecha: "24 de Octubre 2025", imagen: "img/premio1.jpg" }
+];
+
+// ==== Mostrar boletos ====
+function mostrarBoletos(filtroNumero = "", filtroFecha = "todas") {
+  const cont = document.getElementById('boletosGrid');
   cont.innerHTML = "";
   boletos
-    .filter(b => b.numero.includes(filtro))
+    .filter(b => b.numero.includes(filtroNumero) && (filtroFecha === "todas" || b.fecha === filtroFecha))
     .forEach(b => {
       const div = document.createElement('div');
       div.classList.add('tarjeta-boleto');
       div.innerHTML = `
         <div>Boleto ${b.numero}</div>
+        <small>${b.fecha}</small><br>
         <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
       `;
       cont.appendChild(div);
     });
 }
-generarBoletos('boletosGrid');
-generarBoletos('inicioBoletos');
-
-// ==== Filtrar boletos (buscador) ====
-function filtrarBoletos() {
-  const valor = document.getElementById('buscarBoleto').value.trim();
-  generarBoletos('inicioBoletos', valor);
-}
-
-// ==== Premios ====
-const sorteos = [
-  {
-    nombre: "Sorteo Mayor",
-    fecha: "24 de Octubre 2025",
-    numeros: [
-      { numero: "12345", tipo: "primer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "67890", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "54321", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "11223", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
-    ]
-  }
-];
-
-const container = document.getElementById('sorteosContainer');
-const inicioPremios = document.getElementById('inicioPremios');
-const fechaSelect = document.getElementById('fechaSelect');
-
-// ==== Fechas ====
-const fechasUnicas = [...new Set(sorteos.map(s => s.fecha))];
-fechasUnicas.forEach(fecha => {
-  const option = document.createElement('option');
-  option.value = fecha;
-  option.textContent = fecha;
-  fechaSelect.appendChild(option);
-});
+mostrarBoletos();
 
 // ==== Mostrar premios ====
-function mostrarSorteos(contenedor, fecha = 'todas') {
-  contenedor.innerHTML = '';
-  let filtrados = sorteos;
-  if(fecha !== 'todas') filtrados = sorteos.filter(s => s.fecha === fecha);
-
-  filtrados.forEach(sorteo => {
-    const divSorteo = document.createElement('div');
-    divSorteo.classList.add('sorteo');
-    divSorteo.innerHTML = `
-      <h2>${sorteo.nombre}</h2>
-      <div class="fecha">${sorteo.fecha}</div>
-    `;
-
-    const premiosContainer = document.createElement('div');
-    premiosContainer.classList.add('premios-container');
-
-    sorteo.numeros.forEach((item,index)=>{
-      const tarjeta = document.createElement('div');
-      tarjeta.classList.add('tarjeta-premio', item.tipo);
-      tarjeta.style.backgroundImage = `url(${item.imagen})`;
-      tarjeta.innerHTML = `
-        <div class="contenido-premio">
-          <div class="label-premio">${
-            item.tipo === 'primer-premio' ? 'Primer Premio' :
-            item.tipo === 'segundo-premio' ? 'Segundo Premio' :
-            item.tipo === 'tercer-premio' ? 'Tercer Premio' : 'Premio Adicional'
-          }</div>
-          <div class="numero">${item.numero}</div>
+function mostrarPremios(filtroNumero = "", filtroFecha = "todas") {
+  const cont = document.getElementById('sorteosContainer');
+  cont.innerHTML = "";
+  premios
+    .filter(p => p.numero.includes(filtroNumero) && (filtroFecha === "todas" || p.fecha === filtroFecha))
+    .forEach(p => {
+      const div = document.createElement('div');
+      div.classList.add('sorteo');
+      div.innerHTML = `
+        <h2>${p.tipo}</h2>
+        <div class="fecha">${p.fecha}</div>
+        <div class="tarjeta-premio" style="background-image:url('${p.imagen}')">
+          <div class="label-premio">${p.tipo}</div>
+          <div class="numero">${p.numero}</div>
         </div>
       `;
-      setTimeout(()=> tarjeta.classList.add('visible'), 100*index);
-      premiosContainer.appendChild(tarjeta);
+      cont.appendChild(div);
     });
-    divSorteo.appendChild(premiosContainer);
-    contenedor.appendChild(divSorteo);
-  });
 }
-fechaSelect.addEventListener('change', e => {
-  mostrarSorteos(container, e.target.value);
-  mostrarSorteos(inicioPremios, e.target.value);
+mostrarPremios();
+
+// ==== Filtros ====
+document.getElementById('buscarBoletoDisponibles').addEventListener('input', e => {
+  mostrarBoletos(e.target.value.trim(), document.getElementById('fechaBoletos').value);
 });
-mostrarSorteos(container);
-mostrarSorteos(inicioPremios);
+document.getElementById('fechaBoletos').addEventListener('change', e => {
+  mostrarBoletos(document.getElementById('buscarBoletoDisponibles').value.trim(), e.target.value);
+});
+
+document.getElementById('buscarPremio').addEventListener('input', e => {
+  mostrarPremios(e.target.value.trim(), document.getElementById('fechaPremio').value);
+});
+document.getElementById('fechaPremio').addEventListener('change', e => {
+  mostrarPremios(document.getElementById('buscarPremio').value.trim(), e.target.value);
+});
 
 // ==== Pestañas ====
 const tabs = document.querySelectorAll('.tab');
