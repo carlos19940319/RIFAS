@@ -8,20 +8,42 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    background: #f2f2f2;
     margin: 0;
-    padding: 20px;
+    padding: 140px 20px 20px 20px; /* padding top para header flotante */
+    background: url('https://via.placeholder.com/1920x1080?text=Fondo+de+Pantalla') no-repeat center center fixed;
+    background-size: cover; /* cubrir toda la pantalla */
   }
 
-  h1 {
-    text-align: center;
+  /* Bloque flotante tipo panel */
+  .flotante-header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-width: 500px;
+    width: 90%;
+  }
+
+  .flotante-header h1 {
+    margin: 0;
     color: #b22222;
-    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8rem;
   }
 
-  .filtro-container {
+  .flotante-header .filtro-container {
+    margin: 0;
     text-align: center;
-    margin-bottom: 30px;
   }
 
   select {
@@ -150,13 +172,14 @@
 </head>
 <body>
 
-<h1>Resultados de Rifas</h1>
-
-<div class="filtro-container">
-  <label for="fechaSelect">Selecciona Fecha: </label>
-  <select id="fechaSelect">
-    <option value="todas">Todas las fechas</option>
-  </select>
+<div class="flotante-header">
+  <h1>Resultados de Rifas</h1>
+  <div class="filtro-container">
+    <label for="fechaSelect">Selecciona Fecha: </label>
+    <select id="fechaSelect">
+      <option value="todas">Todas las fechas</option>
+    </select>
+  </div>
 </div>
 
 <div class="sorteos-grid" id="sorteosContainer">
@@ -175,7 +198,6 @@ const sorteos = [
       { numero: "11223", tipo: "premio-adicional", imagen: "https://via.placeholder.com/280x180?text=A1" }
     ]
   },
-
   {
     nombre: "Sorteo Chiquito",
     fecha: "23 de Octubre 2025",
@@ -187,7 +209,7 @@ const sorteos = [
     ]
   },
   {
-    nombre: "Sorteo Chiquito",
+    nombre: "Sorteo Extra",
     fecha: "25 de Octubre 2025",
     numeros: [
       { numero: "98765", tipo: "primer-premio", imagen: "https://via.placeholder.com/280x180?text=1P" },
@@ -196,13 +218,11 @@ const sorteos = [
       { numero: "44556", tipo: "premio-adicional", imagen: "https://via.placeholder.com/280x180?text=A1" }
     ]
   }
-
 ];
 
 const container = document.getElementById('sorteosContainer');
 const fechaSelect = document.getElementById('fechaSelect');
 
-// Llenar opciones de fechas
 const fechasUnicas = [...new Set(sorteos.map(s => s.fecha))];
 fechasUnicas.forEach(fecha => {
   const option = document.createElement('option');
@@ -212,7 +232,6 @@ fechasUnicas.forEach(fecha => {
 });
 
 function mostrarSorteos(fecha = 'todas') {
-  // Fade-out de sorteos actuales
   const actuales = Array.from(container.children);
   actuales.forEach(s => s.classList.add('fade-out'));
 
@@ -270,12 +289,10 @@ function mostrarSorteos(fecha = 'todas') {
       divSorteo.appendChild(premiosContainer);
       container.appendChild(divSorteo);
     });
-  }, 500); // Tiempo del fade-out
+  }, 500);
 }
 
 fechaSelect.addEventListener('change', e => mostrarSorteos(e.target.value));
-
-// Mostrar todos al inicio
 mostrarSorteos();
 </script>
 
