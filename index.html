@@ -8,29 +8,22 @@
   body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 140px 20px 20px 20px;
+    padding-top: 140px;
     background: url('img/FONDO1410.jpg') no-repeat center center fixed;
     background-size: cover;
   }
 
-  /* Bloque flotante tipo panel */
+  /* Barra fija */
   .flotante-header {
     position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.95);
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(8px);
     z-index: 1000;
-    padding: 20px 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    max-width: 500px;
-    width: 90%;
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
 
   .flotante-header h1 {
@@ -60,6 +53,38 @@
 
   .tab-content { margin-top: 20px; }
 
+  /* Boletos disponibles */
+  .boletos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    max-width: 1000px;
+    margin: 20px auto;
+  }
+
+  .tarjeta-boleto {
+    background: #b22222;
+    border-radius: 12px;
+    padding: 20px 10px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .tarjeta-boleto a {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  /* Boletos premiados */
   .sorteos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -73,27 +98,12 @@
     border-radius: 15px;
     padding: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    overflow: hidden;
-    opacity: 1;
-    transition: opacity 0.5s ease;
   }
 
-  .sorteo.fade-out { opacity: 0; }
-
-  .sorteo h2 {
-    text-align: center;
-    margin-bottom: 5px;
-    color: #333;
-  }
-
+  .sorteo h2 { text-align: center; margin-bottom: 5px; color: #333; }
   .fecha { text-align: center; color: #555; margin-bottom: 15px; font-size: 0.95rem; }
 
-  .premios-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-  }
+  .premios-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
 
   .tarjeta-premio {
     position: relative;
@@ -114,7 +124,6 @@
     transform: scale(0.9);
     transition: all 0.6s ease;
   }
-
   .tarjeta-premio.visible { opacity: 1; transform: scale(1); }
 
   .label-premio {
@@ -122,59 +131,15 @@
     font-weight: bold;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
   }
-
   .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
-  .primer-premio::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(255,215,0,0.4); z-index:0;
-  }
-  .segundo-premio::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(192,192,192,0.4); z-index:0;
-  }
-  .tercer-premio::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(205,127,50,0.4); z-index:0;
-  }
-  .premio-adicional::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.2); z-index:0;
-  }
+  /* Fondos por tipo de premio */
+  .primer-premio::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,215,0,0.4); z-index:0; }
+  .segundo-premio::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(192,192,192,0.4); z-index:0; }
+  .tercer-premio::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(205,127,50,0.4); z-index:0; }
+  .premio-adicional::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.2); z-index:0; }
 
   .contenido-premio { position: relative; z-index:1; display: flex; flex-direction: column; gap:5px; }
-
-  /* Boletos */
-  .boletos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin:auto; }
-  .tarjeta-boleto {
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    padding: 15px;
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-  .tarjeta-boleto a {
-    margin-top: 10px;
-    padding: 6px 10px;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-  }
 </style>
 </head>
 <body>
@@ -183,39 +148,33 @@
   <h1>Resultados de Rifas</h1>
   <div class="tabs">
     <div class="tab active" data-tab="boletos">Boletos Disponibles</div>
-    <div class="tab" data-tab="premios">Boletos premiados </div>
-  </div>
-  <div class="filtro-container">
-    <label for="fechaSelect">Selecciona Fecha: </label>
-    <select id="fechaSelect">
-      <option value="todas">Todas las fechas</option>
-    </select>
+    <div class="tab" data-tab="premios">Boletos Premiadas</div>
   </div>
 </div>
 
-<!-- Pestañas -->
+<!-- Boletos disponibles -->
 <div class="tab-content" id="boletosContent">
   <div class="boletos-grid" id="boletosGrid"></div>
 </div>
 
-<div class="tab-content" id="premiosContent">
+<!-- Boletos premiados -->
+<div class="tab-content" id="premiosContent" style="display:none;">
   <div class="sorteos-grid" id="sorteosContainer"></div>
 </div>
 
 <script>
-// ==== Boletos ====
+// ==== Boletos Disponibles (solo botón) ====
 const boletos = [
-  { numero: "12345", imagen: "img/FONDO1410.jpg" },
-  { numero: "67890", imagen: "img/FONDO1410.jpg" },
-  { numero: "54321", imagen: "img/FONDO1410.jpg" },
-  { numero: "11223", imagen: "img/FONDO1410.jpg" }
+  { numero: "12345" },
+  { numero: "67890" },
+  { numero: "54321" },
+  { numero: "11223" }
 ];
 
 const boletosGrid = document.getElementById('boletosGrid');
 boletos.forEach(b => {
   const div = document.createElement('div');
   div.classList.add('tarjeta-boleto');
-  div.style.backgroundImage = `url(${b.imagen})`;
   div.innerHTML = `
     <div>Boleto ${b.numero}</div>
     <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
@@ -223,16 +182,14 @@ boletos.forEach(b => {
   boletosGrid.appendChild(div);
 });
 
-// ==== Premios (igual que tu código) ====
+// ==== Boletos Premiadas ====
 const sorteos = [
   {
     nombre: "Sorteo Mayor",
     fecha: "24 de Octubre 2025",
     numeros: [
       { numero: "12345", tipo: "primer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "67890", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "54321", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "11223", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
+      { numero: "67890", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" }
     ]
   },
   {
@@ -240,97 +197,56 @@ const sorteos = [
     fecha: "23 de Octubre 2025",
     numeros: [
       { numero: "98765", tipo: "primer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "11223", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "33445", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "44556", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
-    ]
-  },
-  {
-    nombre: "Sorteo Extra",
-    fecha: "25 de Octubre 2025",
-    numeros: [
-      { numero: "98765", tipo: "primer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "11223", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "33445", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "44556", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
+      { numero: "11223", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" }
     ]
   }
 ];
 
 const container = document.getElementById('sorteosContainer');
-const fechaSelect = document.getElementById('fechaSelect');
 
-const fechasUnicas = [...new Set(sorteos.map(s => s.fecha))];
-fechasUnicas.forEach(fecha => {
-  const option = document.createElement('option');
-  option.value = fecha;
-  option.textContent = fecha;
-  fechaSelect.appendChild(option);
+sorteos.forEach(sorteo => {
+  const divSorteo = document.createElement('div');
+  divSorteo.classList.add('sorteo');
+
+  const titulo = document.createElement('h2');
+  titulo.textContent = sorteo.nombre;
+  divSorteo.appendChild(titulo);
+
+  const fechaDiv = document.createElement('div');
+  fechaDiv.classList.add('fecha');
+  fechaDiv.textContent = sorteo.fecha;
+  divSorteo.appendChild(fechaDiv);
+
+  const premiosContainer = document.createElement('div');
+  premiosContainer.classList.add('premios-container');
+
+  sorteo.numeros.forEach((item,index) => {
+    const tarjeta = document.createElement('div');
+    tarjeta.classList.add('tarjeta-premio', item.tipo);
+    tarjeta.style.backgroundImage = `url(${item.imagen})`;
+
+    const contenido = document.createElement('div');
+    contenido.classList.add('contenido-premio');
+
+    const label = document.createElement('div');
+    label.classList.add('label-premio');
+    label.textContent = item.tipo.replace('-', ' ');
+
+    const numeroDiv = document.createElement('div');
+    numeroDiv.classList.add('numero');
+    numeroDiv.textContent = item.numero;
+
+    contenido.appendChild(label);
+    contenido.appendChild(numeroDiv);
+    tarjeta.appendChild(contenido);
+    premiosContainer.appendChild(tarjeta);
+
+    setTimeout(()=>{ tarjeta.classList.add('visible'); }, 100*index);
+  });
+
+  divSorteo.appendChild(premiosContainer);
+  container.appendChild(divSorteo);
 });
-
-function mostrarSorteos(fecha = 'todas') {
-  const actuales = Array.from(container.children);
-  actuales.forEach(s => s.classList.add('fade-out'));
-
-  setTimeout(() => {
-    container.innerHTML = '';
-    let filtrados = sorteos;
-    if(fecha !== 'todas') filtrados = sorteos.filter(s => s.fecha === fecha);
-
-    filtrados.forEach(sorteo => {
-      const divSorteo = document.createElement('div');
-      divSorteo.classList.add('sorteo');
-
-      const titulo = document.createElement('h2');
-      titulo.textContent = sorteo.nombre;
-      divSorteo.appendChild(titulo);
-
-      const fechaDiv = document.createElement('div');
-      fechaDiv.classList.add('fecha');
-      fechaDiv.textContent = sorteo.fecha;
-      divSorteo.appendChild(fechaDiv);
-
-      const premiosContainer = document.createElement('div');
-      premiosContainer.classList.add('premios-container');
-
-      const orden = { 'primer-premio':1, 'segundo-premio':2, 'tercer-premio':3, 'premio-adicional':4 };
-      sorteo.numeros.sort((a,b) => orden[a.tipo]-orden[b.tipo]);
-
-      sorteo.numeros.forEach((item,index) => {
-        const tarjeta = document.createElement('div');
-        tarjeta.classList.add('tarjeta-premio', item.tipo);
-        tarjeta.style.backgroundImage = `url(${item.imagen})`;
-
-        const contenido = document.createElement('div');
-        contenido.classList.add('contenido-premio');
-
-        const label = document.createElement('div');
-        label.classList.add('label-premio');
-        if(item.tipo==='primer-premio') label.textContent='Primer Premio';
-        else if(item.tipo==='segundo-premio') label.textContent='Segundo Premio';
-        else if(item.tipo==='tercer-premio') label.textContent='Tercer Premio';
-        else label.textContent='Premio Adicional';
-
-        const numeroDiv = document.createElement('div');
-        numeroDiv.classList.add('numero');
-        numeroDiv.textContent = item.numero;
-
-        contenido.appendChild(label);
-        contenido.appendChild(numeroDiv);
-        tarjeta.appendChild(contenido);
-        premiosContainer.appendChild(tarjeta);
-
-        setTimeout(()=>{ tarjeta.classList.add('visible'); }, 100*index);
-      });
-
-      divSorteo.appendChild(premiosContainer);
-      container.appendChild(divSorteo);
-    });
-  }, 500);
-}
-
-fechaSelect.addEventListener('change', e => mostrarSorteos(e.target.value));
-mostrarSorteos();
 
 // ==== Pestañas ====
 const tabs = document.querySelectorAll('.tab');
@@ -338,8 +254,8 @@ tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('boletosContent').style.display = tab.dataset.tab==='boletos' ? 'block' : 'none';
-    document.getElementById('premiosContent').style.display = tab.dataset.tab==='premios' ? 'block' : 'none';
+    document.getElementById('boletosContent').style.display = tab.dataset.tab==='boletos' ? 'grid' : 'none';
+    document.getElementById('premiosContent').style.display = tab.dataset.tab==='premios' ? 'grid' : 'none';
   });
 });
 </script>
