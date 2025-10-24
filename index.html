@@ -1,5 +1,4 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -9,9 +8,9 @@
   body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 140px 20px 20px 20px; /* padding top para header flotante */
+    padding: 140px 20px 20px 20px;
     background: url('img/FONDO1410.jpg') no-repeat center center fixed;
-    background-size: cover; /* cubrir toda la pantalla */
+    background-size: cover;
   }
 
   /* Bloque flotante tipo panel */
@@ -41,17 +40,25 @@
     font-size: 1.8rem;
   }
 
-  .flotante-header .filtro-container {
-    margin: 0;
-    text-align: center;
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
   }
 
-  select {
-    padding: 10px;
-    font-size: 1rem;
+  .tab {
+    padding: 8px 16px;
+    background: #b22222;
+    color: white;
+    cursor: pointer;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    font-weight: bold;
   }
+
+  .tab.active { background: #ff4d4d; }
+
+  .tab-content { margin-top: 20px; }
 
   .sorteos-grid {
     display: grid;
@@ -71,9 +78,7 @@
     transition: opacity 0.5s ease;
   }
 
-  .sorteo.fade-out {
-    opacity: 0;
-  }
+  .sorteo.fade-out { opacity: 0; }
 
   .sorteo h2 {
     text-align: center;
@@ -81,12 +86,7 @@
     color: #333;
   }
 
-  .fecha {
-    text-align: center;
-    color: #555;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-  }
+  .fecha { text-align: center; color: #555; margin-bottom: 15px; font-size: 0.95rem; }
 
   .premios-container {
     display: flex;
@@ -115,10 +115,7 @@
     transition: all 0.6s ease;
   }
 
-  .tarjeta-premio.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
+  .tarjeta-premio.visible { opacity: 1; transform: scale(1); }
 
   .label-premio {
     font-size: 1rem;
@@ -126,47 +123,57 @@
     text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
   }
 
-  .numero {
-    font-size: 1.6rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-  }
+  .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
   .primer-premio::before {
     content: "";
-    position: absolute;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(255,215,0,0.4);
-    z-index:0;
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(255,215,0,0.4); z-index:0;
   }
   .segundo-premio::before {
     content: "";
-    position: absolute;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(192,192,192,0.4);
-    z-index:0;
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(192,192,192,0.4); z-index:0;
   }
   .tercer-premio::before {
     content: "";
-    position: absolute;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(205,127,50,0.4);
-    z-index:0;
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(205,127,50,0.4); z-index:0;
   }
   .premio-adicional::before {
     content: "";
-    position: absolute;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.2);
-    z-index:0;
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.2); z-index:0;
   }
 
-  .contenido-premio {
+  .contenido-premio { position: relative; z-index:1; display: flex; flex-direction: column; gap:5px; }
+
+  /* Boletos */
+  .boletos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin:auto; }
+  .tarjeta-boleto {
     position: relative;
-    z-index:1;
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    height: 150px;
     display: flex;
     flex-direction: column;
-    gap:5px;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .tarjeta-boleto a {
+    margin-top: 10px;
+    padding: 6px 10px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
   }
 </style>
 </head>
@@ -174,6 +181,10 @@
 
 <div class="flotante-header">
   <h1>Resultados de Rifas</h1>
+  <div class="tabs">
+    <div class="tab active" data-tab="boletos">Boletos Disponibles</div>
+    <div class="tab" data-tab="premios">Premios</div>
+  </div>
   <div class="filtro-container">
     <label for="fechaSelect">Selecciona Fecha: </label>
     <select id="fechaSelect">
@@ -182,11 +193,37 @@
   </div>
 </div>
 
-<div class="sorteos-grid" id="sorteosContainer">
-  <!-- Sorteos generados automáticamente -->
+<!-- Pestañas -->
+<div class="tab-content" id="boletosContent">
+  <div class="boletos-grid" id="boletosGrid"></div>
+</div>
+
+<div class="tab-content" id="premiosContent">
+  <div class="sorteos-grid" id="sorteosContainer"></div>
 </div>
 
 <script>
+// ==== Boletos ====
+const boletos = [
+  { numero: "12345", imagen: "img/FONDO1410.jpg" },
+  { numero: "67890", imagen: "img/FONDO1410.jpg" },
+  { numero: "54321", imagen: "img/FONDO1410.jpg" },
+  { numero: "11223", imagen: "img/FONDO1410.jpg" }
+];
+
+const boletosGrid = document.getElementById('boletosGrid');
+boletos.forEach(b => {
+  const div = document.createElement('div');
+  div.classList.add('tarjeta-boleto');
+  div.style.backgroundImage = `url(${b.imagen})`;
+  div.innerHTML = `
+    <div>Boleto ${b.numero}</div>
+    <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
+  `;
+  boletosGrid.appendChild(div);
+});
+
+// ==== Premios (igual que tu código) ====
 const sorteos = [
   {
     nombre: "Sorteo Mayor",
@@ -294,6 +331,17 @@ function mostrarSorteos(fecha = 'todas') {
 
 fechaSelect.addEventListener('change', e => mostrarSorteos(e.target.value));
 mostrarSorteos();
+
+// ==== Pestañas ====
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('boletosContent').style.display = tab.dataset.tab==='boletos' ? 'block' : 'none';
+    document.getElementById('premiosContent').style.display = tab.dataset.tab==='premios' ? 'block' : 'none';
+  });
+});
 </script>
 
 </body>
