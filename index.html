@@ -8,7 +8,7 @@
   body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 140px 20px 20px 20px;
+    padding: 160px 20px 20px 20px;
     background: url('img/FONDO1410.jpg') no-repeat center center fixed;
     background-size: cover;
   }
@@ -16,21 +16,21 @@
   /* Bloque flotante tipo panel */
   .flotante-header {
     position: fixed;
-    top: 10px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     z-index: 1000;
     padding: 20px 30px;
-    border-radius: 15px;
+    border-radius: 0 0 15px 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    max-width: 500px;
-    width: 90%;
+    max-width: 600px;
+    width: 100%;
   }
 
   .flotante-header h1 {
@@ -45,6 +45,7 @@
     justify-content: center;
     margin-top: 10px;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   .tab {
@@ -149,31 +150,25 @@
   .contenido-premio { position: relative; z-index:1; display: flex; flex-direction: column; gap:5px; }
 
   /* Boletos */
-  .boletos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin:auto; }
+  .boletos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1000px; margin:auto; }
   .tarjeta-boleto {
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    padding: 15px;
+    background: white;
+    border-radius: 12px;
     text-align: center;
-    color: #fff;
+    padding: 20px;
     font-weight: bold;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
+    color: #b22222;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
   .tarjeta-boleto a {
     margin-top: 10px;
-    padding: 6px 10px;
+    padding: 8px 12px;
     background: #25D366;
     color: white;
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
+    display: inline-block;
   }
 </style>
 </head>
@@ -182,8 +177,9 @@
 <div class="flotante-header">
   <h1>Resultados de Rifas</h1>
   <div class="tabs">
-    <div class="tab active" data-tab="boletos">Boletos Disponibles</div>
-    <div class="tab" data-tab="premios">Boletos premiados </div>
+    <div class="tab active" data-tab="inicio">Inicio</div>
+    <div class="tab" data-tab="boletos">Boletos Disponibles</div>
+    <div class="tab" data-tab="premios">Boletos premiados</div>
   </div>
   <div class="filtro-container">
     <label for="fechaSelect">Selecciona Fecha: </label>
@@ -193,11 +189,18 @@
   </div>
 </div>
 
-<!-- Pestañas -->
+<!-- INICIO -->
+<div class="tab-content" id="inicioContent" style="display:block;">
+  <h2 style="color:white; text-align:center; text-shadow:1px 1px 3px black;">Bienvenido a la página de rifas</h2>
+  <p style="color:white; text-align:center;">Consulta tus boletos disponibles y los premiados fácilmente.</p>
+</div>
+
+<!-- Boletos -->
 <div class="tab-content" id="boletosContent">
   <div class="boletos-grid" id="boletosGrid"></div>
 </div>
 
+<!-- Premios -->
 <div class="tab-content" id="premiosContent">
   <div class="sorteos-grid" id="sorteosContainer"></div>
 </div>
@@ -205,17 +208,16 @@
 <script>
 // ==== Boletos ====
 const boletos = [
-  { numero: "12345", imagen: "img/FONDO1410.jpg" },
-  { numero: "67890", imagen: "img/FONDO1410.jpg" },
-  { numero: "54321", imagen: "img/FONDO1410.jpg" },
-  { numero: "11223", imagen: "img/FONDO1410.jpg" }
+  { numero: "12345" },
+  { numero: "67890" },
+  { numero: "54321" },
+  { numero: "11223" }
 ];
 
 const boletosGrid = document.getElementById('boletosGrid');
 boletos.forEach(b => {
   const div = document.createElement('div');
   div.classList.add('tarjeta-boleto');
-  div.style.backgroundImage = `url(${b.imagen})`;
   div.innerHTML = `
     <div>Boleto ${b.numero}</div>
     <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
@@ -223,7 +225,7 @@ boletos.forEach(b => {
   boletosGrid.appendChild(div);
 });
 
-// ==== Premios (igual que tu código) ====
+// ==== Premios ====
 const sorteos = [
   {
     nombre: "Sorteo Mayor",
@@ -233,26 +235,6 @@ const sorteos = [
       { numero: "67890", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
       { numero: "54321", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
       { numero: "11223", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
-    ]
-  },
-  {
-    nombre: "Sorteo Chiquito",
-    fecha: "23 de Octubre 2025",
-    numeros: [
-      { numero: "98765", tipo: "primer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "11223", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "33445", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "44556", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
-    ]
-  },
-  {
-    nombre: "Sorteo Extra",
-    fecha: "25 de Octubre 2025",
-    numeros: [
-      { numero: "98765", tipo: "primer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "11223", tipo: "segundo-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "33445", tipo: "tercer-premio", imagen: "img/FONDO1410.jpg" },
-      { numero: "44556", tipo: "premio-adicional", imagen: "img/FONDO1410.jpg" }
     ]
   }
 ];
@@ -338,6 +320,7 @@ tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
+    document.getElementById('inicioContent').style.display = tab.dataset.tab==='inicio' ? 'block' : 'none';
     document.getElementById('boletosContent').style.display = tab.dataset.tab==='boletos' ? 'block' : 'none';
     document.getElementById('premiosContent').style.display = tab.dataset.tab==='premios' ? 'block' : 'none';
   });
