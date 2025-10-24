@@ -8,12 +8,11 @@
   body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 160px 20px 20px 20px;
+    padding: 180px 20px 20px 20px;
     background: url('img/FONDO1410.jpg') no-repeat center center fixed;
     background-size: cover;
   }
 
-  /* Bloque flotante tipo panel */
   .flotante-header {
     position: fixed;
     top: 0;
@@ -74,18 +73,9 @@
     border-radius: 15px;
     padding: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    overflow: hidden;
-    opacity: 1;
-    transition: opacity 0.5s ease;
   }
 
-  .sorteo.fade-out { opacity: 0; }
-
-  .sorteo h2 {
-    text-align: center;
-    margin-bottom: 5px;
-    color: #333;
-  }
+  .sorteo h2 { text-align: center; margin-bottom: 5px; color: #333; }
 
   .fecha { text-align: center; color: #555; margin-bottom: 15px; font-size: 0.95rem; }
 
@@ -108,14 +98,12 @@
     flex-direction: column;
     justify-content: flex-end;
     padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     background-size: cover;
     background-position: center;
     opacity: 0;
     transform: scale(0.9);
     transition: all 0.6s ease;
   }
-
   .tarjeta-premio.visible { opacity: 1; transform: scale(1); }
 
   .label-premio {
@@ -123,33 +111,12 @@
     font-weight: bold;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
   }
-
   .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
-  .primer-premio::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(255,215,0,0.4); z-index:0;
-  }
-  .segundo-premio::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(192,192,192,0.4); z-index:0;
-  }
-  .tercer-premio::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(205,127,50,0.4); z-index:0;
-  }
-  .premio-adicional::before {
-    content: "";
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.2); z-index:0;
-  }
+  .primer-premio::before { background: rgba(255,215,0,0.4); }
+  .segundo-premio::before { background: rgba(192,192,192,0.4); }
+  .tercer-premio::before { background: rgba(205,127,50,0.4); }
 
-  .contenido-premio { position: relative; z-index:1; display: flex; flex-direction: column; gap:5px; }
-
-  /* Boletos */
   .boletos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1000px; margin:auto; }
   .tarjeta-boleto {
     background: white;
@@ -169,6 +136,36 @@
     border-radius: 8px;
     font-weight: bold;
     display: inline-block;
+  }
+
+  /* Buscador */
+  .buscador {
+    display: flex;
+    justify-content: center;
+    margin: 15px auto;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .buscador input {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 200px;
+  }
+  .buscador button {
+    padding: 8px 15px;
+    background: #b22222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 200px 10px 10px 10px; }
+    .flotante-header h1 { font-size: 1.4rem; }
   }
 </style>
 </head>
@@ -193,6 +190,16 @@
 <div class="tab-content" id="inicioContent" style="display:block;">
   <h2 style="color:white; text-align:center; text-shadow:1px 1px 3px black;">Bienvenido a la página de rifas</h2>
   <p style="color:white; text-align:center;">Consulta tus boletos disponibles y los premiados fácilmente.</p>
+
+  <h3 style="color:white; text-align:center;">🎟️ Boletos Disponibles</h3>
+  <div class="buscador">
+    <input type="text" id="buscarBoleto" placeholder="Buscar boleto...">
+    <button onclick="filtrarBoletos()">Buscar</button>
+  </div>
+  <div class="boletos-grid" id="inicioBoletos"></div>
+
+  <h3 style="color:white; text-align:center; margin-top:40px;">🏆 Boletos Premiados</h3>
+  <div class="sorteos-grid" id="inicioPremios"></div>
 </div>
 
 <!-- Boletos -->
@@ -206,24 +213,40 @@
 </div>
 
 <script>
-// ==== Boletos ====
+// === Datos ===
 const boletos = [
   { numero: "12345" },
   { numero: "67890" },
   { numero: "54321" },
-  { numero: "11223" }
+  { numero: "11223" },
+  { numero: "77777" },
+  { numero: "88888" }
 ];
 
-const boletosGrid = document.getElementById('boletosGrid');
-boletos.forEach(b => {
-  const div = document.createElement('div');
-  div.classList.add('tarjeta-boleto');
-  div.innerHTML = `
-    <div>Boleto ${b.numero}</div>
-    <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
-  `;
-  boletosGrid.appendChild(div);
-});
+// ==== Generar boletos ====
+function generarBoletos(contenedorId, filtro = "") {
+  const cont = document.getElementById(contenedorId);
+  cont.innerHTML = "";
+  boletos
+    .filter(b => b.numero.includes(filtro))
+    .forEach(b => {
+      const div = document.createElement('div');
+      div.classList.add('tarjeta-boleto');
+      div.innerHTML = `
+        <div>Boleto ${b.numero}</div>
+        <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
+      `;
+      cont.appendChild(div);
+    });
+}
+generarBoletos('boletosGrid');
+generarBoletos('inicioBoletos');
+
+// ==== Filtrar boletos (buscador) ====
+function filtrarBoletos() {
+  const valor = document.getElementById('buscarBoleto').value.trim();
+  generarBoletos('inicioBoletos', valor);
+}
 
 // ==== Premios ====
 const sorteos = [
@@ -240,8 +263,10 @@ const sorteos = [
 ];
 
 const container = document.getElementById('sorteosContainer');
+const inicioPremios = document.getElementById('inicioPremios');
 const fechaSelect = document.getElementById('fechaSelect');
 
+// ==== Fechas ====
 const fechasUnicas = [...new Set(sorteos.map(s => s.fecha))];
 fechasUnicas.forEach(fecha => {
   const option = document.createElement('option');
@@ -250,69 +275,50 @@ fechasUnicas.forEach(fecha => {
   fechaSelect.appendChild(option);
 });
 
-function mostrarSorteos(fecha = 'todas') {
-  const actuales = Array.from(container.children);
-  actuales.forEach(s => s.classList.add('fade-out'));
+// ==== Mostrar premios ====
+function mostrarSorteos(contenedor, fecha = 'todas') {
+  contenedor.innerHTML = '';
+  let filtrados = sorteos;
+  if(fecha !== 'todas') filtrados = sorteos.filter(s => s.fecha === fecha);
 
-  setTimeout(() => {
-    container.innerHTML = '';
-    let filtrados = sorteos;
-    if(fecha !== 'todas') filtrados = sorteos.filter(s => s.fecha === fecha);
+  filtrados.forEach(sorteo => {
+    const divSorteo = document.createElement('div');
+    divSorteo.classList.add('sorteo');
+    divSorteo.innerHTML = `
+      <h2>${sorteo.nombre}</h2>
+      <div class="fecha">${sorteo.fecha}</div>
+    `;
 
-    filtrados.forEach(sorteo => {
-      const divSorteo = document.createElement('div');
-      divSorteo.classList.add('sorteo');
+    const premiosContainer = document.createElement('div');
+    premiosContainer.classList.add('premios-container');
 
-      const titulo = document.createElement('h2');
-      titulo.textContent = sorteo.nombre;
-      divSorteo.appendChild(titulo);
-
-      const fechaDiv = document.createElement('div');
-      fechaDiv.classList.add('fecha');
-      fechaDiv.textContent = sorteo.fecha;
-      divSorteo.appendChild(fechaDiv);
-
-      const premiosContainer = document.createElement('div');
-      premiosContainer.classList.add('premios-container');
-
-      const orden = { 'primer-premio':1, 'segundo-premio':2, 'tercer-premio':3, 'premio-adicional':4 };
-      sorteo.numeros.sort((a,b) => orden[a.tipo]-orden[b.tipo]);
-
-      sorteo.numeros.forEach((item,index) => {
-        const tarjeta = document.createElement('div');
-        tarjeta.classList.add('tarjeta-premio', item.tipo);
-        tarjeta.style.backgroundImage = `url(${item.imagen})`;
-
-        const contenido = document.createElement('div');
-        contenido.classList.add('contenido-premio');
-
-        const label = document.createElement('div');
-        label.classList.add('label-premio');
-        if(item.tipo==='primer-premio') label.textContent='Primer Premio';
-        else if(item.tipo==='segundo-premio') label.textContent='Segundo Premio';
-        else if(item.tipo==='tercer-premio') label.textContent='Tercer Premio';
-        else label.textContent='Premio Adicional';
-
-        const numeroDiv = document.createElement('div');
-        numeroDiv.classList.add('numero');
-        numeroDiv.textContent = item.numero;
-
-        contenido.appendChild(label);
-        contenido.appendChild(numeroDiv);
-        tarjeta.appendChild(contenido);
-        premiosContainer.appendChild(tarjeta);
-
-        setTimeout(()=>{ tarjeta.classList.add('visible'); }, 100*index);
-      });
-
-      divSorteo.appendChild(premiosContainer);
-      container.appendChild(divSorteo);
+    sorteo.numeros.forEach((item,index)=>{
+      const tarjeta = document.createElement('div');
+      tarjeta.classList.add('tarjeta-premio', item.tipo);
+      tarjeta.style.backgroundImage = `url(${item.imagen})`;
+      tarjeta.innerHTML = `
+        <div class="contenido-premio">
+          <div class="label-premio">${
+            item.tipo === 'primer-premio' ? 'Primer Premio' :
+            item.tipo === 'segundo-premio' ? 'Segundo Premio' :
+            item.tipo === 'tercer-premio' ? 'Tercer Premio' : 'Premio Adicional'
+          }</div>
+          <div class="numero">${item.numero}</div>
+        </div>
+      `;
+      setTimeout(()=> tarjeta.classList.add('visible'), 100*index);
+      premiosContainer.appendChild(tarjeta);
     });
-  }, 500);
+    divSorteo.appendChild(premiosContainer);
+    contenedor.appendChild(divSorteo);
+  });
 }
-
-fechaSelect.addEventListener('change', e => mostrarSorteos(e.target.value));
-mostrarSorteos();
+fechaSelect.addEventListener('change', e => {
+  mostrarSorteos(container, e.target.value);
+  mostrarSorteos(inicioPremios, e.target.value);
+});
+mostrarSorteos(container);
+mostrarSorteos(inicioPremios);
 
 // ==== Pestañas ====
 const tabs = document.querySelectorAll('.tab');
@@ -326,6 +332,5 @@ tabs.forEach(tab => {
   });
 });
 </script>
-
 </body>
 </html>
