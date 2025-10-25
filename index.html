@@ -5,144 +5,224 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIFAS</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 180px 20px 20px 20px;
-    background: url('img/FONDO1410.jpg') no-repeat center center fixed;
-    background-size: cover;
-  }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 180px 20px 20px 20px;
+  background: url('img/FONDO1410.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 
-  .flotante-header {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    z-index: 1000;
-    padding: 20px 30px;
-    border-radius: 0 0 15px 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    max-width: 600px;
-    width: 100%;
-  }
+.flotante-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  padding: 20px 30px;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 600px;
+  width: 100%;
+}
 
-  .flotante-header h1 {
-    margin: 0;
-    color: #b22222;
-    text-align: center;
-    font-size: 1.8rem;
-  }
+.flotante-header h1 {
+  margin: 0;
+  color: #b22222;
+  text-align: center;
+  font-size: 1.8rem;
+}
 
-  .tabs {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-  .tab {
-    padding: 8px 16px;
-    background: #b22222;
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-  }
+.tab {
+  padding: 8px 16px;
+  background: #b22222;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
 
-  .tab.active { background: #ff4d4d; }
+.tab.active { background: #ff4d4d; }
 
-  .tab-content { margin-top: 20px; }
+.tab-content { margin-top: 20px; transition: opacity 0.3s ease; }
 
-  .boletos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    max-width: 1000px;
-    margin: auto;
-  }
+.boletos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  max-width: 1000px;
+  margin: auto;
+}
 
-  .tarjeta-boleto {
-    background: white;
-    border-radius: 12px;
-    text-align: center;
-    padding: 20px;
-    font-weight: bold;
-    color: #b22222;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-  .tarjeta-boleto a {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    display: inline-block;
-  }
+.sorteos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: auto;
+}
 
-  .buscador {
-    display: flex;
-    justify-content: center;
-    margin: 15px auto;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .buscador input, .buscador select {
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
+.sorteo {
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 
-  .sorteos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
-    margin: auto;
-  }
+.tarjeta-premio {
+  width: 100%;
+  max-width: 280px;
+  height: 180px;
+  border-radius: 15px;
+  overflow: hidden;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 15px;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+}
 
-  .sorteo {
-    background: #fff;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
+.label-premio { font-size: 0.9rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
+.numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
-  .sorteo h2 { text-align: center; margin-bottom: 5px; color: #333; }
-  .fecha { text-align: center; color: #555; margin-bottom: 15px; font-size: 0.95rem; }
+.buscador {
+  display: flex;
+  justify-content: center;
+  margin: 15px auto;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-  .tarjeta-premio {
-    width: 100%;
-    max-width: 280px;
-    height: 180px;
-    border-radius: 15px;
-    overflow: hidden;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 15px;
-    background-size: cover;
-    background-position: center;
-    margin: auto;
-  }
+.buscador input, .buscador select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
 
-  .label-premio { font-size: 1rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
-  .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
+/* ===== Boletos Modernos Compactos ===== */
+.tarjeta-boleto {
+  position: relative;
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #b22222;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 80px;
+  font-size: 0.85rem;
+}
 
-  @media (max-width: 600px) {
-    body { padding: 200px 10px 10px 10px; }
-    .flotante-header h1 { font-size: 1.4rem; }
-  }
+.tarjeta-boleto:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.tarjeta-boleto.disponible {
+  background: linear-gradient(145deg, #ffeaea, #fff5f5);
+  border: 2px solid #ffb3b3;
+}
+
+.tarjeta-boleto.vendido {
+  background: linear-gradient(145deg, #25d366, #1ebc57);
+  color: white;
+  border: 2px solid #1fa44a;
+}
+
+.tarjeta-boleto .numero {
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.tarjeta-boleto .nombre {
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.tarjeta-boleto .estado {
+  font-size: 0.75rem;
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tarjeta-boleto.ganador::before {
+    content: attr(data-lugar);
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    transform: rotate(-15deg);
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: rgba(255, 215, 0, 0.4);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    z-index: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    animation: brillo-suelto 2s infinite ease-in-out;
+}
+
+.tarjeta-boleto.parpadeo-fuerte::before {
+    animation: brillo-fuerte 0.5s infinite ease-in-out;
+}
+
+@keyframes brillo-suelto {
+  0%, 100% { color: rgba(255, 215, 0, 0.4); text-shadow: 1px 1px 4px rgba(0,0,0,0.3); }
+  50% { color: rgba(255, 215, 0, 0.8); text-shadow: 2px 2px 10px rgba(0,0,0,0.4); }
+}
+
+@keyframes brillo-fuerte {
+  0%, 100% { color: rgba(255, 215, 0, 0.6); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+  50% { color: rgba(255, 215, 0, 1); text-shadow: 4px 4px 20px rgba(0,0,0,0.6); }
+}
+
+.tarjeta-boleto > * { position: relative; z-index: 1; }
+
+.estado.expirado {
+  color: red;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+#listaGanadores div {
+  color: #ffffff;
+  background: rgba(0,0,0,0.6);
+  margin: 3px 0;
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  body { padding: 200px 10px 10px 10px; }
+  .flotante-header h1 { font-size: 1.4rem; }
+  .boletos-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap:6px; }
+  .tarjeta-boleto { font-size: 0.75rem; min-height:70px; padding:6px 8px; }
+}
 </style>
 </head>
 <body>
@@ -156,120 +236,191 @@
   </div>
 </div>
 
-<!-- 🏠 INICIO -->
+<!-- INICIO -->
 <div class="tab-content" id="inicioContent" style="display:block;">
   <h2 style="color:white; text-align:center; text-shadow:1px 1px 3px black;">🎁 Producto en Rifa</h2>
   <div style="text-align:center; margin-top:20px;">
-    <img src="img/images (1).jpeg" alt="Producto a rifar" style="max-width:90%; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.4);">
+    <img src="img/images (1).jpeg" alt="Producto a rifar" style="max-width:90%; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.4);" loading="lazy">
   </div>
+  <div id="listaGanadores"></div>
 </div>
 
-<!-- 🎟️ BOLETOS DISPONIBLES -->
+<!-- BOLETOS -->
 <div class="tab-content" id="boletosContent" style="display:none;">
   <h3 style="color:white; text-align:center;">🎟️ Boletos Disponibles</h3>
   <div class="buscador">
     <input type="text" id="buscarBoletoDisponibles" placeholder="Buscar boleto...">
-    <select id="fechaBoletos">
-      <option value="todas">Todas las fechas</option>
-      <option value="24 de Octubre 2025">24 de Octubre 2025</option>
-    </select>
+    <select id="fechaBoletos"></select>
   </div>
   <div class="boletos-grid" id="boletosGrid"></div>
 </div>
 
-<!-- 🏆 BOLETOS PREMIADOS -->
+<!-- PREMIOS -->
 <div class="tab-content" id="premiosContent" style="display:none;">
   <h3 style="color:white; text-align:center;">🏆 Boletos Premiados</h3>
   <div class="buscador">
     <input type="text" id="buscarPremio" placeholder="Buscar boleto...">
-    <select id="fechaPremio">
-      <option value="todas">Todas las fechas</option>
-      <option value="24 de Octubre 2025">24 de Octubre 2025</option>
-    </select>
+    <select id="fechaPremio"></select>
   </div>
   <div class="sorteos-grid" id="sorteosContainer"></div>
 </div>
 
 <script>
-// ==== Datos de ejemplo ====
-const boletos = [
-  { numero: "12345", fecha: "24 de Octubre 2025" },
-  { numero: "67890", fecha: "24 de Octubre 2025" },
-  { numero: "54321", fecha: "24 de Octubre 2025" },
-  { numero: "11223", fecha: "24 de Octubre 2025" }
+// ==== Datos ====
+const rangosBoletos = [
+  { inicio: 1000, fin: 1003, fecha: "24 de Octubre 2025" },
+  { inicio: 1004, fin: 1006, fecha: "25 de Octubre 2025" },
+  { inicio: 1007, fin: 1010, fecha: "26 de Octubre 2025" }
+];
+
+const boletosVendidos = [
+  { numero: "1000", nombre: "Carlos", fecha: "24 de Octubre 2025" },
+  { numero: "1002", nombre: "Ana", fecha: "24 de Octubre 2025" }
 ];
 
 const premios = [
-  { numero: "12345", tipo: "Primer Premio", fecha: "24 de Octubre 2025", imagen: "img/premio1.jpg" }
+  { numero: "1001", tipo: "Primer Premio", fecha: "24 de Octubre 2025", imagen: "img/premio1.jpg" },
+  { numero: "1002", tipo: "Segundo Premio", fecha: "24 de Octubre 2025", imagen: "img/premio1.jpg" },
+  { numero: "1003", tipo: "Tercer Premio", fecha: "24 de Octubre 2025", imagen: "img/premio1.jpg" },
+  { numero: "1004", tipo: "Adicional Premio", fecha: "24 de Octubre 2025", imagen: "img/premio2.jpg" }
 ];
 
+// ==== Crear boletos con estado ====
+const boletos = [];
+rangosBoletos.forEach(rango => {
+  for(let i=rango.inicio;i<=rango.fin;i++){
+    const vendido = boletosVendidos.find(b => b.numero === i.toString() && b.fecha === rango.fecha);
+    const premio = premios.find(p => p.numero === i.toString() && p.fecha === rango.fecha);
+    const partes = rango.fecha.match(/(\d+)\s+de\s+(\w+)\s+(\d+)/);
+    const meses = {
+      "Enero":0,"Febrero":1,"Marzo":2,"Abril":3,"Mayo":4,"Junio":5,
+      "Julio":6,"Agosto":7,"Septiembre":8,"Octubre":9,"Noviembre":10,"Diciembre":11
+    };
+    const fechaBoleto = new Date(partes[3],meses[partes[2]],partes[1],23,59,59);
+    boletos.push({
+      numero:i.toString(),
+      fecha:rango.fecha,
+      nombre: vendido ? vendido.nombre : "",
+      vendido: !!vendido,
+      ganador: !!premio,
+      lugar: premio ? premio.tipo : "",
+      expirado: fechaBoleto < new Date()
+    });
+  }
+});
+
+// ==== Llenar fechas dinámicamente ====
+function llenarFechas() {
+  const fechasBoletos = [...new Set(boletos.map(b => b.fecha))];
+  const fechasPremios = [...new Set(premios.map(p => p.fecha))];
+
+  const selectBoletos = document.getElementById('fechaBoletos');
+  const selectPremios = document.getElementById('fechaPremio');
+
+  selectBoletos.innerHTML = '<option value="todas">Todas las fechas</option>';
+  selectPremios.innerHTML = '<option value="todas">Todas las fechas</option>';
+
+  fechasBoletos.forEach(f=>{
+    const opt=document.createElement('option'); opt.value=f; opt.textContent=f; selectBoletos.appendChild(opt);
+  });
+  fechasPremios.forEach(f=>{
+    const opt=document.createElement('option'); opt.value=f; opt.textContent=f; selectPremios.appendChild(opt);
+  });
+}
+llenarFechas();
+
 // ==== Mostrar boletos ====
-function mostrarBoletos(filtroNumero = "", filtroFecha = "todas") {
-  const cont = document.getElementById('boletosGrid');
-  cont.innerHTML = "";
-  boletos
-    .filter(b => b.numero.includes(filtroNumero) && (filtroFecha === "todas" || b.fecha === filtroFecha))
-    .forEach(b => {
-      const div = document.createElement('div');
+function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
+  const cont=document.getElementById('boletosGrid');
+  cont.innerHTML="";
+  boletos.filter(b=>b.numero.includes(filtroNumero) && (filtroFecha==="todas" || b.fecha===filtroFecha))
+    .forEach(b=>{
+      const div=document.createElement('div');
       div.classList.add('tarjeta-boleto');
-      div.innerHTML = `
-        <div>Boleto ${b.numero}</div>
-        <small>${b.fecha}</small><br>
-        <a href="https://wa.me/521TU_NUMERO?text=${encodeURIComponent('Quiero este boleto: ' + b.numero)}" target="_blank">Quiero este boleto</a>
-      `;
+      if(b.ganador) div.classList.add('ganador');
+      if(b.vendido) div.classList.add('vendido'); else div.classList.add('disponible');
+      if(b.ganador) div.setAttribute('data-lugar',b.lugar);
+
+      const estadoTexto = b.expirado ? "EXPIRADO" : b.vendido ? "Vendido" : "Disponible";
+      div.innerHTML=`<div class="numero">Boleto ${b.numero} ${b.vendido ? "✅" : ""}</div>
+                      <div class="nombre">${b.nombre ? "Comprador: "+b.nombre : ""}</div>
+                      <div class="estado ${b.expirado ? "expirado" : ""}">${estadoTexto}</div>
+                      <small>${b.fecha}</small>`;
+      if(!b.vendido && !b.expirado){
+        div.style.cursor="pointer";
+        div.addEventListener("click",()=>{ 
+          const mensaje=`Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A`;
+          window.open(`https://wa.me/5217221383605?text=${mensaje}`,"_blank");
+        });
+      }
       cont.appendChild(div);
     });
 }
 mostrarBoletos();
 
 // ==== Mostrar premios ====
-function mostrarPremios(filtroNumero = "", filtroFecha = "todas") {
-  const cont = document.getElementById('sorteosContainer');
-  cont.innerHTML = "";
-  premios
-    .filter(p => p.numero.includes(filtroNumero) && (filtroFecha === "todas" || p.fecha === filtroFecha))
-    .forEach(p => {
-      const div = document.createElement('div');
+function mostrarPremios(filtroNumero="", filtroFecha="todas"){
+  const cont=document.getElementById('sorteosContainer');
+  cont.innerHTML="";
+  premios.filter(p=>p.numero.includes(filtroNumero) && (filtroFecha==="todas" || p.fecha===filtroFecha))
+    .forEach(p=>{
+      const div=document.createElement('div');
       div.classList.add('sorteo');
-      div.innerHTML = `
-        <h2>${p.tipo}</h2>
-        <div class="fecha">${p.fecha}</div>
-        <div class="tarjeta-premio" style="background-image:url('${p.imagen}')">
-          <div class="label-premio">${p.tipo}</div>
-          <div class="numero">${p.numero}</div>
-        </div>
-      `;
+      div.innerHTML=`<h2>${p.tipo}</h2>
+                      <div class="fecha">${p.fecha}</div>
+                      <div class="tarjeta-premio" style="background-image:url('${p.imagen}')">
+                        <div class="label-premio">${p.tipo}</div>
+                        <div class="numero">${p.numero}</div>
+                      </div>`;
       cont.appendChild(div);
     });
 }
 mostrarPremios();
 
+// ==== Mostrar 3 ganadores recientes en Inicio ====
+function mostrarGanadoresRecientes(){
+  const cont=document.getElementById('listaGanadores');
+  cont.innerHTML="";
+  const recientes=boletos.filter(b=>b.ganador).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  for(let i=0;i<3;i++){
+    const b=recientes[i];
+    const div=document.createElement('div');
+    if(b){
+      div.textContent=`🏆 ${b.lugar} - Boleto ${b.numero} - Comprador: ${b.nombre ? b.nombre : "Sin Ganador"} - Fecha: ${b.fecha}`;
+    }else{
+      div.textContent="🏆 Sin Ganador";
+    }
+    cont.appendChild(div);
+  }
+}
+mostrarGanadoresRecientes();
+
 // ==== Filtros ====
-document.getElementById('buscarBoletoDisponibles').addEventListener('input', e => {
+document.getElementById('buscarBoletoDisponibles').addEventListener('input', e=>{
   mostrarBoletos(e.target.value.trim(), document.getElementById('fechaBoletos').value);
 });
-document.getElementById('fechaBoletos').addEventListener('change', e => {
+document.getElementById('fechaBoletos').addEventListener('change', e=>{
   mostrarBoletos(document.getElementById('buscarBoletoDisponibles').value.trim(), e.target.value);
 });
-
-document.getElementById('buscarPremio').addEventListener('input', e => {
+document.getElementById('buscarPremio').addEventListener('input', e=>{
   mostrarPremios(e.target.value.trim(), document.getElementById('fechaPremio').value);
 });
-document.getElementById('fechaPremio').addEventListener('change', e => {
+document.getElementById('fechaPremio').addEventListener('change', e=>{
   mostrarPremios(document.getElementById('buscarPremio').value.trim(), e.target.value);
 });
 
 // ==== Pestañas ====
-const tabs = document.querySelectorAll('.tab');
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
+const tabs=document.querySelectorAll('.tab');
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('inicioContent').style.display = tab.dataset.tab==='inicio' ? 'block' : 'none';
-    document.getElementById('boletosContent').style.display = tab.dataset.tab==='boletos' ? 'block' : 'none';
-    document.getElementById('premiosContent').style.display = tab.dataset.tab==='premios' ? 'block' : 'none';
+    document.getElementById('inicioContent').style.display=tab.dataset.tab==='inicio'?'block':'none';
+    document.getElementById('boletosContent').style.display=tab.dataset.tab==='boletos'?'block':'none';
+    document.getElementById('premiosContent').style.display=tab.dataset.tab==='premios'?'block':'none';
   });
 });
 </script>
+
 </body>
 </html>
