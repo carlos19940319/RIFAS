@@ -234,52 +234,12 @@ body {
   border-radius: 6px;
 }
 
-/* Formulario de rol */
-#rolSelector {
-  position: fixed;
-  top: 0;
-  left:0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  flex-direction: column;
-  gap: 15px;
-  color: white;
-}
-
-#rolSelector button {
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  background: #b22222;
-  color: white;
-}
-
-#adminLogin {
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-#adminLogin input {
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  width: 200px;
-  font-size: 1rem;
-}
-
-#adminLogin button {
-  background: #25d366;
-  color: white;
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  body { padding: 200px 10px 10px 10px; }
+  .flotante-header h1 { font-size: 1.4rem; }
+  .boletos-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap:6px; }
+  .tarjeta-boleto { font-size: 0.75rem; min-height:70px; padding:6px 8px; }
 }
 </style>
 </head>
@@ -288,20 +248,6 @@ body {
 <!-- Fondo fijo -->
 <div class="fondo-fijo"></div>
 
-<!-- Selector de rol -->
-<div id="rolSelector">
-  <h2>Selecciona tu rol</h2>
-  <button id="btnComprador">Visitas</button>
-  <button id="btnAdmin">Administrador</button>
-  <div id="adminLogin">
-    <input type="text" id="adminUser" placeholder="Usuario">
-    <input type="password" id="adminPass" placeholder="Contraseña">
-    <button id="loginAdminBtn">Ingresar</button>
-  </div>
-</div>
-
-<!-- Contenido principal -->
-<div id="mainContent" style="display:none;">
 <div class="flotante-header">
   <h1>Resultados de Rifas</h1>
   <div class="tabs">
@@ -339,7 +285,6 @@ body {
   </div>
   <div class="sorteos-grid" id="sorteosContainer"></div>
 </div>
-</div>
 
 <script>
 // ==== Datos ====
@@ -361,6 +306,7 @@ const premios = [
   { numero: "1004", tipo: "Adicional Premio", fecha: "24 de Octubre 2025", imagen: "img/FONDO.jpg" }
 ];
 
+// ==== Crear boletos con estado ====
 const boletos = [];
 rangosBoletos.forEach(rango => {
   for(let i=rango.inicio;i<=rango.fin;i++){
@@ -388,17 +334,19 @@ rangosBoletos.forEach(rango => {
 function llenarFechas() {
   const fechasBoletos = [...new Set(boletos.map(b => b.fecha))];
   const fechasPremios = [...new Set(premios.map(p => p.fecha))];
+
   const selectBoletos = document.getElementById('fechaBoletos');
   const selectPremios = document.getElementById('fechaPremio');
+
   selectBoletos.innerHTML = '<option value="todas">Todas las fechas</option>';
   selectPremios.innerHTML = '<option value="todas">Todas las fechas</option>';
+
   fechasBoletos.forEach(f=>{ const opt=document.createElement('option'); opt.value=f; opt.textContent=f; selectBoletos.appendChild(opt); });
   fechasPremios.forEach(f=>{ const opt=document.createElement('option'); opt.value=f; opt.textContent=f; selectPremios.appendChild(opt); });
 }
 llenarFechas();
 
 // ==== Mostrar boletos ====
-let esAdmin = false; // bandera de rol
 function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
   const cont=document.getElementById('boletosGrid');
   cont.innerHTML="";
@@ -409,34 +357,18 @@ function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
       if(b.ganador) div.classList.add('ganador');
       if(b.vendido) div.classList.add('vendido'); else div.classList.add('disponible');
       if(b.ganador) div.setAttribute('data-lugar',b.lugar);
+
       const estadoTexto = b.expirado ? "EXPIRADO" : b.vendido ? "Vendido" : "Disponible";
       div.innerHTML=`<div class="numero">Boleto ${b.numero} ${b.vendido ? "✅" : ""}</div>
                       <div class="nombre">${b.nombre ? "Comprador: "+b.nombre : ""}</div>
                       <div class="estado ${b.expirado ? "expirado" : ""}">${estadoTexto}</div>
                       <small>${b.fecha}</small>`;
-      if(!b.expirado){
-        if(esAdmin){
-          // Administrador: editar nombre y vender
-          div.style.cursor="pointer";
-          div.addEventListener("click",()=>{
-            const nuevoNombre = prompt("Nombre del comprador:", b.nombre);
-            if(nuevoNombre !== null){
-              b.nombre = nuevoNombre;
-              b.vendido = nuevoNombre.trim() !== "";
-              mostrarBoletos(filtroNumero,filtroFecha);
-              mostrarGanadoresRecientes();
-            }
-          });
-        }else{
-          // Comprador: enviar a WhatsApp
-          if(!b.vendido){
-            div.style.cursor="pointer";
-            div.addEventListener("click",()=>{
-              const mensaje=`Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A`;
-              window.open(`https://wa.me/5217221383605?text=${mensaje}`,"_blank");
-            });
-          }
-        }
+      if(!b.vendido && !b.expirado){
+        div.style.cursor="pointer";
+        div.addEventListener("click",()=>{ 
+          const mensaje=Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A;
+          window.open(https://wa.me/5217221383605?text=${mensaje},"_blank");
+        });
       }
       cont.appendChild(div);
     });
@@ -471,7 +403,7 @@ function mostrarGanadoresRecientes(){
     const b=recientes[i];
     const div=document.createElement('div');
     if(b){
-      div.textContent=`🏆 ${b.lugar} - Boleto ${b.numero} - Comprador: ${b.nombre ? b.nombre : "Sin Ganador"} - Fecha: ${b.fecha}`;
+      div.textContent=🏆 ${b.lugar} - Boleto ${b.numero} - Comprador: ${b.nombre ? b.nombre : "Sin Ganador"} - Fecha: ${b.fecha};
     }else{
       div.textContent="🏆 Sin Ganador";
     }
@@ -505,33 +437,7 @@ tabs.forEach(tab=>{
     document.getElementById('premiosContent').style.display=tab.dataset.tab==='premios'?'block':'none';
   });
 });
-
-// ==== Rol selector ====
-document.getElementById('btnComprador').addEventListener('click',()=>{
-  esAdmin=false;
-  document.getElementById('rolSelector').style.display='none';
-  document.getElementById('mainContent').style.display='block';
-});
-
-document.getElementById('btnAdmin').addEventListener('click',()=>{
-  document.getElementById('adminLogin').style.display='flex';
-});
-
-document.getElementById('loginAdminBtn').addEventListener('click',()=>{
-  const user=document.getElementById('adminUser').value.trim();
-  const pass=document.getElementById('adminPass').value.trim();
-  if(user==="carlosmira" && pass==="1234"){
-    esAdmin=true;
-    document.getElementById('rolSelector').style.display='none';
-    document.getElementById('mainContent').style.display='block';
-    mostrarBoletos();
-    alert("Bienvenido Administrador");
-  }else{
-    alert("Usuario o contraseña incorrectos");
-  }
-});
 </script>
 
 </body>
 </html>
-
