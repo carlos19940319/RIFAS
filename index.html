@@ -248,6 +248,21 @@ body {
 <!-- Fondo fijo -->
 <div class="fondo-fijo"></div>
 
+<!-- Overlay selector rol -->
+<div id="overlayRol" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:2000;display:flex;justify-content:center;align-items:center;flex-direction:column;color:white;">
+  <h2>Seleccione su rol</h2>
+  <div style="margin-top:20px;display:flex;gap:20px;">
+    <button id="btnComprador" style="padding:10px 20px;font-size:1rem;border-radius:8px;border:none;background:#25d366;color:white;cursor:pointer;">Comprador</button>
+    <button id="btnAdmin" style="padding:10px 20px;font-size:1rem;border-radius:8px;border:none;background:#b22222;color:white;cursor:pointer;">Administrador</button>
+  </div>
+  <div id="loginAdmin" style="margin-top:20px;display:none;flex-direction:column;gap:10px;">
+    <input type="text" id="usuarioAdmin" placeholder="Usuario" style="padding:8px;border-radius:6px;border:none;">
+    <input type="password" id="passAdmin" placeholder="Contraseña" style="padding:8px;border-radius:6px;border:none;">
+    <button id="btnLoginAdmin" style="padding:8px;border-radius:6px;background:#ff4d4d;color:white;border:none;">Ingresar</button>
+    <small id="errorAdmin" style="color:#ff8080;display:none;">Usuario o contraseña incorrectos</small>
+  </div>
+</div>
+
 <div class="flotante-header">
   <h1>Resultados de Rifas</h1>
   <div class="tabs">
@@ -287,7 +302,13 @@ body {
 </div>
 
 <script>
-// ==== Datos ====
+// ==== ADMINISTRADORES DEFINIDOS EN EL CÓDIGO ====
+const administradores = [
+  { usuario: 'carlosmira2018', password: 'contraseña1234' },
+  // Agrega más si deseas: { usuario: 'admin2', password: 'pass2' }
+];
+
+// ==== Datos de boletos y premios ====
 const rangosBoletos = [
   { inicio: 1000, fin: 1003, fecha: "24 de Octubre 2025" },
   { inicio: 1004, fin: 1006, fecha: "25 de Octubre 2025" },
@@ -295,8 +316,7 @@ const rangosBoletos = [
 ];
 
 const boletosVendidos = [
-  { numero: "1001", nombre: "Carlos", fecha: "25 de Octubre 2025" },
-{ numero: "1003", nombre: "jessy", fecha: "24 de Octubre 2025" },
+  { numero: "1000", nombre: "Carlos", fecha: "24 de Octubre 2025" },
   { numero: "1002", nombre: "Ana", fecha: "24 de Octubre 2025" }
 ];
 
@@ -307,7 +327,7 @@ const premios = [
   { numero: "1004", tipo: "Adicional Premio", fecha: "24 de Octubre 2025", imagen: "img/FONDO.jpg" }
 ];
 
-// ==== Crear boletos con estado ====
+// ==== Construir boletos con estado ====
 const boletos = [];
 rangosBoletos.forEach(rango => {
   for(let i=rango.inicio;i<=rango.fin;i++){
@@ -347,7 +367,7 @@ function llenarFechas() {
 }
 llenarFechas();
 
-// ==== Mostrar boletos ====
+// ==== Función para mostrar boletos con permisos ====
 function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
   const cont=document.getElementById('boletosGrid');
   cont.innerHTML="";
@@ -364,13 +384,27 @@ function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
                       <div class="nombre">${b.nombre ? "Comprador: "+b.nombre : ""}</div>
                       <div class="estado ${b.expirado ? "expirado" : ""}">${estadoTexto}</div>
                       <small>${b.fecha}</small>`;
-      if(!b.vendido && !b.expirado){
+      
+      if(rolUsuario==='comprador' && !b.vendido && !b.expirado){
         div.style.cursor="pointer";
         div.addEventListener("click",()=>{ 
           const mensaje=`Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A`;
           window.open(`https://wa.me/5217221383605?text=${mensaje}`,"_blank");
         });
       }
+
+      if(rolUsuario==='admin'){
+        div.style.cursor="pointer";
+        div.addEventListener("click",()=>{
+          const nuevoNombre = prompt("Modificar nombre del comprador (dejar vacío para disponible):", b.nombre);
+          if(nuevoNombre!==null){
+            b.nombre = nuevoNombre.trim();
+            b.vendido = nuevoNombre.trim() !== "";
+            mostrarBoletos(filtroNumero,filtroFecha);
+          }
+        });
+      }
+
       cont.appendChild(div);
     });
 }
@@ -395,7 +429,7 @@ function mostrarPremios(filtroNumero="", filtroFecha="todas"){
 }
 mostrarPremios();
 
-// ==== Mostrar 3 ganadores recientes en Inicio ====
+// ==== Ganadores recientes ====
 function mostrarGanadoresRecientes(){
   const cont=document.getElementById('listaGanadores');
   cont.innerHTML="";
@@ -437,6 +471,30 @@ tabs.forEach(tab=>{
     document.getElementById('boletosContent').style.display=tab.dataset.tab==='boletos'?'block':'none';
     document.getElementById('premiosContent').style.display=tab.dataset.tab==='premios'?'block':'none';
   });
+});
+
+// ==== Selector de rol ====
+let rolUsuario = null;
+document.getElementById('btnComprador').addEventListener('click',()=>{
+  rolUsuario='comprador';
+  document.getElementById('overlayRol').style.display='none';
+  mostrarBoletos();
+});
+document.getElementById('btnAdmin').addEventListener('click',()=>{
+  document.getElementById('loginAdmin').style.display='flex';
+});
+document.getElementById('btnLoginAdmin').addEventListener('click',()=>{
+  const usuario=document.getElementById('usuarioAdmin').value.trim();
+  const pass=document.getElementById('passAdmin').value.trim();
+  const adminValido=administradores.find(a=>a.usuario===usuario && a.password===pass);
+  if(adminValido){
+    rolUsuario='admin';
+    document.getElementById('overlayRol').style.display='none';
+    mostrarBoletos();
+    alert('Ingresaste como Administrador');
+  }else{
+    document.getElementById('errorAdmin').style.display='block';
+  }
 });
 </script>
 
