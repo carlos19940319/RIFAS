@@ -9,8 +9,19 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 180px 20px 20px 20px;
-  background: url('img/FONDO1.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background-image: url('img/FONDO1.jpg');
+  background-repeat: no-repeat;          /* No se repite */
+  background-position: center center;   /* Siempre centrada */
+  background-attachment: fixed;         /* Fija al hacer scroll */
+  background-size: cover;               /* Cubre toda la pantalla sin deformarse */
+}
+
+/* Ajuste para pantallas muy chicas (móviles) */
+@media (max-width: 600px) {
+  body {
+    padding: 200px 10px 10px 10px;
+    background-size: cover;  /* Mantiene el fondo cubriendo toda la pantalla */
+  }
 }
 
 .flotante-header {
