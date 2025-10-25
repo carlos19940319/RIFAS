@@ -77,8 +77,13 @@ body {
 
 .tab.active { background: #ff4d4d; }
 
-.tab-content { margin-top: 20px; transition: opacity 0.3s ease; }
+.tab-content { 
+  margin-top: 20px; 
+  transition: opacity 0.3s ease; 
+  opacity: 1;
+}
 
+/* ===== Grids ===== */
 .boletos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -95,6 +100,7 @@ body {
   margin: auto;
 }
 
+/* ===== Tarjetas ===== */
 .sorteo {
   background: #fff;
   border-radius: 15px;
@@ -121,6 +127,7 @@ body {
 .label-premio { font-size: 0.9rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
 .numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
+/* ===== Buscadores ===== */
 .buscador {
   display: flex;
   justify-content: center;
@@ -136,7 +143,7 @@ body {
   font-size: 1rem;
 }
 
-/* ===== Boletos Modernos Compactos ===== */
+/* ===== Boletos ===== */
 .tarjeta-boleto {
   position: relative;
   padding: 8px 10px;
@@ -170,42 +177,28 @@ body {
   border: 2px solid #1fa44a;
 }
 
-.tarjeta-boleto .numero {
-  font-weight: 700;
-  margin-bottom: 3px;
-}
-
-.tarjeta-boleto .nombre {
-  font-size: 0.8rem;
-  font-weight: 500;
-  opacity: 0.9;
-}
-
-.tarjeta-boleto .estado {
-  font-size: 0.75rem;
-  margin-top: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+.tarjeta-boleto .numero { font-weight: 700; margin-bottom: 3px; }
+.tarjeta-boleto .nombre { font-size: 0.8rem; font-weight: 500; opacity: 0.9; }
+.tarjeta-boleto .estado { font-size: 0.75rem; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
 
 .tarjeta-boleto.ganador::before {
-    content: attr(data-lugar);
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    transform: rotate(-15deg);
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: rgba(255, 215, 0, 0.4);
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    z-index: 0;
-    pointer-events: none;
-    white-space: nowrap;
-    animation: brillo-suelto 2s infinite ease-in-out;
+  content: attr(data-lugar);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  transform: rotate(-15deg);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: rgba(255, 215, 0, 0.4);
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  z-index: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: brillo-suelto 2s infinite ease-in-out;
 }
 
 .tarjeta-boleto.parpadeo-fuerte::before {
-    animation: brillo-fuerte 0.5s infinite ease-in-out;
+  animation: brillo-fuerte 0.5s infinite ease-in-out;
 }
 
 @keyframes brillo-suelto {
@@ -219,12 +212,7 @@ body {
 }
 
 .tarjeta-boleto > * { position: relative; z-index: 1; }
-
-.estado.expirado {
-  color: red;
-  font-weight: bold;
-  font-size: 0.8rem;
-}
+.estado.expirado { color: red; font-weight: bold; font-size: 0.8rem; }
 
 #listaGanadores div {
   color: #ffffff;
@@ -366,8 +354,8 @@ function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
       if(!b.vendido && !b.expirado){
         div.style.cursor="pointer";
         div.addEventListener("click",()=>{ 
-          const mensaje=Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A;
-          window.open(https://wa.me/5217221383605?text=${mensaje},"_blank");
+          const mensaje=`Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A`;
+          window.open(`https://wa.me/5217221383605?text=${mensaje}`,"_blank");
         });
       }
       cont.appendChild(div);
@@ -403,7 +391,7 @@ function mostrarGanadoresRecientes(){
     const b=recientes[i];
     const div=document.createElement('div');
     if(b){
-      div.textContent=🏆 ${b.lugar} - Boleto ${b.numero} - Comprador: ${b.nombre ? b.nombre : "Sin Ganador"} - Fecha: ${b.fecha};
+      div.textContent=`🏆 ${b.lugar} - Boleto ${b.numero} - Comprador: ${b.nombre ? b.nombre : "Sin Ganador"} - Fecha: ${b.fecha}`;
     }else{
       div.textContent="🏆 Sin Ganador";
     }
@@ -426,15 +414,25 @@ document.getElementById('fechaPremio').addEventListener('change', e=>{
   mostrarPremios(document.getElementById('buscarPremio').value.trim(), e.target.value);
 });
 
-// ==== Pestañas ====
-const tabs=document.querySelectorAll('.tab');
-tabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    tabs.forEach(t=>t.classList.remove('active'));
+// ==== Pestañas Mejoradas ====
+const tabs2 = document.querySelectorAll('.tab');
+const tabContents2 = document.querySelectorAll('.tab-content');
+
+tabs2.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs2.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('inicioContent').style.display=tab.dataset.tab==='inicio'?'block':'none';
-    document.getElementById('boletosContent').style.display=tab.dataset.tab==='boletos'?'block':'none';
-    document.getElementById('premiosContent').style.display=tab.dataset.tab==='premios'?'block':'none';
+
+    tabContents2.forEach(content => {
+      content.style.display = 'none';
+      content.style.opacity = 0;
+    });
+
+    const contentToShow = document.getElementById(tab.dataset.tab + 'Content');
+    contentToShow.style.display = 'block';
+    setTimeout(() => {
+      contentToShow.style.opacity = 1;
+    }, 50);
   });
 });
 </script>
