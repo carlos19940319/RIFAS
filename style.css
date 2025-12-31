@@ -781,20 +781,19 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 .book{
-  /* 🔥 ancho se mantiene */
-  width:clamp(420px, 99vw, 1480px);
+  /* ancho correcto */
+  width:clamp(360px, 92vw, 1100px);
 
-  /* ⬇️ ALTURA MÁS CORTA Y CONTROLADA */
+  /* 🔥 MUCHO MÁS CORTA */
   height:min(
-    62vh,                  /* 👈 antes 84vh (demasiado alto) */
-    clamp(480px, 60vw, 680px)
+    56vh,                 /* 👈 clave: ya no es tan larga */
+    clamp(420px, 48vw, 560px)
   );
 
   position:relative;
   transform-style:preserve-3d;
 
   max-width:100vw;
-  max-height:100vh;
 }
 /* =========================
    🔥 PÁGINAS
