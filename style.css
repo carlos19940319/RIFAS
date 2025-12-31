@@ -747,6 +747,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
    📖 LIBRO / CARTA VIRTUAL — TAMAÑO CARRUSEL
 ========================= */
 
+/* CONTENEDOR GENERAL */
 .menu-book{
   display:flex;
   align-items:center;
@@ -757,81 +758,108 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   width:100%;
 }
 
-
-
-/* 📐 CONTENEDOR MÁS GRANDE (SEGURO EN PANTALLAS PEQUEÑAS) */
+/* =========================
+   📐 CONTENEDOR DEL LIBRO
+========================= */
 .book{
-  width: clamp(360px, 96vw, 1200px);   /* 🔥 un poco más ancho */
-  height: min(78vh, clamp(520px, 74vw, 760px)); /* 🔥 límite por altura real */
-  position: relative;
-  transform-style: preserve-3d;
+  width:clamp(360px, 96vw, 1200px);
+  height:min(78vh, clamp(520px, 74vw, 760px));
+  position:relative;
+  transform-style:preserve-3d;
 }
 
-/* 🔥 PÁGINAS — SIN CONTORNO BLANCO, DELGADAS */
+/* =========================
+   🔥 PÁGINAS
+========================= */
 .page{
   position:absolute;
   inset:0;
-
-  background: transparent;
+  background:transparent;
   border-radius:8px;
-  overflow:hidden; /* 🔥 SOLUCIÓN DEFINITIVA */
+  overflow:hidden;
 
-  box-shadow:0 18px 36px rgba(0,0,0,.55);
+  /* 🌑 SOMBRA REALISTA MULTICAPA (SIN CAMBIAR TAMAÑO) */
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    0 18px 38px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.06);
 
   transform-origin:left center;
   transform:rotateY(0deg);
-  transition:transform 1s cubic-bezier(.4,0,.2,1);
+  transition:
+    transform 1s cubic-bezier(.4,0,.2,1),
+    box-shadow .6s ease;
+
   backface-visibility:hidden;
-  z-index:1;
   will-change:transform;
+  z-index:1;
 }
 
+/* SOMBRA CUANDO SE ESTÁ GIRANDO */
+.page.turning{
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.6),
+    0 28px 55px rgba(0,0,0,.75),
+    inset -6px 0 12px rgba(0,0,0,.25);
+}
+
+/* =========================
+   🖼️ IMÁGENES
+========================= */
 .page img{
   width:100%;
   height:100%;
-  object-fit:fill; /* 🔥 CAMBIO CLAVE */
+  object-fit:fill;
   border-radius:inherit;
   display:block;
-  background:#46220f; /* o el color del fondo */
+  background:#46220f;
 }
-}
-          
 
-/* 🔘 BOTONES */
+/* =========================
+   🔘 BOTONES DE NAVEGACIÓN
+========================= */
 .nav{
-  background:rgba(255,255,255,.95);
+  background:rgba(255,255,255,.96);
   border:none;
   font-size:clamp(2rem, 5vw, 2.8rem);
   width:clamp(44px, 6vw, 60px);
   height:clamp(44px, 6vw, 60px);
   border-radius:50%;
   cursor:pointer;
-  box-shadow:0 10px 26px rgba(0,0,0,.45);
+
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.35),
+    0 14px 30px rgba(0,0,0,.45);
+
   user-select:none;
-  transition:transform .2s ease;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 
 .nav:hover{
   transform:scale(1.1);
+  box-shadow:
+    0 10px 22px rgba(0,0,0,.45),
+    0 22px 40px rgba(0,0,0,.55);
 }
 
 /* =========================
    ✨ SOMBRA CURVA AL DOBLAR
 ========================= */
-
 .page::after{
   content:"";
   position:absolute;
   inset:0;
   pointer-events:none;
   border-radius:inherit;
+
   background:linear-gradient(
     90deg,
-    rgba(0,0,0,0.35) 0%,
-    rgba(0,0,0,0.18) 10%,
-    rgba(0,0,0,0.05) 22%,
-    rgba(0,0,0,0) 35%
+    rgba(0,0,0,.45) 0%,
+    rgba(0,0,0,.28) 12%,
+    rgba(0,0,0,.12) 25%,
+    rgba(0,0,0,0) 40%
   );
+
   opacity:0;
   transition:opacity .6s ease;
 }
@@ -839,7 +867,6 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 .page.turning::after{
   opacity:1;
 }
-
 
 /* =========================
    BOTÓN COTIZA TU EVENTO
