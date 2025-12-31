@@ -786,7 +786,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   /* ⬇️ ALTURA MÁS CORTA Y CONTROLADA */
   height:min(
-    70vh,                  /* 👈 antes 84vh (demasiado alto) */
+    62vh,                  /* 👈 antes 84vh (demasiado alto) */
     clamp(480px, 60vw, 680px)
   );
 
