@@ -787,8 +787,8 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   /* 🔥 MUCHO MÁS CORTA */
   height:min(
-    58vh,
-    clamp(450px, 59vw, 580px)
+    69vh,
+    clamp(450px, 61vw, 580px)
   );
 
   position:relative;
