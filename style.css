@@ -150,7 +150,7 @@ body::before {
 
   /* ✍️ letra tipo logo */
   font-family: 'Pacifico', cursive;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
   font-weight: normal;
 
   /* 🔴 MUY IMPORTANTE */
