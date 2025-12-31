@@ -495,254 +495,276 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
    CARRUSEL EVENTOS / CARTA
 ========================= */
 
-#eventos {
-  width: 100%;
-  font-family: Inter, system-ui, Roboto, Arial;
-  padding: 40px 0;
+#eventos{
+  width:100%;
+  font-family:Inter, system-ui, Roboto, Arial;
+  padding-top:16px;     /* 🔥 subido */
+  padding-bottom:40px;
 }
 
-/* CONTENEDOR */
-.carousel-wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  padding: 0 12px;
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
+.carousel-wrap{
+  max-width:1100px;
+  margin:-18px auto 0;  /* 🔥 sube el carrusel sin tapar texto */
+  position:relative;
+  padding:0 12px;
+  box-sizing:border-box;
 }
 
-/* CARRUSEL */
-.carousel {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  padding: 16px 0;
-  scrollbar-width: none;
-}
-.carousel::-webkit-scrollbar {
-  display: none;
+/* =========================
+   CARRUSEL
+========================= */
+.carousel{
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;
+  padding:16px 0;
+  scrollbar-width:none;
+
+  position:relative;
+  z-index:1; /* 👈 no tapa botones */
 }
 
-/* SLIDE */
-.slide {
-  min-width: 90%;
-  background: rgba(255,255,255,0.06);
-  border-radius: 18px;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  transition: transform .35s ease, box-shadow .35s ease, opacity .35s ease;
-  transform: scale(.94);
-  opacity: .85;
-  scroll-snap-align: center;
+.carousel::-webkit-scrollbar{
+  display:none;
 }
 
-.slide.active {
-  transform: scale(1.05);
-  opacity: 1;
-  box-shadow: 0 14px 36px rgba(0,0,0,.35);
+/* =========================
+   SLIDES
+========================= */
+.slide{
+  min-width:90%;
+  background:rgba(255,255,255,0.06);
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+  text-align:center;
+
+  /* ✨ contorno blanco */
+  outline:2px solid rgba(255,255,255,.85);
+  outline-offset:-2px;
+
+  /* 🌑 sombra premium */
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.25);
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    opacity .35s ease;
+
+  transform:scale(.94);
+  opacity:.85;
+  scroll-snap-align:center;
+}
+
+.slide.active{
+  transform:scale(1.05);
+  opacity:1;
+  box-shadow:
+    0 16px 42px rgba(0,0,0,.45),
+    0 0 0 2px rgba(255,255,255,.9);
 }
 
 /* ===== DESKTOP ===== */
-@media (min-width: 900px) {
-  .slide { min-width: 45%; }
+@media(min-width:900px){
+  .slide{min-width:45%}
 }
-@media (min-width: 1200px) {
-  .slide { min-width: 32%; }
+@media(min-width:1200px){
+  .slide{min-width:32%}
 }
 
 /* =========================
    IMAGEN / MEDIA
 ========================= */
-.media {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4 / 5; /* 🔥 proporción elegante */
+.media{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:4 / 5;
 }
 
-.media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform .35s ease, opacity .35s ease;
-  opacity: 2;              /* 🔥 menos opacidad */
+.media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .35s ease;
 }
 
-
-.slide.active img {
-  transform: scale(1.1);
+.slide.active img{
+  transform:scale(1.1);
 }
 
 /* =========================
    OVERLAY TEXTO
 ========================= */
-.overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 22px;
-  background: linear-gradient(
+.overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:22px;
+  background:linear-gradient(
     180deg,
     rgba(0,0,0,0) 0%,
     rgba(0,0,0,.65) 80%
   );
-  color: #fff;
-  text-align: center;
+  color:#fff;
+  text-align:center;
 }
 
-.badge {
-  background: rgba(255,255,255,.18);
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: .85rem;
-  margin-bottom: 10px;
-  align-self: center;
+.badge{
+  background:rgba(255,255,255,.18);
+  padding:6px 14px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:.85rem;
+  margin-bottom:10px;
+  align-self:center;
 }
 
-.title {
-  font-size: 1.4rem;
-  margin: 4px 0;
-  font-weight: 800;
+.title{
+  font-size:1.4rem;
+  margin:4px 0;
+  font-weight:800;
 }
 
-.desc {
-  font-size: 1rem;
-  margin-top: 6px;
-  line-height: 1.35;
+.desc{
+  font-size:1rem;
+  margin-top:6px;
+  line-height:1.35;
 }
 
 /* =========================
-   BOTONES
+   CONTROLES / BOTONES
 ========================= */
-.controls {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+.controls{
+  position:absolute;
+  inset:0;
+  z-index:20;           /* 🔥 siempre arriba */
+  pointer-events:none;  /* 👈 solo los botones reciben click */
 }
 
-.btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: auto;
+.btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:auto;
+  touch-action:manipulation; /* 🔥 CLAVE PARA CELULAR */
 
-  /* 🎨 AMARILLO ESTILO LA CHONA */
-  background: linear-gradient(
+  background:linear-gradient(
     180deg,
     #ffeb3b 0%,
     #fbc02d 55%,
     #f9a825 100%
   );
 
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  border:none;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  cursor:pointer;
 
   box-shadow:
     0 6px 20px rgba(0,0,0,.35),
     0 0 0 3px rgba(255,215,0,.25);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
-  z-index: 5;
+  transition:
+    transform .25s ease,
+    box-shadow .3s ease,
+    background .3s ease;
 }
 
-/* ✨ HOVER */
-.btn:hover {
-  background: linear-gradient(
+.btn:hover{
+  background:linear-gradient(
     180deg,
     #fff176 0%,
     #fdd835 55%,
     #f9a825 100%
   );
-  transform: translateY(-50%) scale(1.1);
+  transform:translateY(-50%) scale(1.1);
   box-shadow:
     0 8px 24px rgba(0,0,0,.45),
     0 0 0 4px rgba(255,215,0,.35);
 }
 
-/* 👉 FLECHAS */
-.btn svg {
-  width: 24px;
-  height: 24px;
-  stroke: #5d3b00; /* marrón oscuro elegante */
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+/* FLECHAS */
+.btn svg{
+  width:24px;
+  height:24px;
+  stroke:#5d3b00;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-/* POSICIÓN */
-.btn.left { left: -12px; }
-.btn.right { right: -12px; }
-
+/* POSICIÓN SEGURA (NO FUERA DE PANTALLA) */
+.btn.left{left:6px}
+.btn.right{right:6px}
 
 /* =========================
    MOBILE 📱
 ========================= */
-@media (max-width: 640px) {
+@media(max-width:640px){
 
-  .slide {
-    min-width: 96%;
-    transform: scale(.96);
+  .carousel-wrap{
+    margin-top:-10px;
   }
 
-  .slide.active {
-    transform: scale(1.02);
+  .slide{
+    min-width:96%;
+    transform:scale(.96);
+    outline-width:1.5px;
   }
 
-  .media {
-    aspect-ratio: 3 / 4; /* 🔥 MÁS ALTO EN CELULAR */
+  .slide.active{
+    transform:scale(1.02);
   }
 
-  .title {
-    font-size: 1.25rem;
+  .media{
+    aspect-ratio:3 / 4;
   }
 
-  .desc {
-    font-size: .95rem;
-  }
+  .title{font-size:1.25rem}
+  .desc{font-size:.95rem}
 
-  .btn {
-    width: 40px;
-    height: 40px;
+  .btn{
+    width:40px;
+    height:40px;
   }
-
-  .btn.left { left: 6px; }
-  .btn.right { right: 6px; }
 }
 
 /* =========================
    DOTS
 ========================= */
-.dots {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 14px;
+.dots{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:14px;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.25);
-  cursor: pointer;
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.25);
+  cursor:pointer;
 }
 
-.dot.active {
-  background: #b22222;
+.dot.active{
+  background:#b22222;
 }
-
-
 /* =========================
    📖 LIBRO / CARTA VIRTUAL — TAMAÑO CARRUSEL
 ========================= */
