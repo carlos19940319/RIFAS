@@ -9,7 +9,7 @@
   --color-secundario: #333333;
   --color-fondo-tarjeta: #ffffff;
   --navbar-bg: rgba(197, 0, 0, 0.45);
-  --fondo-img: url("img/Imagen6.jpg");
+  --fondo-img: url("img/fon.png");
   --fondo-header-img: url("img/tituloo.png");
   --fondo-nav-img: url("img/tituloo.png");
   --fondo-opacidad: 0.8;
@@ -34,51 +34,41 @@ body {
 }
 
 
-
-
-
-/* Fondo fijo universal */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
 
-  /* 🔥 Tamaño real del dispositivo, NO del navegador */
   width: 100vw;
   height: 100dvh;
-/* 🔥 Fondo con imagen REAL (oscuro profundo, no opaco) */
-background:
-  /* viñeta para profundidad (NO opaca el centro) */
-  radial-gradient(
-    circle at center,
-    rgba(0,0,0,0) 0%,
-    rgba(0,0,0,.35) 65%,
-    rgba(0,0,0,.8) 100%
-  ),
 
-  /* degradado principal (más contraste, menos gris) */
-  linear-gradient(
-    180deg,
-    rgba(7,16,33,.55) 0%,
-    rgba(5,10,22,.75) 100%
-  ),
+  /* 🔥 FONDO CONTROLADO DESDE :root */
+  background:
+    /* viñeta */
+    radial-gradient(
+      circle at center,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.35) 65%,
+      rgba(0,0,0,.85) 100%
+    ),
 
-  /* imagen */
-  url("img/fon.png");
+    /* degradado PRINCIPAL con variable */
+    linear-gradient(
+      180deg,
+      rgba(7,16,33, var(--fondo-opacidad)) 0%,
+      rgba(5,10,22, var(--fondo-opacidad)) 100%
+    ),
 
-background-position: center;
-background-size: cover;
-background-repeat: no-repeat;
+    /* imagen desde variable */
+    var(--fondo-img);
 
-/* evita bugs en móviles */
-background-attachment: scroll;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
 
-/* capa de fondo */
-z-index: -1;
+  z-index: -1;
 
-
-  /* Tu animación original */
   opacity: 0;
   transform: scale(1.15);
   animation: fondoZoomUniforme 4s linear forwards;
