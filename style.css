@@ -407,43 +407,256 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 * { -webkit-tap-highlight-color: transparent; }
 
 /* =========================
-   CARRUSEL (copiado de tu <style> original)
-   ========================= */
-#eventos { width: 100%; font-family: Inter, system-ui, Roboto, Arial; padding: 40px 0; }
-.carousel-wrap { max-width: 1100px; margin: 0 auto; position: relative; }
-.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 10px 0; scrollbar-width: none; }
-.carousel::-webkit-scrollbar { display: none; }
-.slide { min-width: 90%; background: rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; position: relative; text-align: center; transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease; transform: scale(.9); opacity: .85; scroll-snap-align: center; }
-.slide.active { transform: scale(1.07); opacity: 1; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
-@media (min-width: 900px) { .slide { min-width: 45%; } }
-@media (min-width: 1200px) { .slide { min-width: 32%; } }
-.media { position: relative; height: 550px; overflow: hidden; }
-.media img { width: 100%; height: 100%; object-fit: fill; transition: transform .3s ease-out; }
-.slide.active img { transform: scale(1.12); }
-.overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 20px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 70%); color: #fff; text-align: center; }
-.badge { background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 999px; font-weight: 600; margin-bottom: 10px; display: inline-block; }
-.title { font-size: 1.4rem; margin: 6px 0; font-weight: bold; }
-.desc { font-size: 1rem; margin-top: 8px; line-height: 1.35; }
+   CARRUSEL EVENTOS / CARTA
+========================= */
 
-/* Botones carrusel */
-.controls { position: absolute; inset: 0; pointer-events: none; }
-.btn { position: absolute; top: 50%; transform: translateY(-50%); pointer-events: auto; background: rgba(178,34,34,0.95); border: none; width: 48px; height: 48px; border-radius: 50%; box-shadow: 0 6px 20px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .25s ease, background .3s ease, box-shadow .3s ease; z-index: 5; }
-.btn:hover { background: #ff4d4d; transform: translateY(-50%) scale(1.1); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-.btn svg { width: 24px; height: 24px; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-.btn.left { left: -16px; }
-.btn.right { right: -16px; }
-
-@media (max-width: 640px) {
-  .media { height: 280px; }
-  .slide { min-width: 90%; }
-  .btn { width: 40px; height: 40px; }
-  .btn.left { left: 4px; }
-  .btn.right { right: 4px; }
+#eventos {
+  width: 100%;
+  font-family: Inter, system-ui, Roboto, Arial;
+  padding: 40px 0;
 }
 
-.dots { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.15); cursor: pointer; }
-.dot.active { background: #b22222; }
+/* CONTENEDOR */
+.carousel-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 12px;
+}
+
+/* CARRUSEL */
+.carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 16px 0;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* SLIDE */
+.slide {
+  min-width: 90%;
+  background: rgba(255,255,255,0.06);
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  transition: transform .35s ease, box-shadow .35s ease, opacity .35s ease;
+  transform: scale(.94);
+  opacity: .85;
+  scroll-snap-align: center;
+}
+
+.slide.active {
+  transform: scale(1.05);
+  opacity: 1;
+  box-shadow: 0 14px 36px rgba(0,0,0,.35);
+}
+
+/* ===== DESKTOP ===== */
+@media (min-width: 900px) {
+  .slide { min-width: 45%; }
+}
+@media (min-width: 1200px) {
+  .slide { min-width: 32%; }
+}
+
+/* =========================
+   IMAGEN / MEDIA
+========================= */
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5; /* 🔥 proporción elegante */
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .35s ease, opacity .35s ease;
+  opacity: 2;              /* 🔥 menos opacidad */
+}
+
+
+.slide.active img {
+  transform: scale(1.1);
+}
+
+/* =========================
+   OVERLAY TEXTO
+========================= */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,.65) 80%
+  );
+  color: #fff;
+  text-align: center;
+}
+
+.badge {
+  background: rgba(255,255,255,.18);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: .85rem;
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+.title {
+  font-size: 1.4rem;
+  margin: 4px 0;
+  font-weight: 800;
+}
+
+.desc {
+  font-size: 1rem;
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+/* =========================
+   BOTONES
+========================= */
+.controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+
+  /* 🎨 AMARILLO ESTILO LA CHONA */
+  background: linear-gradient(
+    180deg,
+    #ffeb3b 0%,
+    #fbc02d 55%,
+    #f9a825 100%
+  );
+
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.35),
+    0 0 0 3px rgba(255,215,0,.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
+  z-index: 5;
+}
+
+/* ✨ HOVER */
+.btn:hover {
+  background: linear-gradient(
+    180deg,
+    #fff176 0%,
+    #fdd835 55%,
+    #f9a825 100%
+  );
+  transform: translateY(-50%) scale(1.1);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.45),
+    0 0 0 4px rgba(255,215,0,.35);
+}
+
+/* 👉 FLECHAS */
+.btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #5d3b00; /* marrón oscuro elegante */
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* POSICIÓN */
+.btn.left { left: -12px; }
+.btn.right { right: -12px; }
+
+
+/* =========================
+   MOBILE 📱
+========================= */
+@media (max-width: 640px) {
+
+  .slide {
+    min-width: 96%;
+    transform: scale(.96);
+  }
+
+  .slide.active {
+    transform: scale(1.02);
+  }
+
+  .media {
+    aspect-ratio: 3 / 4; /* 🔥 MÁS ALTO EN CELULAR */
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .desc {
+    font-size: .95rem;
+  }
+
+  .btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn.left { left: 6px; }
+  .btn.right { right: 6px; }
+}
+
+/* =========================
+   DOTS
+========================= */
+.dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.25);
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #b22222;
+}
+
 
 /* =========================
    📖 LIBRO / CARTA VIRTUAL — RESPONSIVE PRO
