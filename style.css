@@ -300,7 +300,10 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
   width: 100%;
 }
 
-  /* Imagen bienvenida – presentación premium */
+  
+
+
+/* Imagen bienvenida – presentación premium (FIX MÓVIL) */
 .img-bienvenida {
   display: block;
   width: 100%;
@@ -311,8 +314,8 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
   border-radius: 0;
   box-shadow: none;
 
-  /* ✅ sombra real detrás (sin cuadro) */
- filter: drop-shadow(0 18px 40px rgba(255, 111, 0, 0.6));
+  /* ✅ sombra SOLO en PC */
+  filter: drop-shadow(0 18px 40px rgba(255, 111, 0, 0.6));
 
   animation: heroReveal 1.8s ease-out both;
   will-change: transform, opacity;
@@ -329,12 +332,13 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
     transform: translateY(0) scale(1);
   }
 }
+
+/* 🚫 MÓVIL: quitamos drop-shadow para evitar cuadro blanco */
 @media (max-width: 768px) {
   .img-bienvenida {
-    filter: drop-shadow(0 14px 30px rgba(255, 193, 7, 0.55));
+    filter: none !important;
   }
 }
-
 
 
 /* Grid y tarjetas */
