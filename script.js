@@ -1,106 +1,116 @@
 /* =========================
-   script.js — todo tu JS
-   Incluye: comportamiento SPA (fade), tu JS original, reloj/estado, carrusel
-   ========================= */
+   script.js — TODO TU JS COMPLETO
+========================= */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1️⃣ Fade-in inicial (body.show no es obligatorio, lo dejo minimal)
+
+  /* =========================
+     FADE IN INICIAL
+  ========================= */
   document.body.classList.add('show');
 
-  // SPA: manejar navegación por secciones con efecto fade
+  /* =========================
+     SPA — SECCIONES (FIX DEFINITIVO)
+  ========================= */
   const links = document.querySelectorAll('nav a[data-target]');
   const sections = document.querySelectorAll('.page-section');
-
-  // Usar "inicio" como sección inicial según lo pediste
   const defaultSection = 'inicio';
 
   function showSection(id, push = true) {
+
+    // 🔒 OCULTAR TODAS
     sections.forEach(sec => {
-      if (sec.id === id) {
-        sec.classList.add('active');
-      } else {
-        sec.classList.remove('active');
-      }
+      sec.classList.remove('active');
+      sec.style.display = 'none';
     });
 
-    links.forEach(link => {
-      if (link.getAttribute('data-target') === id) link.classList.add('active');
-      else link.classList.remove('active');
-    });
+    // 🔘 DESACTIVAR LINKS
+    links.forEach(link => link.classList.remove('active'));
 
-    if (push) {
-      history.replaceState(null, '', `#${id}`);
+    // ✅ MOSTRAR SOLO LA SECCIÓN ACTIVA
+    const section = document.getElementById(id);
+    const link = document.querySelector(`nav a[data-target="${id}"]`);
+
+    if (section) {
+      section.style.display = 'block';
+      requestAnimationFrame(() => section.classList.add('active'));
     }
+
+    if (link) link.classList.add('active');
+
+    if (push) history.replaceState(null, '', `#${id}`);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Click en nav -> mostrar sección con fade
+  // CLICK NAV
   links.forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener('click', e => {
       e.preventDefault();
-      const target = link.getAttribute('data-target');
-      // Fade effect handled by CSS class toggles
-      showSection(target, true);
+      showSection(link.dataset.target, true);
     });
   });
 
-  // Mostrar sección según hash o por defecto "inicio"
-  const currentHash = location.hash ? location.hash.replace('#','') : defaultSection;
+  // CARGA INICIAL
+  const currentHash = location.hash.replace('#','') || defaultSection;
   showSection(currentHash, false);
 
-  // Evitar scroll automático al cambiar hash (en algunos navegadores)
-  window.addEventListener('hashchange', (e) => {
-    const id = location.hash.replace('#','') || defaultSection;
-    showSection(id, false);
+  // HASH CHANGE
+  window.addEventListener('hashchange', () => {
+    showSection(location.hash.replace('#','') || defaultSection, false);
   });
 
-  // --------------------------
-  // Código original: toggle zoom en tarjetas y clicks (mantenido)
-  // --------------------------
+  /* =========================
+     TARJETAS (ORIGINAL)
+  ========================= */
   const cards = document.querySelectorAll('.card');
   cards.forEach(card => {
-    card.addEventListener('click', (ev) => {
-      ev.stopPropagation();
+    card.addEventListener('click', e => {
+      e.stopPropagation();
       cards.forEach(c => { if (c !== card) c.classList.remove('selected'); });
       card.classList.toggle('selected');
     });
   });
 
-  document.addEventListener('click', (e) => {
+  document.addEventListener('click', e => {
     cards.forEach(card => {
-      if (!card.contains(e.target)) {
-        card.classList.remove('selected');
-      }
+      if (!card.contains(e.target)) card.classList.remove('selected');
     });
   });
 
-  // --------------------------
-  // Reloj y estado (migrado desde tu index)
-  // --------------------------
+  /* =========================
+     RELOJ Y ESTADO (ORIGINAL)
+  ========================= */
   function actualizarReloj() {
     const reloj = document.getElementById("reloj");
     if (!reloj) return;
     const ahora = new Date();
-    let h = ahora.getHours(), m = ahora.getMinutes(), s = ahora.getSeconds();
-    reloj.textContent = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    reloj.textContent =
+      `${String(ahora.getHours()).padStart(2,'0')}:` +
+      `${String(ahora.getMinutes()).padStart(2,'0')}:` +
+      `${String(ahora.getSeconds()).padStart(2,'0')}`;
   }
+
   let ultimoEstado = "";
   function actualizarEstado() {
-    const ahora = new Date();
-    const hoy = ahora.getDay();
     const estado = document.getElementById("estado");
     if (!estado) return;
+    const ahora = new Date();
+    const hoy = ahora.getDay();
     let abierto = false;
+
     if ([5].includes(hoy)) {
       const ahoraMin = ahora.getHours()*60 + ahora.getMinutes();
       if (ahoraMin >= 19*60 && ahoraMin <= 23*60) abierto = true;
     }
+
     if (abierto) {
       estado.textContent = "🟢 Abierto";
       estado.style.color = "green";
       estado.style.boxShadow = "0 0 8px green";
-      if (ultimoEstado != "abierto") {
+      if (ultimoEstado !== "abierto") {
         estado.classList.add("open-anim");
-        setTimeout(()=>estado.classList.remove("open-anim"), 500);
+        setTimeout(() => estado.classList.remove("open-anim"), 500);
       }
       ultimoEstado = "abierto";
     } else {
@@ -110,42 +120,34 @@ document.addEventListener('DOMContentLoaded', () => {
       ultimoEstado = "cerrado";
     }
   }
+
   function resaltarDia() {
     const dias = document.querySelectorAll("#dias li");
     const hoy = new Date().getDay();
     dias.forEach(li => {
-      const diasArray = li.dataset.dia.split(",").map(Number);
-      if (diasArray.includes(hoy)) li.classList.add("dia-actual");
+      const arr = li.dataset.dia.split(",").map(Number);
+      if (arr.includes(hoy)) li.classList.add("dia-actual");
     });
-    ajustarColores();
     actualizarEstado();
   }
-  function ajustarColores() {
-    let bgColor = window.getComputedStyle(document.body).backgroundColor || "rgb(255,255,255)";
-    let rgb = bgColor.match(/\d+/g);
-    if (!rgb) return;
-    let brightness = (parseInt(rgb[0])*299 + parseInt(rgb[1])*587 + parseInt(rgb[2])*114)/1000;
-    let textoColor = brightness>128 ? "#000" : "#fff";
-    let brilloColor = brightness>128 ? "rgba(241,196,15,1)" : "rgba(255,255,0,1)";
-    const titulo = document.getElementById("titulo");
-    if (titulo) titulo.style.color = textoColor;
-    const reloj = document.getElementById("reloj");
-    if (reloj) reloj.style.color = textoColor;
-    document.querySelectorAll("#dias li").forEach(li => li.style.color = textoColor);
-    document.documentElement.style.setProperty("--brillo-color", brilloColor);
-    document.querySelectorAll(".dia-actual").forEach(li => {
-      li.style.backgroundColor = brightness>128 ? "rgba(241,196,15,0.5)" : "rgba(255,255,0,0.5)";
-    });
-  }
-  setInterval(()=>{ actualizarReloj(); actualizarEstado(); }, 1000);
-  window.onload = ()=>{ actualizarReloj(); resaltarDia(); };
 
-  // --------------------------
-  // Carrusel (migrado desde tu script de eventos)
-  // --------------------------
+  setInterval(() => {
+    actualizarReloj();
+    actualizarEstado();
+  }, 1000);
+
+  window.onload = () => {
+    actualizarReloj();
+    resaltarDia();
+  };
+
+  /* =========================
+     CARRUSEL (ORIGINAL)
+  ========================= */
   (function() {
     const carousel = document.getElementById('carousel');
     if (!carousel) return;
+
     const slides = [...carousel.querySelectorAll('.slide')];
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -161,45 +163,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const dots = [...dotsWrap.children];
 
-    function updateActiveSlide() {
+    function updateActive() {
       const center = carousel.scrollLeft + carousel.clientWidth / 2;
       let closest = 0, min = Infinity;
-      slides.forEach((s, i) => {
-        const slideCenter = s.offsetLeft + s.clientWidth / 2;
-        const dist = Math.abs(center - slideCenter);
-        if (dist < min) { min = dist; closest = i; }
+      slides.forEach((s,i)=>{
+        const c = s.offsetLeft + s.clientWidth / 2;
+        const d = Math.abs(center - c);
+        if (d < min) { min = d; closest = i; }
         s.classList.remove('active');
       });
-      if (slides[closest]) slides[closest].classList.add('active');
+      slides[closest]?.classList.add('active');
       current = closest;
-      dots.forEach(d => d.classList.remove('active'));
-      if (dots[current]) dots[current].classList.add('active');
+      dots.forEach(d=>d.classList.remove('active'));
+      dots[current]?.classList.add('active');
     }
 
-    function clamp(i) { return i < 0 ? slides.length - 1 : i >= slides.length ? 0 : i; }
-
-    function goTo(i) {
-      current = clamp(i);
+    function goTo(i){
+      current = (i + slides.length) % slides.length;
       const s = slides[current];
-      const left = s.offsetLeft - (carousel.clientWidth - s.clientWidth) / 2;
-      carousel.scrollTo({ left, behavior: 'smooth' });
-      setTimeout(updateActiveSlide, 250);
+      const left = s.offsetLeft - (carousel.clientWidth - s.clientWidth)/2;
+      carousel.scrollTo({ left, behavior:'smooth' });
+      setTimeout(updateActive,250);
     }
 
     prevBtn.onclick = () => goTo(current - 1);
     nextBtn.onclick = () => goTo(current + 1);
-    carousel.addEventListener('scroll', () => {
-      clearTimeout(window._scrollTimer);
-      window._scrollTimer = setTimeout(updateActiveSlide, 100);
+    carousel.addEventListener('scroll', ()=>{
+      clearTimeout(window._st);
+      window._st = setTimeout(updateActive,100);
     });
 
-    window.addEventListener('load', () => goTo(0));
+    window.addEventListener('load',()=>goTo(0));
   })();
 
-  // --------------------------
-  // Año en footer
-  // --------------------------
+  /* =========================
+     AÑO FOOTER
+  ========================= */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+});
+
+/* =========================
+   📖 CARTA / LIBRO (SIN CAMBIOS)
+========================= */
+
+const pages = [...document.querySelectorAll('.page')];
+let current = 0;
+
+function updatePages() {
+  pages.forEach((page, i) => {
+
+    if (i < current) {
+      // páginas ya pasadas
+      page.style.transform = 'rotateY(-180deg)';
+      page.style.zIndex = i;
+    } 
+    else if (i === current) {
+      // página visible
+      page.style.transform = 'rotateY(0deg)';
+      page.style.zIndex = pages.length + 1;
+    } 
+    else {
+      // páginas futuras
+      page.style.transform = 'rotateY(0deg)';
+      page.style.zIndex = pages.length - i;
+    }
+  });
+}
+
+// estado inicial correcto
+updatePages();
+
+
+document.querySelector('.next')?.addEventListener('click',()=>{
+  if(current < pages.length-1){ current++; updatePages(); }
+});
+
+document.querySelector('.prev')?.addEventListener('click',()=>{
+  if(current > 0){ current--; updatePages(); }
+});
+
+/* 👆 swipe móvil */
+let startX = 0;
+document.querySelector('.book')?.addEventListener('touchstart',e=>{
+  startX = e.touches[0].clientX;
+});
+document.querySelector('.book')?.addEventListener('touchend',e=>{
+  let endX = e.changedTouches[0].clientX;
+  if(startX - endX > 50) document.querySelector('.next')?.click();
+  if(endX - startX > 50) document.querySelector('.prev')?.click();
 });
