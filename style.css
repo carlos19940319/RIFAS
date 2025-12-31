@@ -867,7 +867,24 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 .page.turning::after{
   opacity:1;
 }
+.page::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
 
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.22) 0px,
+      rgba(255,255,255,.22) 1px,
+      rgba(0,0,0,.18) 2px,
+      rgba(0,0,0,0) 4px
+    );
+
+  opacity:.35;
+}
 /* =========================
    BOTÓN COTIZA TU EVENTO
 ========================= */
