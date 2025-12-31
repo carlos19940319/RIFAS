@@ -758,14 +758,23 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   width:100%;
 }
 
-/* =========================
-   📐 CONTENEDOR DEL LIBRO
-========================= */
+
 .book{
-  width:clamp(360px, 96vw, 1200px);
-  height:min(78vh, clamp(520px, 74vw, 760px));
+  /* 🔥 MÁS GRANDE PERO INTELIGENTE */
+  width:clamp(380px, 98vw, 1320px);
+
+  /* 👇 altura ligada al viewport real */
+  height:min(
+    82vh,
+    clamp(560px, 78vw, 820px)
+  );
+
   position:relative;
   transform-style:preserve-3d;
+
+  /* 🛡️ protección extra */
+  max-width:100vw;
+  max-height:100vh;
 }
 
 /* =========================
