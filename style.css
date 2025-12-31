@@ -767,17 +767,16 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   transform-style: preserve-3d;
 }
 
-
 /* 🔥 PÁGINAS — SIN CONTORNO BLANCO, DELGADAS */
 .page{
   position:absolute;
   inset:0;
 
-  background: transparent;   /* ❌ fuera blanco */
-  border-radius:8px;         /* 🔥 más delgado */
+  background: transparent;
+  border-radius:8px;
+  overflow:hidden; /* 🔥 SOLUCIÓN DEFINITIVA */
 
-  box-shadow:
-    0 18px 36px rgba(0,0,0,.55); /* sombra elegante */
+  box-shadow:0 18px 36px rgba(0,0,0,.55);
 
   transform-origin:left center;
   transform:rotateY(0deg);
@@ -786,11 +785,12 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   z-index:1;
   will-change:transform;
 }
-/* 🖼️ IMAGEN — CUBRE TODO (SE DEFORMA) */
+
+/* 🖼️ IMAGEN */
 .page img{
   width:100%;
   height:100%;
-  object-fit:fill;      /* 🔥 estira la imagen */
+  object-fit:fill;
   border-radius:inherit;
   display:block;
 }
