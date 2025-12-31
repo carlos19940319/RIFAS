@@ -1083,31 +1083,38 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   }
 }
 /* =========================
-   BOTONES DELIVERY HORIZONTALES
+   BOTONES DELIVERY — ESTILO PREMIUM
 ========================= */
 
 .delivery-buttons{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:14px;
-  margin:22px auto;
-  flex-wrap:wrap; /* 🔥 en móviles baja si no cabe */
+  gap:16px;
+  margin:26px auto;
+  flex-wrap:wrap;
 }
 
-/* BOTÓN BASE */
+/* 🔘 BOTÓN BASE */
 .btn-delivery{
-  padding:12px 20px;
+  position:relative;
+  padding:13px 22px;
   border-radius:999px;
-  font-weight:700;
+
+  font-weight:800;
   font-size:.95rem;
+  letter-spacing:.4px;
   text-decoration:none;
   color:#fff;
-  min-width:120px;
+
+  min-width:130px;
   text-align:center;
 
+  /* ✨ glass + profundidad */
+  backdrop-filter: blur(6px);
   box-shadow:
-    0 6px 18px rgba(0,0,0,.35);
+    0 8px 22px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.18);
 
   transition:
     transform .25s ease,
@@ -1115,36 +1122,78 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     filter .3s ease;
 }
 
-/* UBER EATS */
+/* ✨ brillo suave superior */
+.btn-delivery::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.35),
+    rgba(255,255,255,0) 55%
+  );
+
+  opacity:.35;
+}
+
+/* =========================
+   COLORES POR PLATAFORMA
+========================= */
+
+/* 🖤 UBER EATS */
 .btn-delivery.uber{
-  background:#000;
+  background:linear-gradient(
+    180deg,
+    #111 0%,
+    #000 100%
+  );
 }
 
-/* DIDI FOOD */
+/* 🟠 DIDI FOOD */
 .btn-delivery.didi{
-  background:#ff7a00;
+  background:linear-gradient(
+    180deg,
+    #ff8a1d 0%,
+    #ff6a00 100%
+  );
 }
 
-/* WHATSAPP */
+/* 🟢 WHATSAPP */
 .btn-delivery.whatsapp{
-  background:#25d366;
+  background:linear-gradient(
+    180deg,
+    #34e17a 0%,
+    #1fa855 100%
+  );
 }
 
-/* HOVER (desktop) */
+/* =========================
+   ✨ HOVER / ACTIVE
+========================= */
 @media (hover:hover){
   .btn-delivery:hover{
-    transform:translateY(-2px) scale(1.05);
+    transform:translateY(-3px) scale(1.06);
     box-shadow:
-      0 10px 26px rgba(0,0,0,.45);
+      0 14px 32px rgba(0,0,0,.45),
+      inset 0 0 0 1px rgba(255,255,255,.28);
     filter:brightness(1.05);
   }
 }
 
-/* 📱 MOBILE */
+.btn-delivery:active{
+  transform:scale(.97);
+}
+
+/* =========================
+   📱 MOBILE
+========================= */
 @media (max-width:640px){
   .btn-delivery{
     font-size:.9rem;
-    padding:11px 18px;
-    min-width:110px;
+    padding:12px 20px;
+    min-width:120px;
   }
 }
