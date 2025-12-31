@@ -205,52 +205,77 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =========================
-   📖 CARTA / LIBRO (SIN CAMBIOS)
+   📖 CARTA / LIBRO (ANTI-PARPADEO)
 ========================= */
 
 const pages = [...document.querySelectorAll('.page')];
 let current = 0;
+let locked = false;
 
 function updatePages() {
-  pages.forEach((page, i) => {
 
+  /* 1️⃣ Quitamos transición para ordenar capas */
+  pages.forEach(p => p.style.transition = 'none');
+
+  pages.forEach((page, i) => {
     if (i < current) {
-      // páginas ya pasadas
-      page.style.transform = 'rotateY(-180deg)';
       page.style.zIndex = i;
     } 
     else if (i === current) {
-      // página visible
-      page.style.transform = 'rotateY(0deg)';
       page.style.zIndex = pages.length + 1;
     } 
     else {
-      // páginas futuras
-      page.style.transform = 'rotateY(0deg)';
       page.style.zIndex = pages.length - i;
     }
   });
+
+  /* 2️⃣ En el siguiente frame, aplicamos el giro */
+  requestAnimationFrame(() => {
+
+    pages.forEach(p => p.style.transition = '');
+
+    pages.forEach((page, i) => {
+      page.style.transform =
+        i < current ? 'rotateY(-180deg)' : 'rotateY(0deg)';
+    });
+
+  });
 }
 
-// estado inicial correcto
+/* estado inicial correcto */
 updatePages();
 
-
-document.querySelector('.next')?.addEventListener('click',()=>{
-  if(current < pages.length-1){ current++; updatePages(); }
+/* 🔘 botones */
+document.querySelector('.next')?.addEventListener('click', () => {
+  if (locked) return;
+  if (current < pages.length - 1) {
+    locked = true;
+    current++;
+    updatePages();
+    setTimeout(() => locked = false, 450);
+  }
 });
 
-document.querySelector('.prev')?.addEventListener('click',()=>{
-  if(current > 0){ current--; updatePages(); }
+document.querySelector('.prev')?.addEventListener('click', () => {
+  if (locked) return;
+  if (current > 0) {
+    locked = true;
+    current--;
+    updatePages();
+    setTimeout(() => locked = false, 450);
+  }
 });
 
 /* 👆 swipe móvil */
 let startX = 0;
-document.querySelector('.book')?.addEventListener('touchstart',e=>{
+const book = document.querySelector('.book');
+
+book?.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
 });
-document.querySelector('.book')?.addEventListener('touchend',e=>{
+
+book?.addEventListener('touchend', e => {
   let endX = e.changedTouches[0].clientX;
-  if(startX - endX > 50) document.querySelector('.next')?.click();
-  if(endX - startX > 50) document.querySelector('.prev')?.click();
+  if (startX - endX > 50) document.querySelector('.next')?.click();
+  if (endX - startX > 50) document.querySelector('.prev')?.click();
 });
