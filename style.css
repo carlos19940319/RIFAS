@@ -783,7 +783,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
 .book{
   /* ancho correcto */
-  width:clamp(380px, 96vw, 1100px);
+  width:clamp(380px, 88vw, 1000px);
 
   /* 🔥 MUCHO MÁS CORTA */
   height:min(
