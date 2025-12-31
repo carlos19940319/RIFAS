@@ -47,21 +47,36 @@ body::before {
   /* 🔥 Tamaño real del dispositivo, NO del navegador */
   width: 100vw;
   height: 100dvh;
+/* 🔥 Fondo con imagen REAL (oscuro profundo, no opaco) */
+background:
+  /* viñeta para profundidad (NO opaca el centro) */
+  radial-gradient(
+    circle at center,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,.35) 65%,
+    rgba(0,0,0,.8) 100%
+  ),
 
-  /* 🔥 Fondo con imagen REAL (NO variable, para evitar fallos móviles) */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(7, 16, 33, var(--fondo-opacidad)) 0%,
-      rgba(12, 19, 32, var(--fondo-opacidad)) 100%
-    ),
-    url("img/fon.png");
+  /* degradado principal (más contraste, menos gris) */
+  linear-gradient(
+    180deg,
+    rgba(7,16,33,.55) 0%,
+    rgba(5,10,22,.75) 100%
+  ),
 
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  /* imagen */
+  url("img/fon.png");
 
-  z-index: -1;
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+
+/* evita bugs en móviles */
+background-attachment: scroll;
+
+/* capa de fondo */
+z-index: -1;
+
 
   /* Tu animación original */
   opacity: 0;
