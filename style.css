@@ -786,8 +786,8 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   /* 🔥 MUCHO MÁS CORTA */
   height:min(
-    56vh,                 /* 👈 clave: ya no es tan larga */
-    clamp(420px, 48vw, 560px)
+    58vh,                 /* 👈 clave: ya no es tan larga */
+    clamp(450px, 59vw, 580px)
   );
 
   position:relative;
