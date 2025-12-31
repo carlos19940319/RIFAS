@@ -190,7 +190,7 @@ body::before {
   text-decoration: none;
   white-space: nowrap;
 
-  font-family: 'Pacifico', cursive; /* 👈 FUENTE GOOGLE */
+  font-family: 'Pacifico', cursive;
   font-size: clamp(0.8rem, 1.6vw, 1rem);
   font-weight: 400;
   letter-spacing: 0.8px;
@@ -201,34 +201,44 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
 
-  background-color: rgba(0,0,0,0.45);
-  background-blend-mode: overlay;
+  /* 🔥 oscurece imagen sin opacar */
+  background-color: rgba(0,0,0,0.55);
+  background-blend-mode: multiply;
 
   border: 2px solid #f4c430;
 
   box-shadow:
     0 6px 16px rgba(0,0,0,.6),
-    inset 0 0 12px rgba(255,255,255,.15);
+    inset 0 0 12px rgba(255,255,255,.12);
 
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background-color .25s ease;
 }
 
-/* HOVER */
-.header-unificado nav a:hover {
-  transform: translateY(-3px) scale(1.07);
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.75),
-    inset 0 0 14px rgba(255,255,255,.25);
+/* ===== HOVER (SOLO DESKTOP) ===== */
+@media (hover: hover) {
+  .header-unificado nav a:hover {
+    transform: translateY(-3px) scale(1.06);
+    box-shadow:
+      0 10px 24px rgba(0,0,0,.75),
+      inset 0 0 14px rgba(255,255,255,.25);
+  }
 }
 
-/* ACTIVO */
+/* ===== ACTIVO (SECCIÓN SELECCIONADA) ===== */
 .header-unificado nav a.active {
+  background-color: rgba(0,0,0,0.25);
   outline: 3px solid #f4c430;
   outline-offset: -3px;
-  background-color: rgba(0,0,0,0.25);
+
+  box-shadow:
+    0 0 0 2px rgba(244,196,48,.6),
+    0 10px 24px rgba(0,0,0,.75);
 }
 
-/* ===== IMÁGENES POR BOTÓN (SIN PERDER ESTILO) ===== */
+/* ===== IMÁGENES POR BOTÓN ===== */
 .header-unificado nav a[data-target="inicio"] {
   background-image: url("img/R.jpg");
 }
@@ -258,9 +268,9 @@ body::before {
   .header-unificado nav a {
     padding: 8px 10px;
     font-size: clamp(0.75rem, 3vw, 0.95rem);
+    transform: none; /* 🔒 evita “saltos” en móvil */
   }
 }
-
 
 
 
