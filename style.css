@@ -789,10 +789,11 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 .page img{
   width:100%;
   height:100%;
-  object-fit: cover; /* 🔥 CAMBIO CLAVE */
+  object-fit:fill; /* 🔥 CAMBIO CLAVE */
   border-radius:inherit;
   display:block;
-  background: transparent;
+  background:#46220f; /* o el color del fondo */
+}
 }
           
 
