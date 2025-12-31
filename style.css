@@ -1082,3 +1082,69 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     opacity: .35;
   }
 }
+/* =========================
+   BOTONES DELIVERY HORIZONTALES
+========================= */
+
+.delivery-buttons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  margin:22px auto;
+  flex-wrap:wrap; /* 🔥 en móviles baja si no cabe */
+}
+
+/* BOTÓN BASE */
+.btn-delivery{
+  padding:12px 20px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.95rem;
+  text-decoration:none;
+  color:#fff;
+  min-width:120px;
+  text-align:center;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.35);
+
+  transition:
+    transform .25s ease,
+    box-shadow .3s ease,
+    filter .3s ease;
+}
+
+/* UBER EATS */
+.btn-delivery.uber{
+  background:#000;
+}
+
+/* DIDI FOOD */
+.btn-delivery.didi{
+  background:#ff7a00;
+}
+
+/* WHATSAPP */
+.btn-delivery.whatsapp{
+  background:#25d366;
+}
+
+/* HOVER (desktop) */
+@media (hover:hover){
+  .btn-delivery:hover{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:
+      0 10px 26px rgba(0,0,0,.45);
+    filter:brightness(1.05);
+  }
+}
+
+/* 📱 MOBILE */
+@media (max-width:640px){
+  .btn-delivery{
+    font-size:.9rem;
+    padding:11px 18px;
+    min-width:110px;
+  }
+}
