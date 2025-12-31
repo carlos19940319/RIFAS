@@ -781,13 +781,13 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 .book{
-  /* 🔥 MÁS ANCHO AÚN */
+  /* 🔥 ancho se mantiene */
   width:clamp(420px, 99vw, 1480px);
 
-  /* altura inteligente */
+  /* ⬇️ ALTURA MÁS CORTA Y CONTROLADA */
   height:min(
-    84vh,
-    clamp(580px, 80vw, 860px)
+    70vh,                  /* 👈 antes 84vh (demasiado alto) */
+    clamp(480px, 60vw, 680px)
   );
 
   position:relative;
