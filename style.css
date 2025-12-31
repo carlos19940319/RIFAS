@@ -303,52 +303,70 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
     padding-top: 2px;
   }
 }
-
 /* =========================
    TÍTULO TRICOLOR REAL
-   (pegado al header al aparecer)
+   (ROBUSTO PARA TODOS LOS DISPOSITIVOS)
 ========================= */
-.welcome-text h2 {
-  margin: 0;
-  margin-top: -22px; /* 🔥 lo acerca al header SOLO visualmente */
+.welcome-text h2{
+  margin:0;
+  margin-top:-22px;
 
-  font-family: 'Pacifico', cursive;
-  font-size: clamp(2.4rem, 5vw, 3.2rem);
-  font-weight: 400;
-  letter-spacing: .5px;
+  font-family:'Pacifico', cursive;
+  font-size:clamp(2.4rem, 5vw, 3.2rem);
+  font-weight:400;
+  letter-spacing:.5px;
 
-  /* VERDE – BLANCO – ROJO */
-  background: linear-gradient(
-    90deg,
-    #00843d 0%,
-    #ffffff 50%,
-    #d50000 100%
-  );
+  /* 🔒 COLOR DE RESPALDO (GAMA BAJA) */
+  color:#f5f5f5;
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* ✨ CONTORNO SIMULADO (SIEMPRE VISIBLE) */
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0  0 10px rgba(0,0,0,.6);
 
-  /* realce suave */
-  text-shadow: 0 0 6px rgba(255,255,255,.35);
+  position:relative;
+  z-index:2;
 
-  position: relative;
-  z-index: 2;
+  animation:tituloEntrada 1.4s ease-out both;
+}
 
-  /* animación de entrada */
-  animation: tituloEntrada 1.4s ease-out both;
+/* =========================
+   🎨 DEGRADADO SOLO SI SE SOPORTA
+========================= */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .welcome-text h2{
+    background:linear-gradient(
+      90deg,
+      #00843d 0%,
+      #ffffff 50%,
+      #d50000 100%
+    );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    /* realce elegante */
+    text-shadow:
+      0 0 6px rgba(255,255,255,.45),
+      0 0 14px rgba(0,0,0,.6);
+  }
 }
 
 /* =========================
    ANIMACIÓN DE ENTRADA
 ========================= */
-@keyframes tituloEntrada {
-  0% {
-    opacity: 0;
-    transform: translateY(-22px) scale(0.96);
+@keyframes tituloEntrada{
+  0%{
+    opacity:0;
+    transform:translateY(-22px) scale(.96);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  100%{
+    opacity:1;
+    transform:translateY(0) scale(1);
   }
 }
 
