@@ -276,3 +276,8 @@ const book = document.querySelector('.book');
 book?.addEventListener('click', () => {
   book.classList.toggle('zoom');
 });
+
+if(!sessionStorage.getItem('libroVisto')){
+  document.querySelector('.menu-book')?.classList.add('animar');
+  sessionStorage.setItem('libroVisto', '1');
+}
