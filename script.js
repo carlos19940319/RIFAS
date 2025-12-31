@@ -267,3 +267,12 @@ book?.addEventListener('touchend', e => {
     document.querySelector('.prev')?.click();
   }
 });
+/* =========================
+   🔍 ZOOM SUAVE AL TOCAR
+========================= */
+
+const book = document.querySelector('.book');
+
+book?.addEventListener('click', () => {
+  book.classList.toggle('zoom');
+});
