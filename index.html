@@ -1,441 +1,269 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RIFAS</title>
-<style>
-/* ===== Fondo fijo ===== */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>La chona</title>
+  <!-- 🔽 AQUÍ PEGA LA FUENTE -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-.fondo-fijo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('img/FONDO1.jpg');
-  background-size: cover;
-  background-position: center center;
-  z-index: -1;
-}
 
-/* ===== Contenido ===== */
-body {
-  padding: 180px 20px 20px 20px;
-}
+  <!-- Favicon -->
+  <link rel="icon" href="img/Imagen6.jpg" type="image/png">
 
-.flotante-header {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
-  padding: 20px 30px;
-  border-radius: 0 0 15px 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  max-width: 600px;
-  width: 100%;
-}
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="style.css">
 
-.flotante-header h1 {
-  margin: 0;
-  color: #b22222;
-  text-align: center;
-  font-size: 1.8rem;
-}
+  <!-- SEO -->
+  <meta name="google-site-verification" content="LQZOjQew5_GIjOqafnr1L3Y0WsEU06BC2rNpjLsLfow" />
+  <meta name="msvalidate.01" content="B0C5292EF3AB318E5B3555BE967BDF1A" />
 
-.tabs {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.tab {
-  padding: 8px 16px;
-  background: #b22222;
-  color: white;
-  cursor: pointer;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.tab.active { background: #ff4d4d; }
-
-.tab-content { 
-  margin-top: 20px; 
-  transition: opacity 0.3s ease; 
-  opacity: 1;
-}
-
-/* ===== Grids ===== */
-.boletos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.sorteos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* ===== Tarjetas ===== */
-.sorteo {
-  background: #fff;
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.tarjeta-premio {
-  width: 100%;
-  max-width: 280px;
-  height: 180px;
-  border-radius: 15px;
-  overflow: hidden;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 15px;
-  background-size: cover;
-  background-position: center;
-  margin: auto;
-}
-
-.label-premio { font-size: 0.9rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
-.numero { font-size: 1.6rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
-
-/* ===== Buscadores ===== */
-.buscador {
-  display: flex;
-  justify-content: center;
-  margin: 15px auto;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.buscador input, .buscador select {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-/* ===== Boletos ===== */
-.tarjeta-boleto {
-  position: relative;
-  padding: 8px 10px;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: bold;
-  color: #b22222;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-  transition: transform 0.3s, box-shadow 0.3s;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 80px;
-  font-size: 0.85rem;
-}
-
-.tarjeta-boleto:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.tarjeta-boleto.disponible {
-  background: linear-gradient(145deg, #ffeaea, #fff5f5);
-  border: 2px solid #ffb3b3;
-}
-
-.tarjeta-boleto.vendido {
-  background: linear-gradient(145deg, #25d366, #1ebc57);
-  color: white;
-  border: 2px solid #1fa44a;
-}
-
-.tarjeta-boleto .numero { font-weight: 700; margin-bottom: 3px; }
-.tarjeta-boleto .nombre { font-size: 0.8rem; font-weight: 500; opacity: 0.9; }
-.tarjeta-boleto .estado { font-size: 0.75rem; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-.tarjeta-boleto.ganador::before {
-  content: attr(data-lugar);
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  transform: rotate(-15deg);
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: rgba(255, 215, 0, 0.4);
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-  z-index: 0;
-  pointer-events: none;
-  white-space: nowrap;
-  animation: brillo-suelto 2s infinite ease-in-out;
-}
-
-.tarjeta-boleto.parpadeo-fuerte::before {
-  animation: brillo-fuerte 0.5s infinite ease-in-out;
-}
-
-@keyframes brillo-suelto {
-  0%, 100% { color: rgba(255, 215, 0, 0.4); text-shadow: 1px 1px 4px rgba(0,0,0,0.3); }
-  50% { color: rgba(255, 215, 0, 0.8); text-shadow: 2px 2px 10px rgba(0,0,0,0.4); }
-}
-
-@keyframes brillo-fuerte {
-  0%, 100% { color: rgba(255, 215, 0, 0.6); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-  50% { color: rgba(255, 215, 0, 1); text-shadow: 4px 4px 20px rgba(0,0,0,0.6); }
-}
-
-.tarjeta-boleto > * { position: relative; z-index: 1; }
-.estado.expirado { color: red; font-weight: bold; font-size: 0.8rem; }
-
-#listaGanadores div {
-  color: #ffffff;
-  background: rgba(0,0,0,0.6);
-  margin: 3px 0;
-  padding: 5px 8px;
-  border-radius: 6px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  body { padding: 200px 10px 10px 10px; }
-  .flotante-header h1 { font-size: 1.4rem; }
-  .boletos-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap:6px; }
-  .tarjeta-boleto { font-size: 0.75rem; min-height:70px; padding:6px 8px; }
-}
-</style>
+  <!-- Datos estructurados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "La Bonanza",
+    "url": "https://www.labonanza.pizza/",
+    "logo": "https://www.labonanza.pizza/img/logo.png"
+  }
+  </script>
 </head>
 <body>
 
-<!-- Fondo fijo -->
-<div class="fondo-fijo"></div>
+  <!-- ✨ BOTONES FLOTANTES DE REDES -->
+  <div class="redes-flotantes">
+    <a href="https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Calle+Amado+Nervo+14-MZ+016,+San+Miguel,+52740+Ocoyoacac,+Méx" class="redes-flotantes-icono">
+      <img src="img/UB.png" class="img-red" alt="Ubicación" onerror="this.style.display='none';">
+    </a>
 
-<div class="flotante-header">
-  <h1>Resultados de Rifas</h1>
-  <div class="tabs">
-    <div class="tab active" data-tab="inicio">Inicio</div>
-    <div class="tab" data-tab="boletos">Boletos Disponibles</div>
-    <div class="tab" data-tab="premios">Boletos Premiados</div>
+    <a href="https://wa.me/5217222675873?text=Hola,%20me%20gustaría%20más%20información%20sobre%20la%20pizzería" target="_blank" class="icono">
+      <img src="img/WAA.png" class="img-red" 
+           onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-brands fa-whatsapp\'></i>'; ">
+    </a>
+
+    <a href="https://www.instagram.com/mar_bonanza" target="_blank" class="icono">
+      <img src="img/instagram-3d-logo-free-png.png" class="img-red" onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-brands fa-instagram\'></i>'; ">
+    </a>
+
+    <a href="https://www.facebook.com/share/1ELta8Ed9h/" target="_blank" class="icono">
+      <img src="img/facce.png" class="img-red" onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-brands fa-facebook-f\'></i>'; ">
+    </a>
   </div>
-</div>
 
-<!-- INICIO -->
-<div class="tab-content" id="inicioContent" style="display:block;">
-  <h2 style="color:white; text-align:center; text-shadow:1px 1px 3px black;">🎁 Producto en Rifa</h2>
-  <div style="text-align:center; margin-top:20px;">
-    <img src="img/images (1).jpeg" alt="Producto a rifar" style="max-width:90%; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.4);" loading="lazy">
+  <!-- HEADER UNIFICADO -->
+  <div class="header-unificado">
+    <div class="header-top">
+      <img src="img/logo.png" alt="Logo" class="logo">
+      <h2 class="titulo">La Chona</h2>
+
+    </div>
+
+    <nav>
+      <a href="#inicio" data-target="inicio">Bienvenida</a>
+      <a href="#pizzas" data-target="pizzas">Carta</a>
+      <a href="#eventos" data-target="eventos">¡EventosCatering!</a>
+    </nav>
   </div>
-  <div id="listaGanadores"></div>
-</div>
 
-<!-- BOLETOS -->
-<div class="tab-content" id="boletosContent" style="display:none;">
-  <h3 style="color:white; text-align:center;">🎟 Boletos Disponibles</h3>
-  <div class="buscador">
-    <input type="text" id="buscarBoletoDisponibles" placeholder="Buscar boleto...">
-    <select id="fechaBoletos"></select>
-  </div>
-  <div class="boletos-grid" id="boletosGrid"></div>
+  <!-- ========================================================= -->
+  <!-- SECCIÓN 1 — INICIO -->
+  <!-- ========================================================= -->
+  <section id="inicio" class="page-section active">
+    <main class="contenido">
+      <div class="welcome-text">
+  <h2>El sabor Mexicano</h2>
+  
 </div>
+      <section class="hero">
+        <img src="img/principal.jpg" class="img-bienvenida" alt="Bienvenida">
+      </section>
 
-<!-- PREMIOS -->
-<div class="tab-content" id="premiosContent" style="display:none;">
-  <h3 style="color:white; text-align:center;">🏆 Boletos Premiados</h3>
-  <div class="buscador">
-    <input type="text" id="buscarPremio" placeholder="Buscar boleto...">
-    <select id="fechaPremio"></select>
-  </div>
-  <div class="sorteos-grid" id="sorteosContainer"></div>
-</div>
+      <p style="color:white;">
+        ¡Explora sabores únicos en nuestra sección de pizzas y bebidas!  
+        🎉 Conozca también nuestros eventos exclusivos "Catering". 👌🫰
+      </p>
 
+      <!-- Horario compacto -->
+      <div id="horario-compacto" style="text-align:center; font-family:Arial,sans-serif; margin-bottom:20px; font-size:0.95em;">
+        <div id="reloj" style="margin-bottom:4px; font-weight:bold;"></div>
+        <div id="estado" style="margin-bottom:4px; font-weight:bold; display:inline-block; padding:2px 6px; border-radius:4px; transition: all 0.3s;"></div>
+        <h2 id="titulo" style="margin:0 0 4px 0; font-size:1em;">Horario de servicio.</h2>
+        <ul id="dias" style="list-style:none; padding:0; margin:0;">
+          <li data-dia="5" style="padding:1px 0;"><strong>Viernes:</strong> 19:00 a 23:00 hrs</li>
+        </ul>
+      </div>
+    </main>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SECCIÓN 2 — PIZZAS -->
+  <!-- ========================================================= -->
+  <section id="pizzas" class="page-section">
+    <main class="contenido">  
+      <div class="welcome-text"><h2 style="color:white;">carta la chona</h2></div>  
+      <div class="grid">
+
+        <div class="card">
+          <img src="img/desayunos.png" alt="desayunos">
+          
+        </div>
+
+        <div class="card">
+          <img src="img/desayunoe.png" alt="desayunoe">
+          
+        </div>
+
+        <div class="card">
+          <img src="img/corrida.png" alt="corrida">
+         
+        </div>
+
+        <div class="card">
+          <img src="img/amburguesas.png" alt="amburguesas">
+         
+        </div>
+
+        <div class="card">
+          <img src="img/tortas.png" alt="3 tortas">
+          
+        </div>
+
+        <div class="card">
+          <img src="img/hot.png" alt="hot">
+          
+        </div>
+
+        <div class="card">
+          <img src="img/champiñones.jpg" alt="Champiñon">
+          
+        </div>
+
+      </div>
+      <div><h3 style="color:white">“Pregunta por nuestros sabores de temporada.” 👌🫰</h3></div>
+    </main>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SECCIÓN 4 — EVENTOS -->
+  <!-- ========================================================= -->
+  <section id="eventos" class="page-section">
+    <main class="contenido">
+      <div class="welcome-text">
+        <h3 style="color:white">🎉 Celebra con nosotros tus momentos especiales. Eventos, reservas y experiencias únicas para ti.</h3>
+      </div>
+
+      <!-- Carrusel -->
+      <section id="eventos-carrusel" aria-label="Carrusel de eventos">
+        <div class="carousel-wrap">
+          <div class="carousel" id="carousel" tabindex="0">
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/dos.jpg" alt="Evento 1">
+                <div class="overlay"><div><p class="desc"></p></div></div>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/uno.jpg" alt="Evento 2">
+                <div class="overlay"><div><p class="desc"></p></div></div>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/fondo22.jpg" alt="Evento 3">
+                <div class="overlay">
+                  <div>
+                    <div class="badge">LA BONANZA</div>
+                    <h3 class="title">Reserve nuestro espacio</h3>
+                    <p class="desc">Ambiente cómodo y exclusivo, ideal para celebrar momentos especiales.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/foto7.jpg" alt="Evento 4">
+                <div class="overlay"><div><div class="badge">CATERING</div><h3 class="title">🍽 Servicio de banquetes</h3><p class="desc">Torre de nopal, queso y jitomate con pesto de albahaca.</p></div></div>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/foto3.jpg" alt="Evento 5">
+                <div class="overlay"><div><div class="badge">CATERING</div><h3 class="title">🍽 Servicio de banquetes</h3><p class="desc">Sopa de tortilla.</p></div></div>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/foto6.jpg" alt="Evento 6">
+                <div class="overlay"><div><div class="badge">CATERING</div><h3 class="title">🍽 Servicio de banquetes</h3><p class="desc">Lomo de cerdo en salsa de champiñones, con papa al horno y aderezo de la casa.</p></div></div>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media">
+                <img src="img/IMG-20251003-WA0150.jpg" alt="Evento 7">
+                <div class="overlay"><div><div class="badge">CATERING</div><h3 class="title">🍽 Servicio de banquetes</h3><p class="desc">Rollo de pollo con salsa de cacahuate 🥜.</p></div></div>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="controls">
+            <button class="btn left" id="prevBtn" aria-label="Anterior">
+              <svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg>
+            </button>
+            <button class="btn right" id="nextBtn" aria-label="Siguiente">
+              <svg viewBox="0 0 24 24"><path d="M9 6 L15 12 L9 18"/></svg>
+            </button>
+          </div>
+
+          <div class="dots" id="dots"></div>
+        </div>
+      </section>
+
+    </main>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="width:100%; background:rgba(0,0,0,0.5); color:#fff; text-align:center; padding:12px 8px; box-sizing:border-box; font-family:Arial,sans-serif;">
+    <div class="footer-direccion" style="margin-bottom:10px; font-size:14px; line-height:1.4;">
+      Calle Amado Nervo 14-MZ 016,<br>
+      San Miguel, 52740 Ocoyoacac, Méx.
+    </div>
+    <div>© <span id="year"></span> La Bonanza — Ceniza y fuego. ❤</div>
+  </footer>
+
+  <!-- ❄️ EFECTO NIEVE SOLO EN DICIEMBRE -->
 <script>
-// ==== Datos ====
-const rangosBoletos = [
-  { inicio: 1000, fin: 1003, fecha: "24 de Octubre 2025" },
-  { inicio: 1004, fin: 1006, fecha: "25 de Octubre 2025" },
-  { inicio: 1007, fin: 1010, fecha: "26 de Octubre 2025" }
-];
+document.addEventListener("DOMContentLoaded", () => {
+  const mes = new Date().getMonth(); // 0 = enero, 11 = diciembre
 
-const boletosVendidos = [
-  { numero: "1000", nombre: "Carlos", fecha: "24 de Octubre 2025" },
-  { numero: "1002", nombre: "Ana", fecha: "24 de Octubre 2025" }
-];
+  if (mes === 11) {  // ❄️ Solo diciembre
+    const copos = 70;
 
-const premios = [
-  { numero: "1001", tipo: "Primer Premio", fecha: "24 de Octubre 2025", imagen: "img/FONDO.jpg" },
-  { numero: "1002", tipo: "Segundo Premio", fecha: "24 de Octubre 2025", imagen: "img/FONDO.jpg" },
-  { numero: "1003", tipo: "Tercer Premio", fecha: "24 de Octubre 2025", imagen: "img/FONDO.jpg" },
-  { numero: "1004", tipo: "Adicional Premio", fecha: "24 de Octubre 2025", imagen: "img/FONDO.jpg" }
-];
-
-// ==== Crear boletos con estado ====
-const boletos = [];
-rangosBoletos.forEach(rango => {
-  for(let i=rango.inicio;i<=rango.fin;i++){
-    const vendido = boletosVendidos.find(b => b.numero === i.toString() && b.fecha === rango.fecha);
-    const premio = premios.find(p => p.numero === i.toString() && p.fecha === rango.fecha);
-    const partes = rango.fecha.match(/(\d+)\s+de\s+(\w+)\s+(\d+)/);
-    const meses = {
-      "Enero":0,"Febrero":1,"Marzo":2,"Abril":3,"Mayo":4,"Junio":5,
-      "Julio":6,"Agosto":7,"Septiembre":8,"Octubre":9,"Noviembre":10,"Diciembre":11
-    };
-    const fechaBoleto = new Date(partes[3],meses[partes[2]],partes[1],23,59,59);
-    boletos.push({
-      numero:i.toString(),
-      fecha:rango.fecha,
-      nombre: vendido ? vendido.nombre : "",
-      vendido: !!vendido,
-      ganador: !!premio,
-      lugar: premio ? premio.tipo : "",
-      expirado: fechaBoleto < new Date()
-    });
-  }
-});
-
-// ==== Llenar fechas dinámicamente ====
-function llenarFechas() {
-  const fechasBoletos = [...new Set(boletos.map(b => b.fecha))];
-  const fechasPremios = [...new Set(premios.map(p => p.fecha))];
-
-  const selectBoletos = document.getElementById('fechaBoletos');
-  const selectPremios = document.getElementById('fechaPremio');
-
-  selectBoletos.innerHTML = '<option value="todas">Todas las fechas</option>';
-  selectPremios.innerHTML = '<option value="todas">Todas las fechas</option>';
-
-  fechasBoletos.forEach(f=>{ const opt=document.createElement('option'); opt.value=f; opt.textContent=f; selectBoletos.appendChild(opt); });
-  fechasPremios.forEach(f=>{ const opt=document.createElement('option'); opt.value=f; opt.textContent=f; selectPremios.appendChild(opt); });
-}
-llenarFechas();
-
-// ==== Mostrar boletos ====
-function mostrarBoletos(filtroNumero="", filtroFecha="todas"){
-  const cont=document.getElementById('boletosGrid');
-  cont.innerHTML="";
-  boletos.filter(b=>b.numero.includes(filtroNumero) && (filtroFecha==="todas" || b.fecha===filtroFecha))
-    .forEach(b=>{
-      const div=document.createElement('div');
-      div.classList.add('tarjeta-boleto');
-      if(b.ganador) div.classList.add('ganador');
-      if(b.vendido) div.classList.add('vendido'); else div.classList.add('disponible');
-      if(b.ganador) div.setAttribute('data-lugar',b.lugar);
-
-      const estadoTexto = b.expirado ? "EXPIRADO" : b.vendido ? "Vendido" : "Disponible";
-      div.innerHTML=`<div class="numero">Boleto ${b.numero} ${b.vendido ? "✅" : ""}</div>
-                      <div class="nombre">${b.nombre ? "Comprador: "+b.nombre : ""}</div>
-                      <div class="estado ${b.expirado ? "expirado" : ""}">${estadoTexto}</div>
-                      <small>${b.fecha}</small>`;
-      if(!b.vendido && !b.expirado){
-        div.style.cursor="pointer";
-        div.addEventListener("click",()=>{ 
-          const mensaje=`Hola, quiero este boleto: ${b.numero}%0ANombre:%0ADirección:%0A`;
-          window.open(`https://wa.me/5217221383605?text=${mensaje}`,"_blank");
-        });
-      }
-      cont.appendChild(div);
-    });
-}
-mostrarBoletos();
-
-// ==== Mostrar premios ====
-function mostrarPremios(filtroNumero="", filtroFecha="todas"){
-  const cont=document.getElementById('sorteosContainer');
-  cont.innerHTML="";
-  premios.filter(p=>p.numero.includes(filtroNumero) && (filtroFecha==="todas" || p.fecha===filtroFecha))
-    .forEach(p=>{
-      const div=document.createElement('div');
-      div.classList.add('sorteo');
-      div.innerHTML=`<h2>${p.tipo}</h2>
-                      <div class="fecha">${p.fecha}</div>
-                      <div class="tarjeta-premio" style="background-image:url('${p.imagen}')">
-                        <div class="label-premio">${p.tipo}</div>
-                        <div class="numero">${p.numero}</div>
-                      </div>`;
-      cont.appendChild(div);
-    });
-}
-mostrarPremios();
-
-// ==== Mostrar 3 ganadores recientes en Inicio ====
-function mostrarGanadoresRecientes(){
-  const cont=document.getElementById('listaGanadores');
-  cont.innerHTML="";
-  const recientes=boletos.filter(b=>b.ganador).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
-  for(let i=0;i<3;i++){
-    const b=recientes[i];
-    const div=document.createElement('div');
-    if(b){
-      div.textContent=`🏆 ${b.lugar} - Boleto ${b.numero} - Comprador: ${b.nombre ? b.nombre : "Sin Ganador"} - Fecha: ${b.fecha}`;
-    }else{
-      div.textContent="🏆 Sin Ganador";
+    for (let i = 0; i < copos; i++) {
+      const f = document.createElement("div");
+      f.classList.add("snowflake");
+      f.style.left = Math.random() * 100 + "vw";
+      f.style.animationDuration = 4 + Math.random() * 7 + "s";
+      f.style.opacity = Math.random();
+      f.style.fontSize = 8 + Math.random() * 14 + "px";
+      f.textContent = "❄";
+      document.body.appendChild(f);
     }
-    cont.appendChild(div);
   }
-}
-mostrarGanadoresRecientes();
-
-// ==== Filtros ====
-document.getElementById('buscarBoletoDisponibles').addEventListener('input', e=>{
-  mostrarBoletos(e.target.value.trim(), document.getElementById('fechaBoletos').value);
-});
-document.getElementById('fechaBoletos').addEventListener('change', e=>{
-  mostrarBoletos(document.getElementById('buscarBoletoDisponibles').value.trim(), e.target.value);
-});
-document.getElementById('buscarPremio').addEventListener('input', e=>{
-  mostrarPremios(e.target.value.trim(), document.getElementById('fechaPremio').value);
-});
-document.getElementById('fechaPremio').addEventListener('change', e=>{
-  mostrarPremios(document.getElementById('buscarPremio').value.trim(), e.target.value);
-});
-
-// ==== Pestañas Mejoradas ====
-const tabs2 = document.querySelectorAll('.tab');
-const tabContents2 = document.querySelectorAll('.tab-content');
-
-tabs2.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs2.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    tabContents2.forEach(content => {
-      content.style.display = 'none';
-      content.style.opacity = 0;
-    });
-
-    const contentToShow = document.getElementById(tab.dataset.tab + 'Content');
-    contentToShow.style.display = 'block';
-    setTimeout(() => {
-      contentToShow.style.opacity = 1;
-    }, 50);
-  });
 });
 </script>
 
+
+  <!-- JS externo -->
+  <script src="script.js" defer></script>
 </body>
 </html>
