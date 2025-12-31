@@ -733,13 +733,16 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   width:100%;
 }
 
-/* 📐 CONTENEDOR MÁS GRANDE (IMÁGENES MÁS GRANDES) */
+
+
+/* 📐 CONTENEDOR MÁS GRANDE (SEGURO EN PANTALLAS PEQUEÑAS) */
 .book{
-  width: clamp(360px, 96vw, 1100px);   /* 🔥 MÁS ANCHO */
-  height: clamp(480px, 72vw, 700px);   /* 🔥 MÁS ALTO */
+  width: clamp(360px, 96vw, 1200px);   /* 🔥 un poco más ancho */
+  height: min(78vh, clamp(520px, 74vw, 760px)); /* 🔥 límite por altura real */
   position: relative;
   transform-style: preserve-3d;
 }
+
 
 /* 🔥 PÁGINAS */
 .page{
