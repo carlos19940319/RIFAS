@@ -203,9 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 });
-
 /* =========================
-   📖 CARTA / LIBRO (ANTI-PARPADEO)
+   📖 CARTA / LIBRO (ANTI-PARPADEO REAL)
 ========================= */
 
 const pages = [...document.querySelectorAll('.page')];
@@ -213,60 +212,43 @@ let current = 0;
 let locked = false;
 
 function updatePages() {
-
-  /* 1️⃣ Quitamos transición para ordenar capas */
-  pages.forEach(p => p.style.transition = 'none');
-
   pages.forEach((page, i) => {
+
+    /* orden 3D estable (no z-index) */
+    const depth = (pages.length - i) * 0.15;
+
     if (i < current) {
-      page.style.zIndex = i;
-    } 
-    else if (i === current) {
-      page.style.zIndex = pages.length + 1;
-    } 
-    else {
-      page.style.zIndex = pages.length - i;
-    }
-  });
-
-  /* 2️⃣ En el siguiente frame, aplicamos el giro */
-  requestAnimationFrame(() => {
-
-    pages.forEach(p => p.style.transition = '');
-
-    pages.forEach((page, i) => {
       page.style.transform =
-        i < current ? 'rotateY(-180deg)' : 'rotateY(0deg)';
-    });
+        `rotateY(-180deg) translateZ(${depth}px)`;
+    } else {
+      page.style.transform =
+        `rotateY(0deg) translateZ(${depth}px)`;
+    }
 
   });
 }
 
-/* estado inicial correcto */
+/* estado inicial */
 updatePages();
 
-/* 🔘 botones */
+/* 🔘 BOTONES */
 document.querySelector('.next')?.addEventListener('click', () => {
-  if (locked) return;
-  if (current < pages.length - 1) {
-    locked = true;
-    current++;
-    updatePages();
-    setTimeout(() => locked = false, 450);
-  }
+  if (locked || current >= pages.length - 1) return;
+  locked = true;
+  current++;
+  updatePages();
+  setTimeout(() => locked = false, 700);
 });
 
 document.querySelector('.prev')?.addEventListener('click', () => {
-  if (locked) return;
-  if (current > 0) {
-    locked = true;
-    current--;
-    updatePages();
-    setTimeout(() => locked = false, 450);
-  }
+  if (locked || current <= 0) return;
+  locked = true;
+  current--;
+  updatePages();
+  setTimeout(() => locked = false, 700);
 });
 
-/* 👆 swipe móvil */
+/* 👆 SWIPE MÓVIL */
 let startX = 0;
 const book = document.querySelector('.book');
 
@@ -275,7 +257,13 @@ book?.addEventListener('touchstart', e => {
 });
 
 book?.addEventListener('touchend', e => {
-  let endX = e.changedTouches[0].clientX;
-  if (startX - endX > 50) document.querySelector('.next')?.click();
-  if (endX - startX > 50) document.querySelector('.prev')?.click();
+  const endX = e.changedTouches[0].clientX;
+
+  if (startX - endX > 50) {
+    document.querySelector('.next')?.click();
+  }
+
+  if (endX - startX > 50) {
+    document.querySelector('.prev')?.click();
+  }
 });
