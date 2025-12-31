@@ -914,3 +914,62 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     transform: translateY(0) scale(1);
   }
 }
+/* =========================
+   🔔 ANIMACIÓN BOTÓN ACTIVO
+========================= */
+
+.header-unificado nav a.active{
+  position: relative;
+
+  animation: activePulse 1.8s ease-in-out infinite;
+
+  box-shadow:
+    0 0 0 2px rgba(244,196,48,.6),
+    0 10px 24px rgba(0,0,0,.75);
+}
+
+/* brillo suave */
+.header-unificado nav a.active::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(244,196,48,.35) 0%,
+    rgba(244,196,48,.15) 35%,
+    rgba(244,196,48,0) 70%
+  );
+
+  animation: activeGlow 1.8s ease-in-out infinite;
+}
+
+/* =========================
+   🎞️ KEYFRAMES
+========================= */
+
+@keyframes activePulse{
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.04);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+@keyframes activeGlow{
+  0%{
+    opacity: .35;
+  }
+  50%{
+    opacity: .75;
+  }
+  100%{
+    opacity: .35;
+  }
+}
