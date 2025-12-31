@@ -538,7 +538,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 ========================= */
 .slide{
   min-width:90%;
-  background:rgba(255,255,255,0.06);
+  background:#1b1b1b;
   border-radius:18px;
   overflow:hidden;
   position:relative;
@@ -559,7 +559,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     opacity .35s ease;
 
   transform:scale(.94);
-  opacity:.85;
+  opacity:1;
   scroll-snap-align:center;
 }
 
