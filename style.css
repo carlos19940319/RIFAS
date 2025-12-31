@@ -756,3 +756,59 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   transform-style: preserve-3d;
 }
 
+/* =========================
+   BOTÓN COTIZA TU EVENTO
+========================= */
+
+.overlay-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.btn-cotiza {
+  margin-bottom: 14px;
+  padding: 12px 26px;
+
+  background: linear-gradient(
+    180deg,
+    #ffeb3b 0%,
+    #fbc02d 60%,
+    #f9a825 100%
+  );
+
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 999px;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.35),
+    0 0 0 3px rgba(255,215,0,.25);
+
+  transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
+}
+
+/* Hover */
+.btn-cotiza:hover {
+  background: linear-gradient(
+    180deg,
+    #fff176 0%,
+    #fdd835 60%,
+    #f9a825 100%
+  );
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.45),
+    0 0 0 4px rgba(255,215,0,.35);
+}
+
+/* 📱 Mobile */
+@media (max-width: 640px) {
+  .btn-cotiza {
+    font-size: .95rem;
+    padding: 11px 22px;
+  }
+}
