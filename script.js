@@ -80,71 +80,77 @@ document.addEventListener('DOMContentLoaded', () => {
       book.classList.remove('zoom');
     }
   }
+/* =========================
+   📖 LIBRO / CARTA — LA CHONA (ESTABLE)
+========================= */
 
-  /* =========================
-     📖 LIBRO / CARTA — LÓGICA REAL
-  ========================= */
-  function initLibro() {
+let libroInicializado = false;
+let pageIndex = 0;
+let locked = false;
 
-    const book = document.querySelector('.book');
-    const pages = [...document.querySelectorAll('.page')];
-    const nextBtn = document.querySelector('.nav.next');
-    const prevBtn = document.querySelector('.nav.prev');
+function initLibro() {
 
-    if (!book || pages.length === 0) return;
+  if (libroInicializado) return; // 🔒 evita reinicializar
+  libroInicializado = true;
 
-    let index = 0;
-    let locked = false;
+  const book = document.querySelector('.book');
+  const pages = [...document.querySelectorAll('.page')];
+  const nextBtn = document.querySelector('.nav.next');
+  const prevBtn = document.querySelector('.nav.prev');
 
-    function update() {
-      pages.forEach((page, i) => {
-        const depth = (pages.length - i) * 0.15;
-        page.style.transform =
-          i < index
-            ? `rotateY(-180deg) translateZ(${depth}px)`
-            : `rotateY(0deg) translateZ(${depth}px)`;
-      });
-    }
+  if (!book || pages.length === 0) return;
 
-    update();
-
-    nextBtn?.addEventListener('click', () => {
-      if (locked || index >= pages.length - 1) return;
-      locked = true;
-      index++;
-      update();
-      setTimeout(() => locked = false, 800);
-    });
-
-    prevBtn?.addEventListener('click', () => {
-      if (locked || index <= 0) return;
-      locked = true;
-      index--;
-      update();
-      setTimeout(() => locked = false, 800);
-    });
-
-    /* 👉 SWIPE */
-    let startX = 0;
-
-    book.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-
-    book.addEventListener('touchend', e => {
-      const endX = e.changedTouches[0].clientX;
-      if (startX - endX > 50) nextBtn?.click();
-      if (endX - startX > 50) prevBtn?.click();
-    });
-
-    /* 🔍 ZOOM */
-    book.addEventListener('click', () => {
-      if (book.closest('.page-section.active')) {
-        book.classList.toggle('zoom');
-      }
+  function updatePages() {
+    pages.forEach((page, i) => {
+      const depth = (pages.length - i) * 0.15;
+      page.style.transform =
+        i < pageIndex
+          ? `rotateY(-180deg) translateZ(${depth}px)`
+          : `rotateY(0deg) translateZ(${depth}px)`;
     });
   }
 
+  updatePages();
+
+  /* ▶️ SIGUIENTE */
+  nextBtn?.addEventListener('click', () => {
+    if (locked || pageIndex >= pages.length - 1) return;
+    locked = true;
+    pageIndex++;
+    updatePages();
+    setTimeout(() => locked = false, 700);
+  });
+
+  /* ◀️ ANTERIOR */
+  prevBtn?.addEventListener('click', () => {
+    if (locked || pageIndex <= 0) return;
+    locked = true;
+    pageIndex--;
+    updatePages();
+    setTimeout(() => locked = false, 700);
+  });
+
+  /* 👉 SWIPE */
+  let startX = 0;
+
+  book.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  book.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) nextBtn?.click();
+    if (endX - startX > 50) prevBtn?.click();
+  });
+
+  /* 🔍 ZOOM */
+  book.addEventListener('click', () => {
+    if (book.closest('.page-section.active')) {
+      book.classList.toggle('zoom');
+    }
+  });
+}
+  
   /* =========================
      CARRUSEL EVENTOS
   ========================= */
