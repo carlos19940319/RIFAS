@@ -8,7 +8,7 @@
   --color-principal: #C00000;
   --color-secundario: #333333;
   --color-fondo-tarjeta: #ffffff;
-  --navbar-bg: rgba(197, 0, 0, 0.6);
+  --navbar-bg: rgba(197, 0, 0, 0.45);
   --fondo-img: url("img/Imagen6.jpg");
   --fondo-header-img: url("img/tituloo.png");
   --fondo-nav-img: url("img/tituloo.png");
@@ -228,7 +228,7 @@ body::before {
   background-image: url("img/R.jpg");
 }
 
-.header-unificado nav a[data-target="pizzas"] {
+.header-unificado nav a[data-target="carta"] {
   background-image: url("img/R.jpg");
 }
 
@@ -300,15 +300,19 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
   width: 100%;
 }
 
-/* Imagen bienvenida – presentación premium */
+  /* Imagen bienvenida – presentación premium */
 .img-bienvenida {
+  display: block;
   width: 100%;
   max-width: 900px;     /* 🔧 ajusta tamaño aquí */
   height: auto;
 
-  background: none;
+  background: transparent;
   border-radius: 0;
   box-shadow: none;
+
+  /* ✅ sombra real detrás (sin cuadro) */
+ filter: drop-shadow(0 18px 40px rgba(255, 111, 0, 0.6));
 
   animation: heroReveal 1.8s ease-out both;
   will-change: transform, opacity;
@@ -325,6 +329,13 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
     transform: translateY(0) scale(1);
   }
 }
+@media (max-width: 768px) {
+  .img-bienvenida {
+    filter: drop-shadow(0 14px 30px rgba(255, 193, 7, 0.55));
+  }
+}
+
+
 
 /* Grid y tarjetas */
 .grid {
@@ -526,5 +537,9 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 /* cuando la página se está doblando */
 .page.turning::after{
   opacity:1;
+}
+.page{
+  will-change: transform;
+  transform-style: preserve-3d;
 }
 
