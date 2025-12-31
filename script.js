@@ -1,11 +1,15 @@
 /* =========================
-   script.js — CÓDIGO COMPLETO CORREGIDO
+   script.js — VERSIÓN FINAL ESTABLE
+   ✔ SPA
+   ✔ Carta (libro)
+   ✔ Carrusel
+   ✔ Móvil gama baja
 ========================= */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   /* =========================
-     FADE IN INICIAL
+     FADE IN
   ========================= */
   document.body.classList.add('show');
 
@@ -17,17 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultSection = 'inicio';
 
   function showSection(id, push = true) {
-
-    // 🔒 Ocultar todas las secciones
     sections.forEach(sec => {
       sec.classList.remove('active');
       sec.style.display = 'none';
     });
 
-    // 🔘 Desactivar links
     links.forEach(link => link.classList.remove('active'));
 
-    // ✅ Mostrar sección activa
     const section = document.getElementById(id);
     const link = document.querySelector(`nav a[data-target="${id}"]`);
 
@@ -42,11 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // 🔥 Controlar libro según sección
     controlarLibro(id);
   }
 
-  // Click en navegación
   links.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -54,25 +52,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Carga inicial
   const currentHash = location.hash.replace('#', '') || defaultSection;
   showSection(currentHash, false);
 
-  // Cambio de hash
   window.addEventListener('hashchange', () => {
     showSection(location.hash.replace('#', '') || defaultSection, false);
   });
 
   /* =========================
-     CONTROL DEL LIBRO (CLAVE)
+     CONTROL DEL LIBRO
   ========================= */
   const menuBook = document.querySelector('.menu-book');
   const book = document.querySelector('.book');
 
-  function controlarLibro(seccionActiva) {
+  function controlarLibro(seccion) {
     if (!menuBook || !book) return;
 
-    if (seccionActiva === 'carta' || seccionActiva === 'eventos') {
+    if (seccion === 'carta' || seccion === 'eventos') {
       menuBook.classList.add('animar');
     } else {
       menuBook.classList.remove('animar');
@@ -81,28 +77,125 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================
-     TARJETAS
+     CARTA / LIBRO (PÁGINAS)
   ========================= */
-  const cards = document.querySelectorAll('.card');
+  const pages = [...document.querySelectorAll('.page')];
+  let pageIndex = 0;
+  let locked = false;
 
-  cards.forEach(card => {
-    card.addEventListener('click', e => {
-      e.stopPropagation();
-      cards.forEach(c => {
-        if (c !== card) c.classList.remove('selected');
-      });
-      card.classList.toggle('selected');
+  function updatePages() {
+    pages.forEach((page, i) => {
+      const depth = (pages.length - i) * 0.15;
+      page.style.transform =
+        i < pageIndex
+          ? `rotateY(-180deg) translateZ(${depth}px)`
+          : `rotateY(0deg) translateZ(${depth}px)`;
     });
+  }
+
+  if (pages.length) updatePages();
+
+  document.querySelector('.nav.next')?.addEventListener('click', () => {
+    if (locked || pageIndex >= pages.length - 1) return;
+    locked = true;
+    pageIndex++;
+    updatePages();
+    setTimeout(() => locked = false, 700);
   });
 
-  document.addEventListener('click', e => {
-    cards.forEach(card => {
-      if (!card.contains(e.target)) card.classList.remove('selected');
-    });
+  document.querySelector('.nav.prev')?.addEventListener('click', () => {
+    if (locked || pageIndex <= 0) return;
+    locked = true;
+    pageIndex--;
+    updatePages();
+    setTimeout(() => locked = false, 700);
+  });
+
+  /* SWIPE LIBRO */
+  let startX = 0;
+
+  book?.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  book?.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) document.querySelector('.nav.next')?.click();
+    if (endX - startX > 50) document.querySelector('.nav.prev')?.click();
+  });
+
+  /* ZOOM */
+  book?.addEventListener('click', () => {
+    if (book.closest('.page-section.active')) {
+      book.classList.toggle('zoom');
+    }
   });
 
   /* =========================
-     RELOJ Y ESTADO
+     CARRUSEL EVENTOS
+  ========================= */
+  (function () {
+    const carousel = document.getElementById('carousel');
+    if (!carousel) return;
+
+    const slides = [...carousel.querySelectorAll('.slide')];
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsWrap = document.getElementById('dots');
+
+    let slideIndex = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    const dots = [...dotsWrap.children];
+
+    function updateActive() {
+      const center = carousel.scrollLeft + carousel.clientWidth / 2;
+      let closest = 0;
+      let min = Infinity;
+
+      slides.forEach((slide, i) => {
+        const c = slide.offsetLeft + slide.clientWidth / 2;
+        const d = Math.abs(center - c);
+        if (d < min) {
+          min = d;
+          closest = i;
+        }
+        slide.classList.remove('active');
+      });
+
+      slides[closest]?.classList.add('active');
+      slideIndex = closest;
+      dots.forEach(d => d.classList.remove('active'));
+      dots[slideIndex]?.classList.add('active');
+    }
+
+    function goTo(i) {
+      slideIndex = (i + slides.length) % slides.length;
+      const slide = slides[slideIndex];
+      const left = slide.offsetLeft - (carousel.clientWidth - slide.clientWidth) / 2;
+      carousel.scrollTo({ left, behavior: 'smooth' });
+      setTimeout(updateActive, 250);
+    }
+
+    prevBtn?.addEventListener('click', () => goTo(slideIndex - 1));
+    nextBtn?.addEventListener('click', () => goTo(slideIndex + 1));
+
+    carousel.addEventListener('scroll', () => {
+      clearTimeout(window._scrollTimer);
+      window._scrollTimer = setTimeout(updateActive, 100);
+    });
+
+    window.addEventListener('load', () => goTo(0));
+  })();
+
+  /* =========================
+     RELOJ / ESTADO
   ========================= */
   function actualizarReloj() {
     const reloj = document.getElementById("reloj");
@@ -114,45 +207,17 @@ document.addEventListener('DOMContentLoaded', () => {
       `${String(ahora.getSeconds()).padStart(2, '0')}`;
   }
 
-  let ultimoEstado = "";
-
   function actualizarEstado() {
     const estado = document.getElementById("estado");
     if (!estado) return;
+
     const ahora = new Date();
     const hoy = ahora.getDay();
-    let abierto = false;
+    const ahoraMin = ahora.getHours() * 60 + ahora.getMinutes();
+    const abierto = hoy === 5 && ahoraMin >= 1140 && ahoraMin <= 1380;
 
-    if ([5].includes(hoy)) {
-      const ahoraMin = ahora.getHours() * 60 + ahora.getMinutes();
-      if (ahoraMin >= 19 * 60 && ahoraMin <= 23 * 60) abierto = true;
-    }
-
-    if (abierto) {
-      estado.textContent = "🟢 Abierto";
-      estado.style.color = "green";
-      estado.style.boxShadow = "0 0 8px green";
-      if (ultimoEstado !== "abierto") {
-        estado.classList.add("open-anim");
-        setTimeout(() => estado.classList.remove("open-anim"), 500);
-      }
-      ultimoEstado = "abierto";
-    } else {
-      estado.textContent = "🔴 Cerrado";
-      estado.style.color = "red";
-      estado.style.boxShadow = "0 0 8px red";
-      ultimoEstado = "cerrado";
-    }
-  }
-
-  function resaltarDia() {
-    const dias = document.querySelectorAll("#dias li");
-    const hoy = new Date().getDay();
-    dias.forEach(li => {
-      const arr = li.dataset.dia.split(",").map(Number);
-      if (arr.includes(hoy)) li.classList.add("dia-actual");
-    });
-    actualizarEstado();
+    estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
+    estado.style.color = abierto ? "green" : "red";
   }
 
   setInterval(() => {
@@ -160,137 +225,13 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarEstado();
   }, 1000);
 
-  window.addEventListener('load', () => {
-    actualizarReloj();
-    resaltarDia();
-  });
+  actualizarReloj();
+  actualizarEstado();
 
   /* =========================
-     CARRUSEL
-  ========================= */
-  (function () {
-    const carousel = document.getElementById('carousel');
-    if (!carousel) return;
-
-    const slides = [...carousel.querySelectorAll('.slide')];
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const dotsWrap = document.getElementById('dots');
-    let current = 0;
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'dot';
-      dot.onclick = () => goTo(i);
-      dotsWrap.appendChild(dot);
-    });
-
-    const dots = [...dotsWrap.children];
-
-    function updateActive() {
-      const center = carousel.scrollLeft + carousel.clientWidth / 2;
-      let closest = 0, min = Infinity;
-      slides.forEach((s, i) => {
-        const c = s.offsetLeft + s.clientWidth / 2;
-        const d = Math.abs(center - c);
-        if (d < min) {
-          min = d;
-          closest = i;
-        }
-        s.classList.remove('active');
-      });
-      slides[closest]?.classList.add('active');
-      current = closest;
-      dots.forEach(d => d.classList.remove('active'));
-      dots[current]?.classList.add('active');
-    }
-
-    function goTo(i) {
-      current = (i + slides.length) % slides.length;
-      const s = slides[current];
-      const left = s.offsetLeft - (carousel.clientWidth - s.clientWidth) / 2;
-      carousel.scrollTo({ left, behavior: 'smooth' });
-      setTimeout(updateActive, 250);
-    }
-
-    prevBtn.onclick = () => goTo(current - 1);
-    nextBtn.onclick = () => goTo(current + 1);
-
-    carousel.addEventListener('scroll', () => {
-      clearTimeout(window._st);
-      window._st = setTimeout(updateActive, 100);
-    });
-
-    window.addEventListener('load', () => goTo(0));
-  })();
-
-  /* =========================
-     AÑO FOOTER
+     FOOTER AÑO
   ========================= */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* =========================
-     ZOOM SUAVE (SOLO SI ESTÁ VISIBLE)
-  ========================= */
-  book?.addEventListener('click', () => {
-    if (book.closest('.page-section.active')) {
-      book.classList.toggle('zoom');
-    }
-  });
-
 });
-
-/* =========================
-   📖 LIBRO / CARTA (ANTI-PARPADEO)
-========================= */
-
-const pages = [...document.querySelectorAll('.page')];
-let current = 0;
-let locked = false;
-
-function updatePages() {
-  pages.forEach((page, i) => {
-    const depth = (pages.length - i) * 0.15;
-    page.style.transform =
-      i < current
-        ? `rotateY(-180deg) translateZ(${depth}px)`
-        : `rotateY(0deg) translateZ(${depth}px)`;
-  });
-}
-
-updatePages();
-
-/* BOTONES */
-document.querySelector('.next')?.addEventListener('click', () => {
-  if (locked || current >= pages.length - 1) return;
-  locked = true;
-  current++;
-  updatePages();
-  setTimeout(() => locked = false, 700);
-});
-
-document.querySelector('.prev')?.addEventListener('click', () => {
-  if (locked || current <= 0) return;
-  locked = true;
-  current--;
-  updatePages();
-  setTimeout(() => locked = false, 700);
-});
-
-/* SWIPE */
-let startX = 0;
-const bookSwipe = document.querySelector('.book');
-
-bookSwipe?.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-});
-
-bookSwipe?.addEventListener('touchend', e => {
-  const endX = e.changedTouches[0].clientX;
-  if (startX - endX > 50) document.querySelector('.next')?.click();
-  if (endX - startX > 50) document.querySelector('.prev')?.click();
-});
-
-
-</script>
