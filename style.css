@@ -774,10 +774,11 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:clamp(12px, 3vw, 22px);
+  gap:0; /* 🔥 ya no reserva espacio lateral */
   perspective:1800px;
   margin:clamp(20px, 4vw, 40px) auto;
   width:100%;
+  position:relative; /* referencia para botones */
 }
 
 .book{
@@ -786,15 +787,15 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   /* 🔥 MUCHO MÁS CORTA */
   height:min(
-    58vh,                 /* 👈 clave: ya no es tan larga */
+    58vh,
     clamp(450px, 59vw, 580px)
   );
 
   position:relative;
   transform-style:preserve-3d;
-
   max-width:100vw;
 }
+
 /* =========================
    🔥 PÁGINAS
 ========================= */
@@ -805,7 +806,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   border-radius:8px;
   overflow:hidden;
 
-  /* 🌑 SOMBRA REALISTA MULTICAPA (SIN CAMBIAR TAMAÑO) */
+  /* 🌑 SOMBRA REALISTA MULTICAPA (SIN CAMBIOS) */
   box-shadow:
     0 6px 14px rgba(0,0,0,.45),
     0 18px 38px rgba(0,0,0,.55),
@@ -843,10 +844,18 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 /* =========================
-   🔘 BOTONES DE NAVEGACIÓN
+   🔘 BOTONES (ENCIMA Y SEMI TRANSPARENTES)
 ========================= */
 .nav{
-  background:rgba(255,255,255,.96);
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:5;
+
+  /* ✨ semi transparente */
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(6px);
+
   border:none;
   font-size:clamp(2rem, 5vw, 2.8rem);
   width:clamp(44px, 6vw, 60px);
@@ -854,33 +863,31 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   border-radius:50%;
   cursor:pointer;
 
+  /* 🌑 mismas sombras */
   box-shadow:
     0 6px 14px rgba(0,0,0,.35),
     0 14px 30px rgba(0,0,0,.45);
 
   user-select:none;
-  transition:transform .2s ease, box-shadow .2s ease;
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+/* POSICIÓN SOBRE LA CARTA */
+.nav.prev{
+  left:10px;
+}
+.nav.next{
+  right:10px;
 }
 
 .nav:hover{
-  transform:scale(1.1);
+  transform:translateY(-50%) scale(1.1);
+  background:rgba(255,255,255,.85);
   box-shadow:
     0 10px 22px rgba(0,0,0,.45),
     0 22px 40px rgba(0,0,0,.55);
 }
-.menu-book{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:clamp(12px, 2vw, 20px);
-  perspective:1800px;
-  margin:clamp(20px, 4vw, 40px) auto;
-  width:100%;
 
-  /* 👇 espacio de seguridad para botones */
-  padding-inline:clamp(10px, 3vw, 24px);
-  box-sizing:border-box;
-}
 /* =========================
    ✨ SOMBRA CURVA AL DOBLAR
 ========================= */
@@ -906,7 +913,6 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 .page.turning::after{
   opacity:1;
 }
-
 /* =========================
    BOTÓN COTIZA TU EVENTO
 ========================= */
