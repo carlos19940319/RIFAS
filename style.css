@@ -1196,3 +1196,80 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     min-width:100px;
   }
 }
+/* =========================
+   MODAL COTIZADOR
+========================= */
+
+.modal-cotiza{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modal-cotiza.activo{
+  display:flex;
+}
+
+.modal-box{
+  background:#1b1b1b;
+  color:#fff;
+  width:92%;
+  max-width:380px;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 20px 45px rgba(0,0,0,.6);
+}
+
+.modal-box h3{
+  margin:0 0 14px;
+  text-align:center;
+}
+
+.modal-box label{
+  display:block;
+  margin-bottom:10px;
+  font-size:.95rem;
+}
+
+.modal-box input[type="checkbox"]{
+  margin-right:8px;
+}
+
+.modal-box textarea{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  resize:none;
+  min-height:70px;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+
+.modal-actions button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.modal-actions button:first-child{
+  background:#444;
+  color:#fff;
+}
+
+.modal-actions button:last-child{
+  background:#25d366;
+  color:#0b3d1d;
+}
