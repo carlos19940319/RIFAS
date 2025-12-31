@@ -733,12 +733,12 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   width:100%;
 }
 
-/* 📐 MISMO IMPACTO VISUAL QUE EL CARRUSEL */
+/* 📐 CONTENEDOR MÁS GRANDE (IMÁGENES MÁS GRANDES) */
 .book{
-  width:clamp(320px, 92vw, 900px);   /* 🔥 ocupa casi todo el ancho */
-  height:clamp(420px, 65vw, 560px);  /* 🔥 similar a media{height:550px} */
-  position:relative;
-  transform-style:preserve-3d;
+  width: clamp(360px, 96vw, 1100px);   /* 🔥 MÁS ANCHO */
+  height: clamp(480px, 72vw, 700px);   /* 🔥 MÁS ALTO */
+  position: relative;
+  transform-style: preserve-3d;
 }
 
 /* 🔥 PÁGINAS */
@@ -763,8 +763,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   border-radius:inherit;
   display:block;
 }
-  background:#000;           /* elegante cuando sobra espacio */
-}
+          
 
 /* 🔘 BOTONES */
 .nav{
