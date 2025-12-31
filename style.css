@@ -865,3 +865,23 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     padding: 11px 22px;
   }
 }
+/* =========================
+   🔍 ZOOM SUAVE AL TOCAR
+========================= */
+
+.book{
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+  cursor: zoom-in;
+}
+
+.book.zoom{
+  transform: scale(1.06);
+  cursor: zoom-out;
+}
+
+/* En móvil un poco menos de zoom */
+@media (max-width: 768px){
+  .book.zoom{
+    transform: scale(1.04);
+  }
+}
