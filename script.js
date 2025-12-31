@@ -291,3 +291,49 @@ bookSwipe?.addEventListener('touchend', e => {
   if (startX - endX > 50) document.querySelector('.next')?.click();
   if (endX - startX > 50) document.querySelector('.prev')?.click();
 });
+<script>
+const abrir = document.getElementById("abrirCotizador");
+const modal = document.getElementById("modalCotiza");
+const cerrar = document.getElementById("cerrarCotiza");
+const form = document.getElementById("formCotiza");
+
+abrir.addEventListener("click", e => {
+  e.preventDefault();
+  modal.classList.add("activo");
+});
+
+cerrar.addEventListener("click", () => {
+  modal.classList.remove("activo");
+});
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const productos = [...form.querySelectorAll("input:checked")]
+    .map(p => `• ${p.value}`)
+    .join("%0A");
+
+  if(!productos){
+    alert("Selecciona al menos un platillo");
+    return;
+  }
+
+  const nota = document.getElementById("notaExtra").value;
+
+  const mensaje =
+`Hola 👋
+Quiero hacer un pedido en *La Chona* 🌮
+
+Mi pedido es:
+${productos}
+${nota ? "%0A📝 Detalles: " + nota : ""}`;
+
+  window.open(
+    "https://wa.me/5217223943462?text=" + mensaje,
+    "_blank"
+  );
+
+  modal.classList.remove("activo");
+  form.reset();
+});
+</script>
