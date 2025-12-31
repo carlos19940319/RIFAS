@@ -1,8 +1,9 @@
 /* =========================
-   script.js — VERSIÓN FINAL ESTABLE
+   script.js — LA CHONA FINAL
    ✔ SPA
    ✔ Carta (libro real)
    ✔ Carrusel
+   ✔ Reloj / Estado
    ✔ Móvil gama baja
 ========================= */
 
@@ -80,79 +81,96 @@ document.addEventListener('DOMContentLoaded', () => {
       book.classList.remove('zoom');
     }
   }
-/* =========================
-   📖 LIBRO / CARTA — LA CHONA (ESTABLE)
-========================= */
 
-let libroInicializado = false;
-let pageIndex = 0;
-let locked = false;
+  /* =========================
+     📖 LIBRO / CARTA — LA CHONA (FIX REAL)
+  ========================= */
 
-function initLibro() {
+  let pageIndex = 0;
+  let locked = false;
 
-  if (libroInicializado) return; // 🔒 evita reinicializar
-  libroInicializado = true;
+  function initLibro() {
 
-  const book = document.querySelector('.book');
-  const pages = [...document.querySelectorAll('.page')];
-  const nextBtn = document.querySelector('.nav.next');
-  const prevBtn = document.querySelector('.nav.prev');
+    const book = document.querySelector('.book');
+    const pages = [...document.querySelectorAll('.page')];
+    const nextBtn = document.querySelector('.nav.next');
+    const prevBtn = document.querySelector('.nav.prev');
 
-  if (!book || pages.length === 0) return;
+    if (!book || pages.length === 0) return;
 
-  function updatePages() {
-    pages.forEach((page, i) => {
-      const depth = (pages.length - i) * 0.15;
-      page.style.transform =
-        i < pageIndex
-          ? `rotateY(-180deg) translateZ(${depth}px)`
-          : `rotateY(0deg) translateZ(${depth}px)`;
+    /* 🔥 RESET TOTAL */
+    pageIndex = 0;
+    locked = false;
+
+    pages.forEach(p => p.style.transform = '');
+
+    function updatePages() {
+      pages.forEach((page, i) => {
+        const depth = (pages.length - i) * 0.15;
+        page.style.transform =
+          i < pageIndex
+            ? `rotateY(-180deg) translateZ(${depth}px)`
+            : `rotateY(0deg) translateZ(${depth}px)`;
+      });
+    }
+
+    updatePages();
+
+    /* 🔁 REEMPLAZAR BOTONES PARA EVITAR DUPLICADOS */
+    if (nextBtn) {
+      const newNext = nextBtn.cloneNode(true);
+      nextBtn.parentNode.replaceChild(newNext, nextBtn);
+    }
+
+    if (prevBtn) {
+      const newPrev = prevBtn.cloneNode(true);
+      prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+    }
+
+    const next = document.querySelector('.nav.next');
+    const prev = document.querySelector('.nav.prev');
+
+    /* ▶️ SIGUIENTE */
+    next?.addEventListener('click', () => {
+      if (locked || pageIndex >= pages.length - 1) return;
+      locked = true;
+      pageIndex++;
+      updatePages();
+      setTimeout(() => locked = false, 850);
     });
+
+    /* ◀️ ANTERIOR */
+    prev?.addEventListener('click', () => {
+      if (locked || pageIndex <= 0) return;
+      locked = true;
+      pageIndex--;
+      updatePages();
+      setTimeout(() => locked = false, 850);
+    });
+
+    /* 👉 SWIPE */
+    let startX = 0;
+
+    book.ontouchstart = e => {
+      startX = e.touches[0].clientX;
+    };
+
+    book.ontouchend = e => {
+      const endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50) next?.click();
+      if (endX - startX > 50) prev?.click();
+    };
+
+    /* 🔍 ZOOM */
+    book.onclick = () => {
+      if (book.closest('.page-section.active')) {
+        book.classList.toggle('zoom');
+      }
+    };
   }
 
-  updatePages();
-
-  /* ▶️ SIGUIENTE */
-  nextBtn?.addEventListener('click', () => {
-    if (locked || pageIndex >= pages.length - 1) return;
-    locked = true;
-    pageIndex++;
-    updatePages();
-    setTimeout(() => locked = false, 700);
-  });
-
-  /* ◀️ ANTERIOR */
-  prevBtn?.addEventListener('click', () => {
-    if (locked || pageIndex <= 0) return;
-    locked = true;
-    pageIndex--;
-    updatePages();
-    setTimeout(() => locked = false, 700);
-  });
-
-  /* 👉 SWIPE */
-  let startX = 0;
-
-  book.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-  });
-
-  book.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50) nextBtn?.click();
-    if (endX - startX > 50) prevBtn?.click();
-  });
-
-  /* 🔍 ZOOM */
-  book.addEventListener('click', () => {
-    if (book.closest('.page-section.active')) {
-      book.classList.toggle('zoom');
-    }
-  });
-}
-  
   /* =========================
-     CARRUSEL EVENTOS
+     🎞️ CARRUSEL EVENTOS
   ========================= */
   (function () {
     const carousel = document.getElementById('carousel');
@@ -213,7 +231,7 @@ function initLibro() {
   })();
 
   /* =========================
-     RELOJ / ESTADO
+     ⏰ RELOJ / ESTADO
   ========================= */
   function actualizarReloj() {
     const reloj = document.getElementById("reloj");
@@ -247,7 +265,7 @@ function initLibro() {
   actualizarEstado();
 
   /* =========================
-     FOOTER AÑO
+     © FOOTER AÑO
   ========================= */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
