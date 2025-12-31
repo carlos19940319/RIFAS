@@ -312,47 +312,6 @@ Contamos con carrito móvil. Cotiza desde la página y disfruta de una experienc
   </footer>
 <!-- JS externo -->
 <script src="script.js" defer></script>
-<script>
-const abrir = document.getElementById("abrirCotizador");
-const modal = document.getElementById("modalCotiza");
-const cerrar = document.getElementById("cerrarCotiza");
-const form = document.getElementById("formCotiza");
 
-abrir.addEventListener("click", e => {
-  e.preventDefault();
-  modal.classList.add("activo");
-});
-
-cerrar.addEventListener("click", () => {
-  modal.classList.remove("activo");
-});
-
-form.addEventListener("submit", e => {
-  e.preventDefault();
-
-  const productos = [...form.querySelectorAll("input:checked")]
-    .map(p => `• ${p.value}`)
-    .join("%0A");
-
-  if(!productos){
-    alert("Selecciona al menos un producto");
-    return;
-  }
-
-  const nota = document.getElementById("notaExtra").value;
-  const mensaje =
-`Hola 👋 quiero cotizar lo siguiente:%0A
-${productos}
-${nota ? "%0A📝 Notas: " + nota : ""}`;
-
-  window.open(
-    `https://wa.me/5217223943462?text=${mensaje}`,
-    "_blank"
-  );
-
-  modal.classList.remove("activo");
-  form.reset();
-});
-</script>
 </body>
 </html>
