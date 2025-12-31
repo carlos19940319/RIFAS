@@ -1,7 +1,7 @@
 /* =========================
    script.js — VERSIÓN FINAL ESTABLE
    ✔ SPA
-   ✔ Carta (libro)
+   ✔ Carta (libro real)
    ✔ Carrusel
    ✔ Móvil gama baja
 ========================= */
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultSection = 'inicio';
 
   function showSection(id, push = true) {
+
     sections.forEach(sec => {
       sec.classList.remove('active');
       sec.style.display = 'none';
@@ -37,12 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (link) link.classList.add('active');
-
     if (push) history.replaceState(null, '', `#${id}`);
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     controlarLibro(id);
+
+    /* 🔥 REINICIAR CARTA AL ENTRAR */
+    if (id === 'carta') {
+      setTimeout(initLibro, 60);
+    }
   }
 
   links.forEach(link => {
@@ -60,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-     CONTROL DEL LIBRO
+     CONTROL VISUAL DEL LIBRO
   ========================= */
   const menuBook = document.querySelector('.menu-book');
   const book = document.querySelector('.book');
@@ -77,59 +82,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================
-     CARTA / LIBRO (PÁGINAS)
+     📖 LIBRO / CARTA — LÓGICA REAL
   ========================= */
-  const pages = [...document.querySelectorAll('.page')];
-  let pageIndex = 0;
-  let locked = false;
+  function initLibro() {
 
-  function updatePages() {
-    pages.forEach((page, i) => {
-      const depth = (pages.length - i) * 0.15;
-      page.style.transform =
-        i < pageIndex
-          ? `rotateY(-180deg) translateZ(${depth}px)`
-          : `rotateY(0deg) translateZ(${depth}px)`;
+    const book = document.querySelector('.book');
+    const pages = [...document.querySelectorAll('.page')];
+    const nextBtn = document.querySelector('.nav.next');
+    const prevBtn = document.querySelector('.nav.prev');
+
+    if (!book || pages.length === 0) return;
+
+    let index = 0;
+    let locked = false;
+
+    function update() {
+      pages.forEach((page, i) => {
+        const depth = (pages.length - i) * 0.15;
+        page.style.transform =
+          i < index
+            ? `rotateY(-180deg) translateZ(${depth}px)`
+            : `rotateY(0deg) translateZ(${depth}px)`;
+      });
+    }
+
+    update();
+
+    nextBtn?.addEventListener('click', () => {
+      if (locked || index >= pages.length - 1) return;
+      locked = true;
+      index++;
+      update();
+      setTimeout(() => locked = false, 800);
+    });
+
+    prevBtn?.addEventListener('click', () => {
+      if (locked || index <= 0) return;
+      locked = true;
+      index--;
+      update();
+      setTimeout(() => locked = false, 800);
+    });
+
+    /* 👉 SWIPE */
+    let startX = 0;
+
+    book.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    book.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50) nextBtn?.click();
+      if (endX - startX > 50) prevBtn?.click();
+    });
+
+    /* 🔍 ZOOM */
+    book.addEventListener('click', () => {
+      if (book.closest('.page-section.active')) {
+        book.classList.toggle('zoom');
+      }
     });
   }
-
-  if (pages.length) updatePages();
-
-  document.querySelector('.nav.next')?.addEventListener('click', () => {
-    if (locked || pageIndex >= pages.length - 1) return;
-    locked = true;
-    pageIndex++;
-    updatePages();
-    setTimeout(() => locked = false, 700);
-  });
-
-  document.querySelector('.nav.prev')?.addEventListener('click', () => {
-    if (locked || pageIndex <= 0) return;
-    locked = true;
-    pageIndex--;
-    updatePages();
-    setTimeout(() => locked = false, 700);
-  });
-
-  /* SWIPE LIBRO */
-  let startX = 0;
-
-  book?.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-  });
-
-  book?.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50) document.querySelector('.nav.next')?.click();
-    if (endX - startX > 50) document.querySelector('.nav.prev')?.click();
-  });
-
-  /* ZOOM */
-  book?.addEventListener('click', () => {
-    if (book.closest('.page-section.active')) {
-      book.classList.toggle('zoom');
-    }
-  });
 
   /* =========================
      CARRUSEL EVENTOS
@@ -142,8 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dotsWrap = document.getElementById('dots');
-
-    let slideIndex = 0;
+    let index = 0;
 
     slides.forEach((_, i) => {
       const dot = document.createElement('button');
@@ -156,8 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateActive() {
       const center = carousel.scrollLeft + carousel.clientWidth / 2;
-      let closest = 0;
-      let min = Infinity;
+      let closest = 0, min = Infinity;
 
       slides.forEach((slide, i) => {
         const c = slide.offsetLeft + slide.clientWidth / 2;
@@ -170,21 +182,21 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       slides[closest]?.classList.add('active');
-      slideIndex = closest;
+      index = closest;
       dots.forEach(d => d.classList.remove('active'));
-      dots[slideIndex]?.classList.add('active');
+      dots[index]?.classList.add('active');
     }
 
     function goTo(i) {
-      slideIndex = (i + slides.length) % slides.length;
-      const slide = slides[slideIndex];
+      index = (i + slides.length) % slides.length;
+      const slide = slides[index];
       const left = slide.offsetLeft - (carousel.clientWidth - slide.clientWidth) / 2;
       carousel.scrollTo({ left, behavior: 'smooth' });
       setTimeout(updateActive, 250);
     }
 
-    prevBtn?.addEventListener('click', () => goTo(slideIndex - 1));
-    nextBtn?.addEventListener('click', () => goTo(slideIndex + 1));
+    prevBtn?.addEventListener('click', () => goTo(index - 1));
+    nextBtn?.addEventListener('click', () => goTo(index + 1));
 
     carousel.addEventListener('scroll', () => {
       clearTimeout(window._scrollTimer);
