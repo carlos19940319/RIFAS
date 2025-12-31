@@ -143,9 +143,26 @@ Contamos con carrito móvil. Cotiza desde la página y disfruta de una experienc
     DiDi Food
   </a>
 
-  <a href="https://wa.me/5217223943462" target="_blank" class="btn-delivery whatsapp">
-    WhatsApp
-  </a>
+  <div class="modal-cotiza" id="modalCotiza">
+  <div class="modal-box">
+    <h3>📝 Cotiza tu pedido</h3>
+
+    <form id="formCotiza">
+      <label><input type="checkbox" value="Tacos al pastor"> Tacos al pastor</label>
+      <label><input type="checkbox" value="Tacos de bistec"> Tacos de bistec</label>
+      <label><input type="checkbox" value="Quesadillas"> Quesadillas</label>
+      <label><input type="checkbox" value="Gringas"> Gringas</label>
+      <label><input type="checkbox" value="Bebidas"> Bebidas</label>
+
+      <textarea id="notaExtra" placeholder="Notas especiales (opcional)"></textarea>
+
+      <div class="modal-actions">
+        <button type="button" id="cerrarCotiza">Cancelar</button>
+        <button type="submit">Enviar por WhatsApp</button>
+      </div>
+    </form>
+  </div>
+</div>
 </div>
 </div>
     <!-- 📖 MENÚ TIPO LIBRO -->
