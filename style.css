@@ -288,7 +288,7 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
   text-align: center;
 
   padding-top: 4px;     /* 🔥 reduce espacio interno */
-  margin-top: -14px;    /* 🔥 acerca al header */
+  margin-top: -19px;    /* 🔥 acerca al header */
 
   position: relative;
   z-index: 1;           /* sigue debajo del header */
