@@ -271,9 +271,22 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
   padding: 12px 0;
 }
 
-/* TÍTULO TRICOLOR REAL */
+/* =========================
+   CONTENEDOR DEL TÍTULO
+========================= */
+.welcome-text{
+  text-align: center;
+  position: relative;
+  z-index: 1; /* debajo del header */
+}
+
+/* =========================
+   TÍTULO TRICOLOR REAL
+   (pegado al header al aparecer)
+========================= */
 .welcome-text h2 {
   margin: 0;
+  margin-top: -22px; /* 🔥 lo acerca al header SOLO visualmente */
 
   font-family: 'Pacifico', cursive;
   font-size: clamp(2.4rem, 5vw, 3.2rem);
@@ -283,26 +296,56 @@ main { max-width: 1100px; margin: 18px auto; padding: 0 14px; padding-top: calc(
   /* VERDE – BLANCO – ROJO */
   background: linear-gradient(
     90deg,
-    #00843d 0%,     /* verde intenso */
-    #ffffff 50%,    /* blanco */
-    #d50000 100%    /* rojo intenso */
+    #00843d 0%,
+    #ffffff 50%,
+    #d50000 100%
   );
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* 🔑 realce SIN negro */
-  text-shadow:
-    0 0 6px rgba(255,255,255,.35);
+  /* realce suave */
+  text-shadow: 0 0 6px rgba(255,255,255,.35);
+
+  position: relative;
+  z-index: 2;
+
+  /* animación de entrada */
+  animation: tituloEntrada 1.4s ease-out both;
 }
 
-/* HERO */
+/* =========================
+   ANIMACIÓN DE ENTRADA
+========================= */
+@keyframes tituloEntrada {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================
+   HERO
+========================= */
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: clamp(10px, 3vw, 30px);
   width: 100%;
+}
+
+/* =========================
+   AJUSTE EXTRA SOLO MÓVIL
+========================= */
+@media (max-width: 768px) {
+  .welcome-text h2 {
+    margin-top: -26px;
+  }
 }
 
   
