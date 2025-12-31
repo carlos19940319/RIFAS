@@ -707,14 +707,14 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   z-index:1;
   will-change:transform;
 }
-
-/* 🖼️ IMAGEN — COMPLETA, SIN RECORTE */
+/* 🖼️ IMAGEN — CUBRE TODO (SE DEFORMA) */
 .page img{
   width:100%;
   height:100%;
-  object-fit:contain;        /* 👈 CLAVE: NO RECORTA */
+  object-fit:fill;      /* 🔥 estira la imagen */
   border-radius:inherit;
   display:block;
+}
   background:#000;           /* elegante cuando sobra espacio */
 }
 
