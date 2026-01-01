@@ -45,9 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     controlarLibro(id);
 
-    /* 🔥 REINICIAR CARTA AL ENTRAR */
+    /* 🔥 INIT CARTA (TIMING CORRECTO) */
     if (id === 'carta') {
-      setTimeout(initLibro, 60);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(initLibro);
+      });
     }
   }
 
@@ -69,21 +71,21 @@ document.addEventListener('DOMContentLoaded', () => {
      CONTROL VISUAL DEL LIBRO
   ========================= */
   const menuBook = document.querySelector('.menu-book');
-  const book = document.querySelector('.book');
+  const bookContainer = document.querySelector('.book');
 
   function controlarLibro(seccion) {
-    if (!menuBook || !book) return;
+    if (!menuBook || !bookContainer) return;
 
     if (seccion === 'carta' || seccion === 'eventos') {
       menuBook.classList.add('animar');
     } else {
       menuBook.classList.remove('animar');
-      book.classList.remove('zoom');
+      bookContainer.classList.remove('zoom');
     }
   }
 
   /* =========================
-     📖 LIBRO / CARTA — LA CHONA (FIX REAL)
+     📖 LIBRO / CARTA — FIX DEFINITIVO
   ========================= */
 
   let pageIndex = 0;
@@ -98,33 +100,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!book || pages.length === 0) return;
 
-    /* 🔥 RESET TOTAL */
+    /* RESET TOTAL */
     pageIndex = 0;
     locked = false;
 
-    pages.forEach(p => p.style.transform = '');
+    pages.forEach(p => {
+      p.style.transform = '';
+      p.classList.remove('turning');
+    });
 
     function updatePages() {
       pages.forEach((page, i) => {
         const depth = (pages.length - i) * 0.15;
-        page.style.transform =
-          i < pageIndex
-            ? `rotateY(-180deg) translateZ(${depth}px)`
-            : `rotateY(0deg) translateZ(${depth}px)`;
+        page.classList.remove('turning');
+
+        if (i < pageIndex) {
+          page.style.transform = `rotateY(-180deg) translateZ(${depth}px)`;
+        } else {
+          page.style.transform = `rotateY(0deg) translateZ(${depth}px)`;
+        }
       });
+
+      /* 🔥 SOMBRA SOLO EN LA ACTIVA */
+      if (pages[pageIndex]) {
+        pages[pageIndex].classList.add('turning');
+      }
     }
 
     updatePages();
 
-    /* 🔁 REEMPLAZAR BOTONES PARA EVITAR DUPLICADOS */
+    /* 🔁 CLONAR BOTONES (EVITA EVENTOS DUPLICADOS) */
     if (nextBtn) {
-      const newNext = nextBtn.cloneNode(true);
-      nextBtn.parentNode.replaceChild(newNext, nextBtn);
+      const n = nextBtn.cloneNode(true);
+      nextBtn.replaceWith(n);
     }
 
     if (prevBtn) {
-      const newPrev = prevBtn.cloneNode(true);
-      prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+      const p = prevBtn.cloneNode(true);
+      prevBtn.replaceWith(p);
     }
 
     const next = document.querySelector('.nav.next');
@@ -136,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = true;
       pageIndex++;
       updatePages();
-      setTimeout(() => locked = false, 850);
+      setTimeout(() => locked = false, 900);
     });
 
     /* ◀️ ANTERIOR */
@@ -145,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = true;
       pageIndex--;
       updatePages();
-      setTimeout(() => locked = false, 850);
+      setTimeout(() => locked = false, 900);
     });
 
     /* 👉 SWIPE */
@@ -250,6 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ahora = new Date();
     const hoy = ahora.getDay();
     const ahoraMin = ahora.getHours() * 60 + ahora.getMinutes();
+
+    /* Viernes 19:00–23:00 (ajústalo si quieres) */
     const abierto = hoy === 5 && ahoraMin >= 1140 && ahoraMin <= 1380;
 
     estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
