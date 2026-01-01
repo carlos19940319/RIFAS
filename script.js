@@ -1,10 +1,10 @@
 /* =========================
-   script.js — LA CHONA FINAL
+   script.js — LA CHONA FINAL ESTABLE
    ✔ SPA
-   ✔ Carta (libro real)
+   ✔ Carta tipo libro real
    ✔ Carrusel
    ✔ Reloj / Estado
-   ✔ Móvil gama baja
+   ✔ Móvil estable
 ========================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -43,10 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    controlarLibro(id);
-
-    /* 🔥 INIT CARTA (TIMING CORRECTO) */
-    if (id === 'carta') {
+    if (id === 'pizzas') {
       requestAnimationFrame(() => {
         requestAnimationFrame(initLibro);
       });
@@ -60,34 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const currentHash = location.hash.replace('#', '') || defaultSection;
-  showSection(currentHash, false);
+  showSection(location.hash.replace('#','') || defaultSection, false);
 
   window.addEventListener('hashchange', () => {
-    showSection(location.hash.replace('#', '') || defaultSection, false);
+    showSection(location.hash.replace('#','') || defaultSection, false);
   });
 
   /* =========================
-     CONTROL VISUAL DEL LIBRO
+     📖 LIBRO / CARTA — DEFINITIVO
   ========================= */
-  const menuBook = document.querySelector('.menu-book');
-  const bookContainer = document.querySelector('.book');
-
-  function controlarLibro(seccion) {
-    if (!menuBook || !bookContainer) return;
-
-    if (seccion === 'carta' || seccion === 'eventos') {
-      menuBook.classList.add('animar');
-    } else {
-      menuBook.classList.remove('animar');
-      bookContainer.classList.remove('zoom');
-    }
-  }
-
-  /* =========================
-     📖 LIBRO / CARTA — FIX DEFINITIVO
-  ========================= */
-
   let pageIndex = 0;
   let locked = false;
 
@@ -100,68 +78,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!book || pages.length === 0) return;
 
-    /* RESET TOTAL */
     pageIndex = 0;
     locked = false;
 
-    pages.forEach(p => {
-      p.style.transform = '';
+    pages.forEach((p, i) => {
+      p.style.transform = 'rotateY(0deg)';
+      p.style.zIndex = pages.length - i;
       p.classList.remove('turning');
     });
 
     function updatePages() {
       pages.forEach((page, i) => {
-        const depth = (pages.length - i) * 0.15;
-        page.classList.remove('turning');
-
         if (i < pageIndex) {
-          page.style.transform = `rotateY(-180deg) translateZ(${depth}px)`;
+          page.style.transform = 'rotateY(-180deg)';
+          page.style.zIndex = i;
+        } else if (i === pageIndex) {
+          page.style.transform = 'rotateY(0deg)';
+          page.style.zIndex = pages.length + 5;
+          page.classList.add('turning');
         } else {
-          page.style.transform = `rotateY(0deg) translateZ(${depth}px)`;
+          page.style.transform = 'rotateY(0deg)';
+          page.style.zIndex = pages.length - i;
+          page.classList.remove('turning');
         }
       });
-
-      /* 🔥 SOMBRA SOLO EN LA ACTIVA */
-      if (pages[pageIndex]) {
-        pages[pageIndex].classList.add('turning');
-      }
     }
 
     updatePages();
 
-    /* 🔁 CLONAR BOTONES (EVITA EVENTOS DUPLICADOS) */
-    if (nextBtn) {
-      const n = nextBtn.cloneNode(true);
-      nextBtn.replaceWith(n);
-    }
-
-    if (prevBtn) {
-      const p = prevBtn.cloneNode(true);
-      prevBtn.replaceWith(p);
-    }
+    /* 🔁 limpiar listeners previos */
+    nextBtn?.replaceWith(nextBtn.cloneNode(true));
+    prevBtn?.replaceWith(prevBtn.cloneNode(true));
 
     const next = document.querySelector('.nav.next');
     const prev = document.querySelector('.nav.prev');
 
-    /* ▶️ SIGUIENTE */
     next?.addEventListener('click', () => {
       if (locked || pageIndex >= pages.length - 1) return;
       locked = true;
       pageIndex++;
       updatePages();
-      setTimeout(() => locked = false, 900);
+      setTimeout(() => locked = false, 700);
     });
 
-    /* ◀️ ANTERIOR */
     prev?.addEventListener('click', () => {
       if (locked || pageIndex <= 0) return;
       locked = true;
       pageIndex--;
       updatePages();
-      setTimeout(() => locked = false, 900);
+      setTimeout(() => locked = false, 700);
     });
 
-    /* 👉 SWIPE */
+    /* 📱 Swipe móvil */
     let startX = 0;
 
     book.ontouchstart = e => {
@@ -170,15 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     book.ontouchend = e => {
       const endX = e.changedTouches[0].clientX;
-      if (startX - endX > 50) next?.click();
-      if (endX - startX > 50) prev?.click();
-    };
-
-    /* 🔍 ZOOM */
-    book.onclick = () => {
-      if (book.closest('.page-section.active')) {
-        book.classList.toggle('zoom');
-      }
+      if (startX - endX > 60) next?.click();
+      if (endX - startX > 60) prev?.click();
     };
   }
 
@@ -208,14 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const center = carousel.scrollLeft + carousel.clientWidth / 2;
       let closest = 0, min = Infinity;
 
-      slides.forEach((slide, i) => {
-        const c = slide.offsetLeft + slide.clientWidth / 2;
+      slides.forEach((s, i) => {
+        const c = s.offsetLeft + s.clientWidth / 2;
         const d = Math.abs(center - c);
-        if (d < min) {
-          min = d;
-          closest = i;
-        }
-        slide.classList.remove('active');
+        if (d < min) { min = d; closest = i; }
+        s.classList.remove('active');
       });
 
       slides[closest]?.classList.add('active');
@@ -226,9 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goTo(i) {
       index = (i + slides.length) % slides.length;
-      const slide = slides[index];
-      const left = slide.offsetLeft - (carousel.clientWidth - slide.clientWidth) / 2;
-      carousel.scrollTo({ left, behavior: 'smooth' });
+      const s = slides[index];
+      carousel.scrollTo({
+        left: s.offsetLeft - (carousel.clientWidth - s.clientWidth) / 2,
+        behavior: 'smooth'
+      });
       setTimeout(updateActive, 250);
     }
 
@@ -236,8 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn?.addEventListener('click', () => goTo(index + 1));
 
     carousel.addEventListener('scroll', () => {
-      clearTimeout(window._scrollTimer);
-      window._scrollTimer = setTimeout(updateActive, 100);
+      clearTimeout(window._st);
+      window._st = setTimeout(updateActive, 120);
     });
 
     window.addEventListener('load', () => goTo(0));
@@ -249,24 +209,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function actualizarReloj() {
     const reloj = document.getElementById("reloj");
     if (!reloj) return;
-    const ahora = new Date();
+    const a = new Date();
     reloj.textContent =
-      `${String(ahora.getHours()).padStart(2, '0')}:` +
-      `${String(ahora.getMinutes()).padStart(2, '0')}:` +
-      `${String(ahora.getSeconds()).padStart(2, '0')}`;
+      `${String(a.getHours()).padStart(2,'0')}:` +
+      `${String(a.getMinutes()).padStart(2,'0')}:` +
+      `${String(a.getSeconds()).padStart(2,'0')}`;
   }
 
   function actualizarEstado() {
     const estado = document.getElementById("estado");
     if (!estado) return;
-
-    const ahora = new Date();
-    const hoy = ahora.getDay();
-    const ahoraMin = ahora.getHours() * 60 + ahora.getMinutes();
-
-    /* Viernes 19:00–23:00 (ajústalo si quieres) */
-    const abierto = hoy === 5 && ahoraMin >= 1140 && ahoraMin <= 1380;
-
+    const a = new Date();
+    const abierto = a.getDay() === 5 && (a.getHours()*60 + a.getMinutes()) >= 1140 && (a.getHours()*60 + a.getMinutes()) <= 1380;
     estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
     estado.style.color = abierto ? "green" : "red";
   }
@@ -280,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarEstado();
 
   /* =========================
-     © FOOTER AÑO
+     © FOOTER
   ========================= */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
