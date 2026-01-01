@@ -98,11 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
           page.style.transform = 'rotateY(-180deg)';
           page.style.zIndex = i;
           page.classList.remove('turning');
-        } else if (i === pageIndex) {
-          page.style.transform = 'rotateY(0deg)';
-          page.style.zIndex = pages.length + 5;
-          page.classList.add('turning');
-        } else {
+        } 
+else if (i === pageIndex) {
+  page.style.transform = 'rotateY(0deg)';
+  page.classList.add('turning');
+
+  /* 🔒 retrasamos el z-index para evitar repaint */
+  requestAnimationFrame(() => {
+    page.style.zIndex = pages.length + 5;
+  });
+}
+
+else {
           page.style.transform = 'rotateY(0deg)';
           page.style.zIndex = pages.length - i;
           page.classList.remove('turning');
