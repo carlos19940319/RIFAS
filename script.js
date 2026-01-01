@@ -43,8 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (id === 'pizzas') {
+    /* 🔥 INICIALIZAR CARTA SOLO EN "carta" */
+    if (id === 'carta') {
       requestAnimationFrame(() => {
+        resetLibro();
         requestAnimationFrame(initLibro);
       });
     }
@@ -57,10 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  showSection(location.hash.replace('#','') || defaultSection, false);
+  showSection(location.hash.replace('#', '') || defaultSection, false);
 
   window.addEventListener('hashchange', () => {
-    showSection(location.hash.replace('#','') || defaultSection, false);
+    showSection(location.hash.replace('#', '') || defaultSection, false);
   });
 
   /* =========================
@@ -69,15 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let pageIndex = 0;
   let locked = false;
 
-  function initLibro() {
-
-    const book = document.querySelector('.book');
-    const pages = [...document.querySelectorAll('.page')];
-    const nextBtn = document.querySelector('.nav.next');
-    const prevBtn = document.querySelector('.nav.prev');
-
-    if (!book || pages.length === 0) return;
-
+  function resetLibro() {
+    const pages = document.querySelectorAll('.book .page');
     pageIndex = 0;
     locked = false;
 
@@ -86,12 +81,23 @@ document.addEventListener('DOMContentLoaded', () => {
       p.style.zIndex = pages.length - i;
       p.classList.remove('turning');
     });
+  }
+
+  function initLibro() {
+
+    const book = document.querySelector('.book');
+    const pages = [...document.querySelectorAll('.book .page')];
+    const nextBtn = document.querySelector('.nav.next');
+    const prevBtn = document.querySelector('.nav.prev');
+
+    if (!book || pages.length === 0) return;
 
     function updatePages() {
       pages.forEach((page, i) => {
         if (i < pageIndex) {
           page.style.transform = 'rotateY(-180deg)';
           page.style.zIndex = i;
+          page.classList.remove('turning');
         } else if (i === pageIndex) {
           page.style.transform = 'rotateY(0deg)';
           page.style.zIndex = pages.length + 5;
@@ -220,7 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const estado = document.getElementById("estado");
     if (!estado) return;
     const a = new Date();
-    const abierto = a.getDay() === 5 && (a.getHours()*60 + a.getMinutes()) >= 1140 && (a.getHours()*60 + a.getMinutes()) <= 1380;
+    const minutos = a.getHours() * 60 + a.getMinutes();
+    const abierto = a.getDay() === 5 && minutos >= 1140 && minutos <= 1380;
     estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
     estado.style.color = abierto ? "green" : "red";
   }
