@@ -93,29 +93,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!book || pages.length === 0) return;
 
     function updatePages() {
-      pages.forEach((page, i) => {
-        if (i < pageIndex) {
-          page.style.transform = 'rotateY(-180deg)';
-          page.style.zIndex = i;
-          page.classList.remove('turning');
-        } 
-else if (i === pageIndex) {
-  page.style.transform = 'rotateY(0deg)';
-  page.classList.add('turning');
+  pages.forEach((page, i) => {
 
-  /* 🔒 retrasamos el z-index para evitar repaint */
-  requestAnimationFrame(() => {
-    page.style.zIndex = pages.length + 5;
+    // limpiamos estado primero
+    page.classList.remove('turning');
+
+    if (i < pageIndex) {
+      page.style.transform = 'rotateY(-180deg)';
+      page.style.zIndex = i;
+    }
+
+    else if (i === pageIndex) {
+      page.style.transform = 'rotateY(0deg)';
+      page.style.zIndex = pages.length + 1; // 👈 fijo, SIN RAF
+      page.classList.add('turning');
+    }
+
+    else {
+      page.style.transform = 'rotateY(0deg)';
+      page.style.zIndex = pages.length - i;
+    }
+
   });
 }
-
-else {
-          page.style.transform = 'rotateY(0deg)';
-          page.style.zIndex = pages.length - i;
-          page.classList.remove('turning');
-        }
-      });
-    }
 
     updatePages();
 
