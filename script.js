@@ -2,6 +2,7 @@
    script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
    ✔ Carta tipo libro (SIN parpadeo)
+   ✔ Reset al salir de carta
    ✔ Carrusel optimizado
    ✔ Reloj / Estado
    ✔ Móvil fluido
@@ -23,6 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showSection(id, push = true) {
 
+    /* 🔄 RESET DEL LIBRO AL SALIR DE CARTA */
+    const activeSection = document.querySelector('.page-section.active');
+    if (activeSection?.id === 'carta' && id !== 'carta') {
+      resetLibro();
+      window._libroInit = false;
+    }
+
     sections.forEach(sec => {
       sec.classList.remove('active');
       sec.style.display = 'none';
@@ -43,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    /* 📖 inicializar libro SOLO una vez */
+    /* 📖 Inicializar libro SOLO al entrar a carta */
     if (id === 'carta' && !window._libroInit) {
-      initLibro();
+      requestAnimationFrame(initLibro);
       window._libroInit = true;
     }
   }
@@ -64,97 +72,104 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-   📖 LIBRO / CARTA — FINAL (ANTI-PARPADEO)
-========================= */
-let pageIndex = 0;
-let locked = false;
+     📖 LIBRO / CARTA — FINAL (ANTI-PARPADEO)
+  ========================= */
+  let pageIndex = 0;
+  let locked = false;
 
-function initLibro() {
+  function initLibro() {
 
-  const book = document.querySelector('.book');
-  const pages = [...document.querySelectorAll('.book .page')];
-  const nextBtn = document.querySelector('.nav.next');
-  const prevBtn = document.querySelector('.nav.prev');
+    const book = document.querySelector('.book');
+    const pages = [...document.querySelectorAll('.book .page')];
+    const nextBtn = document.querySelector('.nav.next');
+    const prevBtn = document.querySelector('.nav.prev');
 
-  if (!book || pages.length === 0) return;
+    if (!book || pages.length === 0) return;
 
-  /* Estado inicial */
-  pages.forEach((p, i) => {
-    p.style.transform = 'rotateY(0deg)';
-    p.style.zIndex = pages.length - i;
-    p.classList.remove('turning');
-  });
+    /* Estado inicial */
+    pages.forEach((p, i) => {
+      p.style.transform = 'rotateY(0deg)';
+      p.style.zIndex = pages.length - i;
+      p.classList.remove('turning');
+    });
 
-  function updatePages() {
+    function updatePages() {
+      pages.forEach((page, i) => {
+
+        page.classList.remove('turning');
+
+        if (i < pageIndex) {
+          page.style.transform = 'rotateY(-180deg)';
+          page.style.zIndex = i;
+        }
+
+        else if (i === pageIndex) {
+          page.style.transform = 'rotateY(-180deg)';
+          page.style.zIndex = pages.length + 1;
+          page.offsetHeight; // 🔒 fuerza frame
+          page.style.transform = 'rotateY(0deg)';
+          page.classList.add('turning');
+        }
+
+        else {
+          page.style.transform = 'rotateY(0deg)';
+          page.style.zIndex = pages.length - i;
+        }
+      });
+    }
+
+    /* Limpiar listeners previos */
+    nextBtn?.replaceWith(nextBtn.cloneNode(true));
+    prevBtn?.replaceWith(prevBtn.cloneNode(true));
+
+    const next = document.querySelector('.nav.next');
+    const prev = document.querySelector('.nav.prev');
+
+    next?.addEventListener('click', () => {
+      if (locked || pageIndex >= pages.length - 1) return;
+      locked = true;
+      pageIndex++;
+      updatePages();
+      setTimeout(() => locked = false, 550);
+    });
+
+    prev?.addEventListener('click', () => {
+      if (locked || pageIndex <= 0) return;
+      locked = true;
+      pageIndex--;
+      updatePages();
+      setTimeout(() => locked = false, 550);
+    });
+
+    /* 📱 Swipe móvil */
+    let startX = 0;
+
+    book.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    book.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      if (startX - endX > 60) next?.click();
+      if (endX - startX > 60) prev?.click();
+    }, { passive: true });
+  }
+
+  /* 🔄 RESET LIBRO (PORTADA) */
+  function resetLibro() {
+    const pages = document.querySelectorAll('.book .page');
+    if (!pages.length) return;
+
+    pageIndex = 0;
+    locked = false;
+
     pages.forEach((page, i) => {
-
       page.classList.remove('turning');
-
-      /* PÁGINAS YA PASADAS */
-      if (i < pageIndex) {
-        page.style.transform = 'rotateY(-180deg)';
-        page.style.zIndex = i;
-      }
-
-      /* PÁGINA ACTIVA — FIX REAL ANTI-FLASH */
-      else if (i === pageIndex) {
-
-        // 1️⃣ Empieza OCULTA
-        page.style.transform = 'rotateY(-180deg)';
-        page.style.zIndex = pages.length + 1;
-
-        // 2️⃣ Forzamos frame inicial (CLAVE)
-        page.offsetHeight;
-
-        // 3️⃣ Ahora sí animamos
-        page.style.transform = 'rotateY(0deg)';
-        page.classList.add('turning');
-      }
-
-      /* PÁGINAS FUTURAS */
-      else {
-        page.style.transform = 'rotateY(0deg)';
-        page.style.zIndex = pages.length - i;
-      }
+      page.style.transform = 'rotateY(0deg)';
+      page.style.zIndex = pages.length - i;
     });
   }
 
-  /* Limpiar listeners previos */
-  nextBtn?.replaceWith(nextBtn.cloneNode(true));
-  prevBtn?.replaceWith(prevBtn.cloneNode(true));
-
-  const next = document.querySelector('.nav.next');
-  const prev = document.querySelector('.nav.prev');
-
-  next?.addEventListener('click', () => {
-    if (locked || pageIndex >= pages.length - 1) return;
-    locked = true;
-    pageIndex++;
-    updatePages();
-    setTimeout(() => locked = false, 550);
-  });
-
-  prev?.addEventListener('click', () => {
-    if (locked || pageIndex <= 0) return;
-    locked = true;
-    pageIndex--;
-    updatePages();
-    setTimeout(() => locked = false, 550);
-  });
-
-  /* 📱 Swipe móvil */
-  let startX = 0;
-
-  book.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  book.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    if (startX - endX > 60) next?.click();
-    if (endX - startX > 60) prev?.click();
-  }, { passive: true });
-}
   /* =========================
      🎞️ CARRUSEL EVENTOS
   ========================= */
