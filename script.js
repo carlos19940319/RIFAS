@@ -75,11 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 /* =====================================================
-📖 LIBRO / CARTA — FINAL PRO (DOBLE EFECTO REAL)
+📖 LIBRO / CARTA — UNA SOLA HOJA (PC + MÓVIL)
 ===================================================== */
 
 let pageIndex = 0;
-let lastIndex = 0;
 let locked = false;
 
 function initLibro() {
@@ -89,97 +88,84 @@ function initLibro() {
   const nextBtn = document.querySelector('.nav.next');
   const prevBtn = document.querySelector('.nav.prev');
 
-  if (!book || !pages.length) return;
+  if (!book || pages.length === 0) return;
 
   /* =========================
      ESTADO INICIAL
   ========================= */
   pages.forEach((page, i) => {
-    page.classList.remove(
-      'turning',
-      'forward',
-      'backward',
-      'cover'
-    );
+    page.classList.remove('turning', 'forward', 'backward');
     page.style.transitionDuration = '1s';
     page.style.transform = 'rotateY(0deg)';
     page.style.zIndex = pages.length - i;
   });
 
-  /* 📕 Portada rígida */
-  pages[0]?.classList.add('cover');
-
   /* =========================
      ACTUALIZAR PÁGINAS
   ========================= */
-  function updatePages() {
-
-    const forwardMove = pageIndex > lastIndex;
+  function updatePages(direction) {
 
     pages.forEach((page, i) => {
 
       page.classList.remove('turning', 'forward', 'backward');
 
-      /* ---------- PÁGINAS YA PASADAS ---------- */
+      /* PÁGINAS YA PASADAS */
       if (i < pageIndex) {
         page.style.zIndex = i;
-        page.style.transitionDuration = '1s';
-        page.style.transform = forwardMove
-          ? 'rotateY(-180deg)'
-          : 'rotateY(180deg)';
+        page.style.transform = 'rotateY(-180deg)';
       }
 
-      /* ---------- PÁGINA ACTIVA ---------- */
+      /* PÁGINA ACTIVA */
       else if (i === pageIndex) {
 
-        page.style.zIndex = pages.length + 5;
-        page.style.transitionDuration = (i === 0) ? '1.4s' : '1s';
+        page.style.zIndex = pages.length + 10;
 
-        /* anti-flash real */
+        /* 🔒 anti-parpadeo */
         page.style.transitionProperty = 'none';
-        page.style.transform = forwardMove
-          ? 'rotateY(-180deg)'
-          : 'rotateY(180deg)';
+        page.style.transform =
+          direction === 'next'
+            ? 'rotateY(-180deg)'
+            : 'rotateY(180deg)';
 
-        page.getBoundingClientRect(); // 🔒 fuerza render
+        page.getBoundingClientRect(); // fuerza repaint
 
         page.style.transitionProperty = '';
-        page.classList.add(
-          'turning',
-          forwardMove ? 'forward' : 'backward'
-        );
-
+        page.classList.add('turning', direction === 'next' ? 'forward' : 'backward');
         page.style.transform = 'rotateY(0deg)';
       }
 
-      /* ---------- PÁGINAS FUTURAS ---------- */
+      /* PÁGINAS FUTURAS */
       else {
         page.style.zIndex = pages.length - i;
-        page.style.transitionDuration = '1s';
         page.style.transform = 'rotateY(0deg)';
       }
     });
-
-    lastIndex = pageIndex;
   }
 
   /* =========================
-     BOTONES
+     BOTÓN SIGUIENTE
   ========================= */
   nextBtn?.addEventListener('click', () => {
     if (locked || pageIndex >= pages.length - 1) return;
+
     locked = true;
     pageIndex++;
-    updatePages();
-    setTimeout(() => locked = false, 700);
+    updatePages('next');
+
+    setTimeout(() => locked = false, 850);
   });
 
+  /* =========================
+     BOTÓN ANTERIOR
+  ========================= */
   prevBtn?.addEventListener('click', () => {
     if (locked || pageIndex <= 0) return;
+
     locked = true;
     pageIndex--;
-    updatePages();
-    setTimeout(() => locked = false, 700);
+    updatePages('prev');
+
+    setTimeout(() => locked = false, 850);
   });
 
   /* =========================
@@ -193,14 +179,15 @@ function initLibro() {
 
   book.addEventListener('touchend', e => {
     const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
 
-    if (startX - endX > 60) nextBtn?.click();
-    if (endX - startX > 60) prevBtn?.click();
+    if (diff > 60) nextBtn?.click();
+    if (diff < -60) prevBtn?.click();
   }, { passive: true });
 }
 
 /* =====================================================
-🔄 RESET LIBRO (PORTADA)
+🔄 RESET LIBRO (VOLVER A PORTADA)
 ===================================================== */
 function resetLibro() {
 
@@ -208,20 +195,20 @@ function resetLibro() {
   if (!pages.length) return;
 
   pageIndex = 0;
-  lastIndex = 0;
   locked = false;
 
   pages.forEach((page, i) => {
-    page.classList.remove(
-      'turning',
-      'forward',
-      'backward'
-    );
+    page.classList.remove('turning', 'forward', 'backward');
     page.style.transitionDuration = '1s';
     page.style.transform = 'rotateY(0deg)';
     page.style.zIndex = pages.length - i;
   });
 }
+
+/* =========================
+INICIAR AUTOMÁTICAMENTE
+========================= */
+document.addEventListener('DOMContentLoaded', initLibro);
 
   /* =====================================================
      ⏰ RELOJ / ESTADO — HORARIO OFICIAL
