@@ -1,7 +1,7 @@
 /* =========================
    script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
-   ✔ Carta tipo libro (SIN parpadeo)
+   ✔ Carta tipo libro (SIN parpadeo / SIN tick)
    ✔ Reset al salir de carta
    ✔ Carrusel optimizado
    ✔ Reloj / Estado
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-     📖 LIBRO / CARTA — FINAL (ANTI-PARPADEO)
+     📖 LIBRO / CARTA — ANTI-PARPADEO REAL
   ========================= */
   let pageIndex = 0;
   let locked = false;
@@ -98,22 +98,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         page.classList.remove('turning');
 
+        /* 📄 PÁGINAS YA PASADAS */
         if (i < pageIndex) {
           page.style.transform = 'rotateY(-180deg)';
           page.style.zIndex = i;
         }
 
+        /* 📄 PÁGINA ACTIVA (ENTRA LIMPIA, SIN TICK) */
         else if (i === pageIndex) {
+
+          /* ⛔ Nunca permitir frame plano */
           page.style.transform = 'rotateY(-180deg)';
-          page.style.zIndex = pages.length + 1;
-          page.offsetHeight; // 🔒 fuerza frame
+          page.style.zIndex = pages.length + 2;
+
+          /* 🔒 Forzamos layout */
+          page.offsetHeight;
+
+          /* ▶️ Ahora sí animamos */
           page.style.transform = 'rotateY(0deg)';
           page.classList.add('turning');
         }
 
+        /* 📄 PÁGINAS FUTURAS */
         else {
           page.style.transform = 'rotateY(0deg)';
-          page.style.zIndex = pages.length - i;
+          page.style.zIndex = pages.length - i - 1; // 🔑 FIX TICK IZQUIERDA
         }
       });
     }
