@@ -1521,3 +1521,22 @@ SOMBRA AL GIRAR
     transform-origin:left center !important;
   }
 }
+.page.forward::after{
+  background:linear-gradient(90deg,
+    rgba(0,0,0,.6) 0%,
+    rgba(0,0,0,.4) 18%,
+    rgba(0,0,0,.22) 35%,
+    rgba(0,0,0,.1) 55%,
+    rgba(0,0,0,0) 75%
+  );
+}
+
+.page.backward::after{
+  background:linear-gradient(-90deg,
+    rgba(0,0,0,.6) 0%,
+    rgba(0,0,0,.4) 18%,
+    rgba(0,0,0,.22) 35%,
+    rgba(0,0,0,.1) 55%,
+    rgba(0,0,0,0) 75%
+  );
+}
