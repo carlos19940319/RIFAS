@@ -293,3 +293,45 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 });
+/* =========================
+   ⏰ HORARIO / RELOJ — VISIBILIDAD UNIVERSAL
+========================= */
+
+#horario-compacto{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:12px;
+
+  /* fondo adaptable a cualquier imagen */
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+
+  /* borde sutil */
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.12);
+}
+
+#reloj,
+#estado,
+#horario-compacto h2,
+#horario-compacto li{
+  color:#fff;
+
+  /* sombra de texto para contraste real */
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.9),
+    0 0 8px rgba(0,0,0,.6);
+}
+
+/* Estado Abierto */
+#estado.abierto{
+  background:rgba(0,128,0,.25);
+  border:1px solid rgba(0,255,0,.4);
+}
+
+/* Estado Cerrado */
+#estado.cerrado{
+  background:rgba(128,0,0,.25);
+  border:1px solid rgba(255,0,0,.4);
+}
