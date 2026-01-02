@@ -937,6 +937,58 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   transform:translateY(-50%) scale(1.12);
 }
 /* =========================
+📖 DOBLE HOJA REAL (DESKTOP)
+========================= */
+@media (min-width: 900px){
+
+  .book{
+    display:flex;
+  }
+
+  .page{
+    width:50%;
+  }
+
+  /* página izquierda */
+  .page.left{
+    left:0;
+    transform-origin:right center;
+  }
+
+  /* página derecha */
+  .page.right{
+    right:0;
+    left:auto;
+    transform-origin:left center;
+  }
+}
+
+/* =========================
+📱 MÓVIL — UNA SOLA HOJA
+========================= */
+@media (max-width: 899px){
+
+  .page{
+    width:100%;
+    left:0 !important;
+    right:auto !important;
+    transform-origin:left center !important;
+  }
+}
+/* =========================
+🌫️ SOMBRA PROGRESIVA REAL
+========================= */
+.page.turning::after{
+  background:linear-gradient(
+    90deg,
+    rgba(0,0,0,.65) 0%,
+    rgba(0,0,0,.45) 18%,
+    rgba(0,0,0,.25) 35%,
+    rgba(0,0,0,.12) 55%,
+    rgba(0,0,0,0) 75%
+  );
+}
+/* =========================
    BOTÓN COTIZA TU EVENTO
 ========================= */
 
