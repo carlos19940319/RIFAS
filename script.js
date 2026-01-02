@@ -98,48 +98,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* 📕 Portada rígida */
-    pages[0]?.classList.add('cover');
+pages[0]?.classList.add('cover');
 
-    function updatePages() {
-      pages.forEach((page, i) => {
+function updatePages() {
+  pages.forEach((page, i) => {
 
-        page.classList.remove('turning');
+    page.classList.remove('turning');
 
-        /* páginas ya pasadas */
-        if (i < pageIndex) {
-          page.style.transform = 'rotateY(-180deg)';
-          page.style.zIndex = i;
-        }
-
-        /* página activa */
-        else if (i === pageIndex) {
-
-          const forward = pageIndex > lastIndex;
-
-          /* portada gira más pesada */
-          page.style.transitionDuration = (i === 0) ? '1.4s' : '1s';
-          page.style.zIndex = pages.length + 2;
-
-          /* ocultamos frame plano */
-          page.style.transform = forward
-            ? 'rotateY(-180deg)'
-            : 'rotateY(180deg)';
-
-          page.offsetHeight; // 🔒 fuerza repaint
-
-          page.style.transform = 'rotateY(0deg)';
-          page.classList.add('turning');
-        }
-
-        /* páginas futuras */
-        else {
-          page.style.transform = 'rotateY(0deg)';
-          page.style.zIndex = pages.length - i;
-        }
-      });
-
-      lastIndex = pageIndex;
+    /* =========================
+       PÁGINAS YA PASADAS
+    ========================= */
+    if (i < pageIndex) {
+      page.style.transitionDuration = '1s';
+      page.style.zIndex = i;
+      page.style.transform = 'rotateY(-180deg)';
     }
+
+    /* =========================
+       PÁGINA ACTIVA (FIX REAL)
+    ========================= */
+    else if (i === pageIndex) {
+
+      const forward = pageIndex > lastIndex;
+
+      /* duración portada */
+      page.style.transitionDuration = (i === 0) ? '1.4s' : '1s';
+      page.style.zIndex = pages.length + 2;
+
+      /* 1️⃣ DESACTIVAMOS TRANSICIÓN */
+      page.style.transitionProperty = 'none';
+
+      /* 2️⃣ NACER GIRADA (NUNCA PLANA) */
+      page.style.transform = forward
+        ? 'rotateY(-180deg)'
+        : 'rotateY(180deg)';
+
+      /* 3️⃣ FORZAMOS RENDER */
+      page.getBoundingClientRect();
+
+      /* 4️⃣ ACTIVAMOS TRANSICIÓN Y GIRAMOS */
+      page.style.transitionProperty = '';
+      page.classList.add('turning');
+      page.style.transform = 'rotateY(0deg)';
+    }
+
+    /* =========================
+       PÁGINAS FUTURAS
+    ========================= */
+    else {
+      page.style.transitionDuration = '1s';
+      page.style.zIndex = pages.length - i;
+      page.style.transform = 'rotateY(0deg)';
+    }
+  });
+
+  lastIndex = pageIndex;
+}
 
     /* Limpiar listeners previos */
     nextBtn?.replaceWith(nextBtn.cloneNode(true));
