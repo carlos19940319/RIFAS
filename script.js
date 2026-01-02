@@ -1,9 +1,9 @@
 /* =========================
    script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
-   ✔ Carta tipo libro (SIN parpadeo)
+   ✔ Carta tipo libro SIN parpadeo
    ✔ Portada rígida
-   ✔ Giro distinto izquierda / derecha
+   ✔ Giro real izquierda / derecha
    ✔ Reset al salir de carta
    ✔ Carrusel optimizado
    ✔ Reloj / Estado
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showSection(id, push = true) {
 
-    /* 🔄 RESET DEL LIBRO AL SALIR DE CARTA */
+    /* 🔄 RESET LIBRO AL SALIR DE CARTA */
     const activeSection = document.querySelector('.page-section.active');
     if (activeSection?.id === 'carta' && id !== 'carta') {
       resetLibro();
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* 📖 Inicializar libro SOLO al entrar a carta */
     if (id === 'carta' && !window._libroInit) {
-      requestAnimationFrame(initLibro);
+      initLibro();
       window._libroInit = true;
     }
   }
@@ -74,136 +74,119 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-     📖 LIBRO / CARTA — FINAL PRO
+     📖 LIBRO / CARTA — PRO REAL
   ========================= */
   let pageIndex = 0;
   let lastIndex = 0;
   let locked = false;
+  let pages = [];
 
   function initLibro() {
 
     const book = document.querySelector('.book');
-    const pages = [...document.querySelectorAll('.book .page')];
+    pages = [...document.querySelectorAll('.book .page')];
     const nextBtn = document.querySelector('.nav.next');
     const prevBtn = document.querySelector('.nav.prev');
 
-    if (!book || pages.length === 0) return;
+    if (!book || !pages.length) return;
 
-    /* Estado inicial */
+    /* Estado inicial limpio */
     pages.forEach((p, i) => {
       p.style.transform = 'rotateY(0deg)';
       p.style.zIndex = pages.length - i;
-      p.style.transitionDuration = '1s';
       p.classList.remove('turning', 'cover');
     });
 
     /* 📕 Portada rígida */
-pages[0]?.classList.add('cover');
+    pages[0]?.classList.add('cover');
 
-function updatePages() {
-  pages.forEach((page, i) => {
+    function updatePages() {
 
-    page.classList.remove('turning');
+      pages.forEach((page, i) => {
 
-    /* =========================
-       PÁGINAS YA PASADAS
-    ========================= */
-    if (i < pageIndex) {
-      page.style.transitionDuration = '1s';
-      page.style.zIndex = i;
-      page.style.transform = 'rotateY(-180deg)';
+        page.classList.remove('turning');
+
+        /* =========================
+           PÁGINAS YA PASADAS
+        ========================= */
+        if (i < pageIndex) {
+          page.style.zIndex = i;
+          page.style.transform = 'rotateY(-180deg)';
+        }
+
+        /* =========================
+           PÁGINA ACTIVA (GIRO REAL)
+        ========================= */
+        else if (i === pageIndex) {
+
+          const forward = pageIndex > lastIndex;
+          page.style.zIndex = pages.length + 2;
+          page.style.transitionDuration = (i === 0) ? '1.4s' : '1s';
+
+          /* 🔒 nace girada (NUNCA plana) */
+          page.style.transition = 'none';
+          page.style.transform = forward
+            ? 'rotateY(-180deg)'
+            : 'rotateY(180deg)';
+
+          page.getBoundingClientRect(); // fuerza render
+
+          /* 🎞️ animación real */
+          page.style.transition = '';
+          page.classList.add('turning');
+          page.style.transform = 'rotateY(0deg)';
+        }
+
+        /* =========================
+           PÁGINAS FUTURAS
+        ========================= */
+        else {
+          page.style.zIndex = pages.length - i;
+          page.style.transform = 'rotateY(0deg)';
+        }
+      });
+
+      lastIndex = pageIndex;
     }
 
-    /* =========================
-       PÁGINA ACTIVA (FIX REAL)
-    ========================= */
-    else if (i === pageIndex) {
-
-      const forward = pageIndex > lastIndex;
-
-      /* duración portada */
-      page.style.transitionDuration = (i === 0) ? '1.4s' : '1s';
-      page.style.zIndex = pages.length + 2;
-
-      /* 1️⃣ DESACTIVAMOS TRANSICIÓN */
-      page.style.transitionProperty = 'none';
-
-      /* 2️⃣ NACER GIRADA (NUNCA PLANA) */
-      page.style.transform = forward
-        ? 'rotateY(-180deg)'
-        : 'rotateY(180deg)';
-
-      /* 3️⃣ FORZAMOS RENDER */
-      page.getBoundingClientRect();
-
-      /* 4️⃣ ACTIVAMOS TRANSICIÓN Y GIRAMOS */
-      page.style.transitionProperty = '';
-      page.classList.add('turning');
-      page.style.transform = 'rotateY(0deg)';
-    }
-
-    /* =========================
-       PÁGINAS FUTURAS
-    ========================= */
-    else {
-      page.style.transitionDuration = '1s';
-      page.style.zIndex = pages.length - i;
-      page.style.transform = 'rotateY(0deg)';
-    }
-  });
-
-  lastIndex = pageIndex;
-}
-
-    /* Limpiar listeners previos */
-    nextBtn?.replaceWith(nextBtn.cloneNode(true));
-    prevBtn?.replaceWith(prevBtn.cloneNode(true));
-
-    const next = document.querySelector('.nav.next');
-    const prev = document.querySelector('.nav.prev');
-
-    next?.addEventListener('click', () => {
+    nextBtn.onclick = () => {
       if (locked || pageIndex >= pages.length - 1) return;
       locked = true;
       pageIndex++;
       updatePages();
       setTimeout(() => locked = false, 650);
-    });
+    };
 
-    prev?.addEventListener('click', () => {
+    prevBtn.onclick = () => {
       if (locked || pageIndex <= 0) return;
       locked = true;
       pageIndex--;
       updatePages();
       setTimeout(() => locked = false, 650);
-    });
+    };
 
     /* 📱 Swipe móvil */
     let startX = 0;
 
     book.addEventListener('touchstart', e => {
       startX = e.touches[0].clientX;
-    }, { passive: true });
+    }, { passive:true });
 
     book.addEventListener('touchend', e => {
       const endX = e.changedTouches[0].clientX;
-      if (startX - endX > 60) next?.click();
-      if (endX - startX > 60) prev?.click();
-    }, { passive: true });
+      if (startX - endX > 60) nextBtn.click();
+      if (endX - startX > 60) prevBtn.click();
+    }, { passive:true });
   }
 
   /* 🔄 RESET LIBRO (PORTADA) */
   function resetLibro() {
-    const pages = document.querySelectorAll('.book .page');
-    if (!pages.length) return;
-
     pageIndex = 0;
     lastIndex = 0;
     locked = false;
 
     pages.forEach((page, i) => {
       page.classList.remove('turning');
-      page.style.transitionDuration = '1s';
       page.style.transform = 'rotateY(0deg)';
       page.style.zIndex = pages.length - i;
     });
@@ -270,58 +253,39 @@ function updatePages() {
   })();
 
   /* =========================
-   ⏰ RELOJ / ESTADO — HORARIO OFICIAL
-   Lunes a sábado: 8:45 a.m. – 5:00 p.m.
-   Domingo: cerrado
-========================= */
+     ⏰ RELOJ / ESTADO
+     Lunes a sábado: 8:45 a.m. – 5:00 p.m.
+  ========================= */
+  function actualizarReloj() {
+    const reloj = document.getElementById("reloj");
+    if (!reloj) return;
 
-function actualizarReloj() {
-  const reloj = document.getElementById("reloj");
-  if (!reloj) return;
-
-  const ahora = new Date();
-
-  reloj.textContent =
-    `${String(ahora.getHours()).padStart(2,'0')}:` +
-    `${String(ahora.getMinutes()).padStart(2,'0')}:` +
-    `${String(ahora.getSeconds()).padStart(2,'0')}`;
-}
-
-function actualizarEstado() {
-  const estado = document.getElementById("estado");
-  if (!estado) return;
-
-  const ahora = new Date();
-
-  const dia = ahora.getDay(); // 0 = domingo
-  const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
-
-  const horaApertura = 8 * 60 + 45;   // 8:45 a.m.
-  const horaCierre   = 17 * 60;       // 5:00 p.m.
-
-  const abierto =
-    dia !== 0 &&                      // ❌ domingo cerrado
-    minutosActuales >= horaApertura &&
-    minutosActuales < horaCierre;
-
-  if (abierto) {
-    estado.textContent = "🟢 Abierto";
-    estado.style.color = "green";
-  } else {
-    estado.textContent = "🔴 Cerrado";
-    estado.style.color = "red";
+    const a = new Date();
+    reloj.textContent =
+      `${String(a.getHours()).padStart(2,'0')}:` +
+      `${String(a.getMinutes()).padStart(2,'0')}:` +
+      `${String(a.getSeconds()).padStart(2,'0')}`;
   }
-}
 
-/* ⏱️ Actualización en tiempo real */
-setInterval(() => {
+  function actualizarEstado() {
+    const estado = document.getElementById("estado");
+    if (!estado) return;
+
+    const a = new Date();
+    const m = a.getHours() * 60 + a.getMinutes();
+    const abierto = a.getDay() !== 0 && m >= 525 && m < 1020;
+
+    estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
+    estado.style.color = abierto ? "green" : "red";
+  }
+
+  setInterval(() => {
+    actualizarReloj();
+    actualizarEstado();
+  }, 1000);
+
   actualizarReloj();
   actualizarEstado();
-}, 1000);
-
-/* Primera ejecución */
-actualizarReloj();
-actualizarEstado();
 
   /* =========================
      © FOOTER
