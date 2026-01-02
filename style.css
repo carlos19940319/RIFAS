@@ -1456,20 +1456,89 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   }
 }
 
-.btn-bonito:active{
-  transform:scale(.96);
+/* 📍 CONTENEDOR CENTRADO */
+.btn-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  margin:24px auto;
 }
 
+/* 🔘 BOTÓN PREMIUM */
+.btn-bonito{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:14px 30px;
+  border-radius:999px;
+
+  font-family:'Pacifico', cursive;
+  font-size:1.05rem;
+  letter-spacing:.6px;
+  text-align:center;
+
+  color:#4a2c00;
+  text-decoration:none;
+
+  background:linear-gradient(
+    180deg,
+    #fff176 0%,
+    #fbc02d 55%,
+    #f9a825 100%
+  );
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.55),
+    0 0 0 3px rgba(255,215,0,.28);
+
+  transition:
+    transform .25s ease,
+    box-shadow .3s ease,
+    filter .3s ease;
+
+  overflow:hidden;
+}
+
+/* ✨ BRILLO SUPERIOR */
 .btn-bonito::before{
   content:"";
   position:absolute;
   inset:0;
   border-radius:inherit;
   pointer-events:none;
+
   background:linear-gradient(
     180deg,
-    rgba(255,255,255,.45),
-    rgba(255,255,255,0) 55%
+    rgba(255,255,255,.55),
+    rgba(255,255,255,0) 60%
   );
+
   opacity:.35;
+}
+
+/* ⭐ EFECTO HOVER (PC) */
+@media (hover:hover){
+  .btn-bonito:hover{
+    transform:translateY(-2px) scale(1.06);
+    box-shadow:
+      0 16px 36px rgba(0,0,0,.65),
+      0 0 0 4px rgba(255,215,0,.4);
+    filter:brightness(1.06);
+  }
+}
+
+/* 📱 ACTIVE (TOQUE) */
+.btn-bonito:active{
+  transform:scale(.95);
+}
+
+/* 📱 MOBILE */
+@media (max-width:640px){
+  .btn-bonito{
+    font-size:.95rem;
+    padding:13px 24px;
+  }
 }
