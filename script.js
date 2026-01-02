@@ -88,14 +88,13 @@ function initLibro() {
   const nextBtn = document.querySelector('.nav.next');
   const prevBtn = document.querySelector('.nav.prev');
 
-  if (!book || pages.length === 0) return;
+  if (!book || !pages.length) return;
 
   /* =========================
      ESTADO INICIAL
   ========================= */
   pages.forEach((page, i) => {
-    page.classList.remove('turning', 'forward', 'backward');
-    page.style.transitionDuration = '1s';
+    page.classList.remove('turning');
     page.style.transform = 'rotateY(0deg)';
     page.style.zIndex = pages.length - i;
   });
@@ -107,7 +106,7 @@ function initLibro() {
 
     pages.forEach((page, i) => {
 
-      page.classList.remove('turning', 'forward', 'backward');
+      page.classList.remove('turning');
 
       /* PÁGINAS YA PASADAS */
       if (i < pageIndex) {
@@ -117,20 +116,8 @@ function initLibro() {
 
       /* PÁGINA ACTIVA */
       else if (i === pageIndex) {
-
-        page.style.zIndex = pages.length + 10;
-
-        /* 🔒 anti-parpadeo */
-        page.style.transitionProperty = 'none';
-        page.style.transform =
-          direction === 'next'
-            ? 'rotateY(-180deg)'
-            : 'rotateY(180deg)';
-
-        page.getBoundingClientRect(); // fuerza repaint
-
-        page.style.transitionProperty = '';
-        page.classList.add('turning', direction === 'next' ? 'forward' : 'backward');
+        page.style.zIndex = pages.length + 5;
+        page.classList.add('turning');
         page.style.transform = 'rotateY(0deg)';
       }
 
@@ -152,7 +139,7 @@ function initLibro() {
     pageIndex++;
     updatePages('next');
 
-    setTimeout(() => locked = false, 850);
+    setTimeout(() => locked = false, 900);
   });
 
   /* =========================
@@ -165,7 +152,7 @@ function initLibro() {
     pageIndex--;
     updatePages('prev');
 
-    setTimeout(() => locked = false, 850);
+    setTimeout(() => locked = false, 900);
   });
 
   /* =========================
@@ -175,38 +162,17 @@ function initLibro() {
 
   book.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
-  }, { passive: true });
+  }, { passive:true });
 
   book.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-
+    const diff = startX - e.changedTouches[0].clientX;
     if (diff > 60) nextBtn?.click();
     if (diff < -60) prevBtn?.click();
-  }, { passive: true });
-}
-
-/* =====================================================
-🔄 RESET LIBRO (VOLVER A PORTADA)
-===================================================== */
-function resetLibro() {
-
-  const pages = document.querySelectorAll('.book .page');
-  if (!pages.length) return;
-
-  pageIndex = 0;
-  locked = false;
-
-  pages.forEach((page, i) => {
-    page.classList.remove('turning', 'forward', 'backward');
-    page.style.transitionDuration = '1s';
-    page.style.transform = 'rotateY(0deg)';
-    page.style.zIndex = pages.length - i;
-  });
+  }, { passive:true });
 }
 
 /* =========================
-INICIAR AUTOMÁTICAMENTE
+INICIAR
 ========================= */
 document.addEventListener('DOMContentLoaded', initLibro);
 
