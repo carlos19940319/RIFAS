@@ -1339,11 +1339,11 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   }
 }
 /* =========================
-   📖 LIBRO / CARTA VIRTUAL — REALISTA (CORREGIDO)
+📖 LIBRO / CARTA VIRTUAL — UNA SOLA HOJA
 ========================= */
 
 /* =========================
-   CONTENEDOR GENERAL
+CONTENEDOR GENERAL
 ========================= */
 .menu-book{
   display:flex;
@@ -1353,35 +1353,32 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   margin:clamp(20px, 4vw, 40px) auto;
   width:100%;
   position:relative;
-
-  /* permite salida real de la hoja */
   overflow:visible;
 }
 
 /* =========================
-   LIBRO
+LIBRO
 ========================= */
 .book{
   width:clamp(350px, 82vw, 900px);
   height:min(69vh, clamp(450px, 61vw, 580px));
   position:relative;
   max-width:100vw;
-
   transform-style:preserve-3d;
   overflow:visible;
 }
 
 /* =========================
-   📄 PÁGINA — HOJA REAL
+📄 PÁGINA — ÚNICA
 ========================= */
 .page{
   position:absolute;
   inset:0;
+  width:100%;
+  margin:auto;
 
   background:#1a0f08;
   border-radius:8px;
-
-  /* 🔑 NO cortar la hoja */
   overflow:visible;
 
   box-shadow:
@@ -1389,7 +1386,6 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
     0 24px 55px rgba(0,0,0,.65),
     inset 0 0 0 1px rgba(255,255,255,.06);
 
-  /* 🔑 giro real (BASE ÚNICA) */
   transform-origin:left center;
   transform:rotateY(0deg);
 
@@ -1406,7 +1402,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 /* =========================
-   SOMBRA DURANTE GIRO
+SOMBRA DURANTE GIRO
 ========================= */
 .page.turning{
   box-shadow:
@@ -1416,24 +1412,21 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 /* =========================
-   🖼️ CONTENIDO
+🖼️ CONTENIDO
 ========================= */
 .page img{
   width:100%;
   height:100%;
   display:block;
-
   object-fit:cover;
   border-radius:inherit;
-
   background:#46220f;
-
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
 
 /* =========================
-   ✨ SOMBRA DE DOBLEZ (BASE)
+✨ SOMBRA DE DOBLEZ
 ========================= */
 .page::after{
   content:"";
@@ -1444,23 +1437,23 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   background:linear-gradient(
     90deg,
-    rgba(0,0,0,.55) 0%,
-    rgba(0,0,0,.35) 18%,
-    rgba(0,0,0,.15) 34%,
-    rgba(0,0,0,0) 48%
+    rgba(0,0,0,.65) 0%,
+    rgba(0,0,0,.45) 18%,
+    rgba(0,0,0,.25) 35%,
+    rgba(0,0,0,.12) 55%,
+    rgba(0,0,0,0) 75%
   );
 
   opacity:0;
   transition:opacity .6s ease;
 }
 
-/* sombra activa */
 .page.turning::after{
   opacity:1;
 }
 
 /* =========================
-   🔘 BOTONES
+🔘 BOTONES
 ========================= */
 .nav{
   position:absolute;
@@ -1470,8 +1463,8 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   background:rgba(255,255,255,.7);
   backdrop-filter:blur(6px);
-
   border:none;
+
   width:clamp(44px, 6vw, 60px);
   height:clamp(44px, 6vw, 60px);
   border-radius:50%;
@@ -1491,58 +1484,4 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
 .nav:hover{
   transform:translateY(-50%) scale(1.12);
-}
-
-/* =========================
-📖 DOBLE HOJA REAL (DESKTOP)
-========================= */
-@media (min-width:900px){
-
-  .book{
-    display:flex;
-  }
-
-  .page{
-    width:50%;
-  }
-
-  /* hoja izquierda */
-  .page.left{
-    left:0;
-    transform-origin:right center;
-  }
-
-  /* hoja derecha */
-  .page.right{
-    right:0;
-    left:auto;
-    transform-origin:left center;
-  }
-}
-
-/* =========================
-📱 MÓVIL — UNA SOLA HOJA
-========================= */
-@media (max-width:899px){
-
-  .page{
-    width:100%;
-    left:0 !important;
-    right:auto !important;
-    transform-origin:left center !important;
-  }
-}
-
-/* =========================
-🌫️ SOMBRA PROGRESIVA REAL
-========================= */
-.page.turning::after{
-  background:linear-gradient(
-    90deg,
-    rgba(0,0,0,.65) 0%,
-    rgba(0,0,0,.45) 18%,
-    rgba(0,0,0,.25) 35%,
-    rgba(0,0,0,.12) 55%,
-    rgba(0,0,0,0) 75%
-  );
 }
