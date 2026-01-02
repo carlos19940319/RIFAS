@@ -256,24 +256,21 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* =========================
-   ⏰ RELOJ / ESTADO
+   ⏰ RELOJ / ESTADO — HORARIO OFICIAL
+   Lunes a sábado: 8:45 a.m. – 5:00 p.m.
+   Domingo: cerrado
 ========================= */
+
 function actualizarReloj() {
   const reloj = document.getElementById("reloj");
   if (!reloj) return;
 
   const ahora = new Date();
-  let horas = ahora.getHours();
-  const minutos = ahora.getMinutes();
-  const segundos = ahora.getSeconds();
-
-  const ampm = horas >= 12 ? 'p.m.' : 'a.m.';
-  horas = horas % 12 || 12; // convierte a formato 12h
 
   reloj.textContent =
-    `${String(horas).padStart(2,'0')}:` +
-    `${String(minutos).padStart(2,'0')}:` +
-    `${String(segundos).padStart(2,'0')} ${ampm}`;
+    `${String(ahora.getHours()).padStart(2,'0')}:` +
+    `${String(ahora.getMinutes()).padStart(2,'0')}:` +
+    `${String(ahora.getSeconds()).padStart(2,'0')}`;
 }
 
 function actualizarEstado() {
@@ -281,28 +278,34 @@ function actualizarEstado() {
   if (!estado) return;
 
   const ahora = new Date();
+
   const dia = ahora.getDay(); // 0 = domingo
   const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
 
-  // Horario: Lun–Sáb 8:45 a.m. a 5:00 p.m.
-  const horaApertura = 8 * 60 + 45; // 8:45
-  const horaCierre = 17 * 60;       // 5:00 p.m.
+  const horaApertura = 8 * 60 + 45;   // 8:45 a.m.
+  const horaCierre   = 17 * 60;       // 5:00 p.m.
 
   const abierto =
-    dia !== 0 && // domingo cerrado
+    dia !== 0 &&                      // ❌ domingo cerrado
     minutosActuales >= horaApertura &&
     minutosActuales < horaCierre;
 
-  estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
-  estado.style.color = abierto ? "green" : "red";
+  if (abierto) {
+    estado.textContent = "🟢 Abierto";
+    estado.style.color = "green";
+  } else {
+    estado.textContent = "🔴 Cerrado";
+    estado.style.color = "red";
+  }
 }
 
+/* ⏱️ Actualización en tiempo real */
 setInterval(() => {
   actualizarReloj();
   actualizarEstado();
 }, 1000);
 
-// ejecución inicial
+/* Primera ejecución */
 actualizarReloj();
 actualizarEstado();
   /* =========================
