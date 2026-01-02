@@ -1592,3 +1592,46 @@ SOMBRA DURANTE GIRO
     max-width: 760px;
   }
 }
+/* =================================================
+   🧠 FIX DEFINITIVO — PANTALLAS PEQUEÑAS / GAMA BAJA
+   Evita que el header tape el contenido
+================================================= */
+
+/* pantallas con poca altura real */
+@media (max-height: 750px) {
+
+  main{
+    padding-top: 190px !important;
+  }
+
+  .welcome-text{
+    margin-top: 0 !important;
+  }
+}
+
+/* laptops chicas (1366x768, 1280x720, etc) */
+@media (max-width: 1366px) and (max-height: 800px){
+
+  main{
+    padding-top: 200px !important;
+  }
+
+  .welcome-text h2{
+    margin-top: 0 !important;
+  }
+}
+
+/* dispositivos lentos / gama baja */
+@media (prefers-reduced-motion: reduce){
+
+  *{
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .menu-book{
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
