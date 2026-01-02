@@ -1,16 +1,16 @@
 /* =========================
-   script.js — LA CHONA FINAL ESTABLE
-   ✔ SPA
-   ✔ Carta tipo libro real
-   ✔ Carrusel
+   script.js — LA CHONA FINAL DEFINITIVO
+   ✔ SPA estable
+   ✔ Carta tipo libro (SIN parpadeo)
+   ✔ Carrusel optimizado
    ✔ Reloj / Estado
-   ✔ Móvil estable
+   ✔ Móvil fluido
 ========================= */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   /* =========================
-     FADE IN
+     FADE IN GENERAL
   ========================= */
   document.body.classList.add('show');
 
@@ -43,12 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    /* 🔥 INICIALIZAR CARTA SOLO EN "carta" */
-    if (id === 'carta') {
-      requestAnimationFrame(() => {
-        resetLibro();
-        requestAnimationFrame(initLibro);
-      });
+    /* 📖 inicializar libro SOLO una vez */
+    if (id === 'carta' && !window._libroInit) {
+      initLibro();
+      window._libroInit = true;
     }
   }
 
@@ -66,22 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-     📖 LIBRO / CARTA — DEFINITIVO
+     📖 LIBRO / CARTA — FINAL
   ========================= */
   let pageIndex = 0;
   let locked = false;
-
-  function resetLibro() {
-    const pages = document.querySelectorAll('.book .page');
-    pageIndex = 0;
-    locked = false;
-
-    pages.forEach((p, i) => {
-      p.style.transform = 'rotateY(0deg)';
-      p.style.zIndex = pages.length - i;
-      p.classList.remove('turning');
-    });
-  }
 
   function initLibro() {
 
@@ -92,34 +78,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!book || pages.length === 0) return;
 
+    /* Estado inicial */
+    pages.forEach((p, i) => {
+      p.style.transform = 'rotateY(0deg)';
+      p.style.zIndex = pages.length - i;
+      p.classList.remove('turning');
+    });
+
     function updatePages() {
-  pages.forEach((page, i) => {
+      pages.forEach((page, i) => {
 
-    // limpiamos estado primero
-    page.classList.remove('turning');
+        page.classList.remove('turning');
 
-    if (i < pageIndex) {
-      page.style.transform = 'rotateY(-180deg)';
-      page.style.zIndex = i;
+        if (i < pageIndex) {
+          page.style.transform = 'rotateY(-180deg)';
+          page.style.zIndex = i;
+        }
+
+        else if (i === pageIndex) {
+          page.style.transform = 'rotateY(0deg)';
+          page.style.zIndex = pages.length + 1;
+          page.classList.add('turning');
+        }
+
+        else {
+          page.style.transform = 'rotateY(0deg)';
+          page.style.zIndex = pages.length - i;
+        }
+
+      });
     }
 
-    else if (i === pageIndex) {
-      page.style.transform = 'rotateY(0deg)';
-      page.style.zIndex = pages.length + 1; // 👈 fijo, SIN RAF
-      page.classList.add('turning');
-    }
-
-    else {
-      page.style.transform = 'rotateY(0deg)';
-      page.style.zIndex = pages.length - i;
-    }
-
-  });
-}
-
-    updatePages();
-
-    /* 🔁 limpiar listeners previos */
+    /* Limpiar listeners previos */
     nextBtn?.replaceWith(nextBtn.cloneNode(true));
     prevBtn?.replaceWith(prevBtn.cloneNode(true));
 
@@ -131,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = true;
       pageIndex++;
       updatePages();
-      setTimeout(() => locked = false, 700);
+      setTimeout(() => locked = false, 550);
     });
 
     prev?.addEventListener('click', () => {
@@ -139,21 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = true;
       pageIndex--;
       updatePages();
-      setTimeout(() => locked = false, 700);
+      setTimeout(() => locked = false, 550);
     });
 
     /* 📱 Swipe móvil */
     let startX = 0;
 
-    book.ontouchstart = e => {
+    book.addEventListener('touchstart', e => {
       startX = e.touches[0].clientX;
-    };
+    }, { passive: true });
 
-    book.ontouchend = e => {
+    book.addEventListener('touchend', e => {
       const endX = e.changedTouches[0].clientX;
       if (startX - endX > 60) next?.click();
       if (endX - startX > 60) prev?.click();
-    };
+    }, { passive: true });
   }
 
   /* =========================
@@ -202,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         left: s.offsetLeft - (carousel.clientWidth - s.clientWidth) / 2,
         behavior: 'smooth'
       });
-      setTimeout(updateActive, 250);
+      setTimeout(updateActive, 200);
     }
 
     prevBtn?.addEventListener('click', () => goTo(index - 1));
@@ -234,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!estado) return;
     const a = new Date();
     const minutos = a.getHours() * 60 + a.getMinutes();
-    const abierto = a.getDay() === 5 && minutos >= 1140 && minutos <= 1380;
+    const abierto = a.getDay() !== 0 && minutos >= 525 && minutos <= 1020;
     estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
     estado.style.color = abierto ? "green" : "red";
   }
