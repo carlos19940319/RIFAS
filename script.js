@@ -2,6 +2,8 @@
    script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
    ✔ Carta tipo libro (SIN parpadeo)
+   ✔ Portada rígida
+   ✔ Giro distinto izquierda / derecha
    ✔ Reset al salir de carta
    ✔ Carrusel optimizado
    ✔ Reloj / Estado
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sec.style.display = 'none';
     });
 
-    links.forEach(link => link.classListremove?.('active') || link.classList.remove('active'));
+    links.forEach(link => link.classList.remove('active'));
 
     const section = document.getElementById(id);
     const link = document.querySelector(`nav a[data-target="${id}"]`);
@@ -72,9 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-     📖 LIBRO / CARTA — FINAL (ANTI-PARPADEO)
+     📖 LIBRO / CARTA — FINAL PRO
   ========================= */
   let pageIndex = 0;
+  let lastIndex = 0;
   let locked = false;
 
   function initLibro() {
@@ -90,25 +93,40 @@ document.addEventListener('DOMContentLoaded', () => {
     pages.forEach((p, i) => {
       p.style.transform = 'rotateY(0deg)';
       p.style.zIndex = pages.length - i;
-      p.classList.remove('turning');
+      p.style.transitionDuration = '1s';
+      p.classList.remove('turning', 'cover');
     });
+
+    /* 📕 Portada rígida */
+    pages[0]?.classList.add('cover');
 
     function updatePages() {
       pages.forEach((page, i) => {
 
         page.classList.remove('turning');
 
-        /* páginas pasadas */
+        /* páginas ya pasadas */
         if (i < pageIndex) {
           page.style.transform = 'rotateY(-180deg)';
           page.style.zIndex = i;
         }
 
-        /* página activa (anti-flash real) */
+        /* página activa */
         else if (i === pageIndex) {
-          page.style.transform = 'rotateY(-180deg)';
-          page.style.zIndex = pages.length + 1;
-          page.offsetHeight; // 🔒 fuerza frame
+
+          const forward = pageIndex > lastIndex;
+
+          /* portada gira más pesada */
+          page.style.transitionDuration = (i === 0) ? '1.4s' : '1s';
+          page.style.zIndex = pages.length + 2;
+
+          /* ocultamos frame plano */
+          page.style.transform = forward
+            ? 'rotateY(-180deg)'
+            : 'rotateY(180deg)';
+
+          page.offsetHeight; // 🔒 fuerza repaint
+
           page.style.transform = 'rotateY(0deg)';
           page.classList.add('turning');
         }
@@ -119,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
           page.style.zIndex = pages.length - i;
         }
       });
+
+      lastIndex = pageIndex;
     }
 
     /* Limpiar listeners previos */
@@ -133,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = true;
       pageIndex++;
       updatePages();
-      setTimeout(() => locked = false, 550);
+      setTimeout(() => locked = false, 650);
     });
 
     prev?.addEventListener('click', () => {
@@ -141,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = true;
       pageIndex--;
       updatePages();
-      setTimeout(() => locked = false, 550);
+      setTimeout(() => locked = false, 650);
     });
 
     /* 📱 Swipe móvil */
@@ -164,10 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!pages.length) return;
 
     pageIndex = 0;
+    lastIndex = 0;
     locked = false;
 
     pages.forEach((page, i) => {
       page.classList.remove('turning');
+      page.style.transitionDuration = '1s';
       page.style.transform = 'rotateY(0deg)';
       page.style.zIndex = pages.length - i;
     });
