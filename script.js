@@ -256,35 +256,58 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* =========================
-     ⏰ RELOJ / ESTADO
-  ========================= */
-  function actualizarReloj() {
-    const reloj = document.getElementById("reloj");
-    if (!reloj) return;
-    const a = new Date();
-    reloj.textContent =
-      `${String(a.getHours()).padStart(2,'0')}:` +
-      `${String(a.getMinutes()).padStart(2,'0')}:` +
-      `${String(a.getSeconds()).padStart(2,'0')}`;
+   ⏰ RELOJ / ESTADO — HORARIO OFICIAL
+   Lunes a sábado: 8:45 a.m. – 5:00 p.m.
+   Domingo: cerrado
+========================= */
+
+function actualizarReloj() {
+  const reloj = document.getElementById("reloj");
+  if (!reloj) return;
+
+  const ahora = new Date();
+
+  reloj.textContent =
+    `${String(ahora.getHours()).padStart(2,'0')}:` +
+    `${String(ahora.getMinutes()).padStart(2,'0')}:` +
+    `${String(ahora.getSeconds()).padStart(2,'0')}`;
+}
+
+function actualizarEstado() {
+  const estado = document.getElementById("estado");
+  if (!estado) return;
+
+  const ahora = new Date();
+
+  const dia = ahora.getDay(); // 0 = domingo
+  const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+
+  const horaApertura = 8 * 60 + 45;   // 8:45 a.m.
+  const horaCierre   = 17 * 60;       // 5:00 p.m.
+
+  const abierto =
+    dia !== 0 &&                      // ❌ domingo cerrado
+    minutosActuales >= horaApertura &&
+    minutosActuales < horaCierre;
+
+  if (abierto) {
+    estado.textContent = "🟢 Abierto";
+    estado.style.color = "green";
+  } else {
+    estado.textContent = "🔴 Cerrado";
+    estado.style.color = "red";
   }
+}
 
-  function actualizarEstado() {
-    const estado = document.getElementById("estado");
-    if (!estado) return;
-    const a = new Date();
-    const minutos = a.getHours() * 60 + a.getMinutes();
-    const abierto = a.getDay() !== 0 && minutos >= 525 && minutos <= 1020;
-    estado.textContent = abierto ? "🟢 Abierto" : "🔴 Cerrado";
-    estado.style.color = abierto ? "green" : "red";
-  }
-
-  setInterval(() => {
-    actualizarReloj();
-    actualizarEstado();
-  }, 1000);
-
+/* ⏱️ Actualización en tiempo real */
+setInterval(() => {
   actualizarReloj();
   actualizarEstado();
+}, 1000);
+
+/* Primera ejecución */
+actualizarReloj();
+actualizarEstado();
 
   /* =========================
      © FOOTER
