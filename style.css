@@ -1339,7 +1339,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   }
 }
 /* =========================
-📖 LIBRO / CARTA VIRTUAL — REALISTA ESTABLE
+📖 LIBRO / CARTA VIRTUAL — UNA SOLA HOJA
 ========================= */
 
 /* =========================
@@ -1360,28 +1360,27 @@ CONTENEDOR GENERAL
 LIBRO
 ========================= */
 .book{
-  width:clamp(350px, 82vw, 900px);
-  height:min(69vh, clamp(450px, 61vw, 580px));
+  width:clamp(340px, 90vw, 820px);
+  height:min(72vh, clamp(460px, 70vw, 620px));
   position:relative;
-  max-width:100vw;
   transform-style:preserve-3d;
   overflow:visible;
 }
 
 /* =========================
-📄 PÁGINA — HOJA REAL
+📄 PÁGINA — HOJA ÚNICA
 ========================= */
 .page{
   position:absolute;
   inset:0;
 
   background:#1a0f08;
-  border-radius:8px;
-  overflow:visible;
+  border-radius:10px;
+  overflow:hidden;
 
   box-shadow:
-    0 8px 18px rgba(0,0,0,.45),
-    0 22px 50px rgba(0,0,0,.6),
+    0 10px 22px rgba(0,0,0,.45),
+    0 30px 65px rgba(0,0,0,.65),
     inset 0 0 0 1px rgba(255,255,255,.06);
 
   transform-origin:left center;
@@ -1389,24 +1388,14 @@ LIBRO
 
   transition:
     transform 1s cubic-bezier(.4,0,.2,1),
-    box-shadow .5s ease;
+    box-shadow .6s ease;
 
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
   transform-style:preserve-3d;
-
   will-change:transform;
-  z-index:1;
-}
 
-/* =========================
-SOMBRA AL GIRAR
-========================= */
-.page.turning{
-  box-shadow:
-    0 18px 36px rgba(0,0,0,.65),
-    0 45px 90px rgba(0,0,0,.75),
-    inset -10px 0 18px rgba(0,0,0,.35);
+  z-index:1;
 }
 
 /* =========================
@@ -1420,11 +1409,10 @@ SOMBRA AL GIRAR
   border-radius:inherit;
   background:#46220f;
   backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
 }
 
 /* =========================
-✨ SOMBRA DE DOBLEZ (ÚNICA)
+✨ SOMBRA DE DOBLEZ (REALISTA)
 ========================= */
 .page::after{
   content:"";
@@ -1435,10 +1423,10 @@ SOMBRA AL GIRAR
 
   background:linear-gradient(
     90deg,
-    rgba(0,0,0,.6) 0%,
-    rgba(0,0,0,.4) 18%,
-    rgba(0,0,0,.22) 35%,
-    rgba(0,0,0,.1) 55%,
+    rgba(0,0,0,.65) 0%,
+    rgba(0,0,0,.45) 20%,
+    rgba(0,0,0,.25) 38%,
+    rgba(0,0,0,.12) 55%,
     rgba(0,0,0,0) 75%
   );
 
@@ -1446,29 +1434,72 @@ SOMBRA AL GIRAR
   transition:opacity .5s ease;
 }
 
+/* =========================
+ANIMACIÓN DE GIRO
+========================= */
+.page.turning{
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.7),
+    0 55px 110px rgba(0,0,0,.8),
+    inset -12px 0 20px rgba(0,0,0,.4);
+}
+
 .page.turning::after{
   opacity:1;
 }
 
 /* =========================
-🔘 BOTONES
+DIRECCIÓN DE GIRO
+========================= */
+.page.forward{
+  transform:rotateY(-180deg);
+}
+
+.page.backward{
+  transform:rotateY(0deg);
+}
+
+.page.forward::after{
+  background:linear-gradient(
+    90deg,
+    rgba(0,0,0,.65) 0%,
+    rgba(0,0,0,.45) 20%,
+    rgba(0,0,0,.25) 38%,
+    rgba(0,0,0,.12) 55%,
+    rgba(0,0,0,0) 75%
+  );
+}
+
+.page.backward::after{
+  background:linear-gradient(
+    -90deg,
+    rgba(0,0,0,.65) 0%,
+    rgba(0,0,0,.45) 20%,
+    rgba(0,0,0,.25) 38%,
+    rgba(0,0,0,.12) 55%,
+    rgba(0,0,0,0) 75%
+  );
+}
+
+/* =========================
+🔘 BOTONES DE NAVEGACIÓN
 ========================= */
 .nav{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  z-index:10;
+  z-index:20;
 
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.85);
   backdrop-filter:blur(6px);
 
   border:none;
-  width:clamp(44px, 6vw, 60px);
-  height:clamp(44px, 6vw, 60px);
+  width:clamp(44px, 6vw, 58px);
+  height:clamp(44px, 6vw, 58px);
   border-radius:50%;
   cursor:pointer;
 
-  font-size:clamp(2rem, 5vw, 2.8rem);
+  font-size:clamp(2rem, 5vw, 2.6rem);
 
   box-shadow:
     0 8px 20px rgba(0,0,0,.45),
@@ -1485,58 +1516,17 @@ SOMBRA AL GIRAR
 }
 
 /* =========================
-📖 DOBLE HOJA (DESKTOP)
+📱 MÓVIL — AJUSTES FINOS
 ========================= */
-@media (min-width:900px){
-
+@media (max-width:768px){
   .book{
-    display:flex;
+    width:96vw;
+    height:min(75vh, 560px);
   }
 
-  .page{
-    width:50%;
+  .nav{
+    width:44px;
+    height:44px;
+    font-size:2rem;
   }
-
-  .page.left{
-    left:0;
-    transform-origin:right center;
-  }
-
-  .page.right{
-    right:0;
-    left:auto;
-    transform-origin:left center;
-  }
-}
-
-/* =========================
-📱 MÓVIL — UNA SOLA HOJA
-========================= */
-@media (max-width:899px){
-
-  .page{
-    width:100%;
-    left:0 !important;
-    right:auto !important;
-    transform-origin:left center !important;
-  }
-}
-.page.forward::after{
-  background:linear-gradient(90deg,
-    rgba(0,0,0,.6) 0%,
-    rgba(0,0,0,.4) 18%,
-    rgba(0,0,0,.22) 35%,
-    rgba(0,0,0,.1) 55%,
-    rgba(0,0,0,0) 75%
-  );
-}
-
-.page.backward::after{
-  background:linear-gradient(-90deg,
-    rgba(0,0,0,.6) 0%,
-    rgba(0,0,0,.4) 18%,
-    rgba(0,0,0,.22) 35%,
-    rgba(0,0,0,.1) 55%,
-    rgba(0,0,0,0) 75%
-  );
 }
