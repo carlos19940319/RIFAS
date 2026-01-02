@@ -1485,3 +1485,110 @@ SOMBRA DURANTE GIRO
 .nav:hover{
   transform:translateY(-50%) scale(1.12);
 }
+/* =================================================
+   💻 LAPTOP / DESKTOP NORMAL (1366px–1599px)
+   Reduce escala general sin afectar móvil
+================================================= */
+@media (min-width: 1024px) and (max-width: 1599px){
+
+  /* CONTENEDOR PRINCIPAL */
+  main{
+    max-width: 980px;          /* 🔽 antes 1100 */
+  }
+
+  /* HEADER */
+  .header-unificado{
+    padding: 10px 16px;
+  }
+
+  .header-unificado .header-top img.logo{
+    width: 56px;               /* 🔽 antes 64 */
+  }
+
+  .header-unificado .header-top .titulo{
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  }
+
+  /* NAV */
+  .header-unificado nav a{
+    font-size: clamp(.9rem, 1.6vw, 1.2rem);
+    padding: 8px 14px;
+    max-width: 200px;
+  }
+
+  /* HERO / TÍTULO */
+  .welcome-text h2{
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    margin-top: -16px;
+  }
+
+  /* IMAGEN BIENVENIDA */
+  .img-bienvenida{
+    max-width: 760px;          /* 🔽 antes 900 */
+  }
+
+  /* LIBRO / CARTA */
+  .book{
+    width: clamp(320px, 72vw, 760px);
+    height: min(62vh, 520px);
+  }
+
+  /* BOTONES DELIVERY */
+  .btn-delivery{
+    font-size: .82rem;
+    padding: 9px 16px;
+    min-width: 100px;
+  }
+}
+/* =================================================
+   🖥️ DESKTOP GRANDE (1600px+)
+================================================= */
+@media (min-width: 1600px){
+
+  main{
+    max-width: 1100px; /* mantiene elegancia */
+  }
+
+  .book{
+    width: 900px;
+    height: 580px;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1599px){
+
+  .header-unificado{
+    padding: 8px 14px;
+    gap: 6px;
+  }
+
+  .header-unificado .header-top img.logo{
+    width: 52px;
+  }
+
+  .header-unificado .header-top .titulo{
+    font-size: 1.9rem;
+  }
+
+  .header-unificado nav{
+    gap: 8px;
+  }
+
+  .header-unificado nav a{
+    padding: 7px 12px;
+    font-size: 1rem;
+  }
+
+  main{
+    padding-top: 150px !important;
+    max-width: 980px;
+  }
+
+  .book{
+    width: 760px;
+    height: 520px;
+  }
+
+  .img-bienvenida{
+    max-width: 760px;
+  }
+}
