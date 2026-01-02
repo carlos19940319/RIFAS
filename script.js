@@ -1,7 +1,7 @@
 /* =========================
    script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
-   ✔ Carta tipo libro (SIN parpadeo / SIN tick)
+   ✔ Carta tipo libro (SIN parpadeo)
    ✔ Reset al salir de carta
    ✔ Carrusel optimizado
    ✔ Reloj / Estado
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sec.style.display = 'none';
     });
 
-    links.forEach(link => link.classList.remove('active'));
+    links.forEach(link => link.classListremove?.('active') || link.classList.remove('active'));
 
     const section = document.getElementById(id);
     const link = document.querySelector(`nav a[data-target="${id}"]`);
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================
-     📖 LIBRO / CARTA — ANTI-PARPADEO REAL
+     📖 LIBRO / CARTA — FINAL (ANTI-PARPADEO)
   ========================= */
   let pageIndex = 0;
   let locked = false;
@@ -98,31 +98,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         page.classList.remove('turning');
 
-        /* 📄 PÁGINAS YA PASADAS */
+        /* páginas pasadas */
         if (i < pageIndex) {
           page.style.transform = 'rotateY(-180deg)';
           page.style.zIndex = i;
         }
 
-        /* 📄 PÁGINA ACTIVA (ENTRA LIMPIA, SIN TICK) */
+        /* página activa (anti-flash real) */
         else if (i === pageIndex) {
-
-          /* ⛔ Nunca permitir frame plano */
           page.style.transform = 'rotateY(-180deg)';
-          page.style.zIndex = pages.length + 2;
-
-          /* 🔒 Forzamos layout */
-          page.offsetHeight;
-
-          /* ▶️ Ahora sí animamos */
+          page.style.zIndex = pages.length + 1;
+          page.offsetHeight; // 🔒 fuerza frame
           page.style.transform = 'rotateY(0deg)';
           page.classList.add('turning');
         }
 
-        /* 📄 PÁGINAS FUTURAS */
+        /* páginas futuras */
         else {
           page.style.transform = 'rotateY(0deg)';
-          page.style.zIndex = pages.length - i - 1; // 🔑 FIX TICK IZQUIERDA
+          page.style.zIndex = pages.length - i;
         }
       });
     }
