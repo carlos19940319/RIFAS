@@ -1412,3 +1412,64 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   background:rgba(128,0,0,.25);
   border:1px solid rgba(255,0,0,.4);
 }
+.btn-bonito{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:12px 26px;
+  border-radius:999px;
+
+  font-family:'Pacifico', cursive;
+  font-size:1.05rem;
+  letter-spacing:.6px;
+
+  color:#4a2c00;
+  text-decoration:none;
+
+  background:linear-gradient(
+    180deg,
+    #ffeb3b 0%,
+    #fbc02d 60%,
+    #f9a825 100%
+  );
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),
+    0 0 0 3px rgba(255,215,0,.25);
+
+  transition:
+    transform .25s ease,
+    box-shadow .3s ease,
+    filter .3s ease;
+
+  position:relative;
+}
+
+@media (hover:hover){
+  .btn-bonito:hover{
+    transform:translateY(-2px) scale(1.06);
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.55),
+      0 0 0 4px rgba(255,215,0,.35);
+    filter:brightness(1.05);
+  }
+}
+
+.btn-bonito:active{
+  transform:scale(.96);
+}
+
+.btn-bonito::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.45),
+    rgba(255,255,255,0) 55%
+  );
+  opacity:.35;
+}
