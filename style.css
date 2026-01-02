@@ -784,7 +784,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   background:#b22222;
 }
 /* =========================
-   📖 LIBRO / CARTA VIRTUAL — FINAL CORREGIDO
+   📖 LIBRO / CARTA VIRTUAL — REALISTA
 ========================= */
 
 /* =========================
@@ -794,14 +794,13 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:0;
   perspective:1800px;
   margin:clamp(20px, 4vw, 40px) auto;
   width:100%;
   position:relative;
 
-  /* evita repaint externo */
-  contain: layout paint;
+  /* permite que la hoja salga */
+  overflow:visible;
 }
 
 /* =========================
@@ -814,58 +813,55 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   max-width:100vw;
 
   transform-style:preserve-3d;
-  will-change:transform;
+  overflow:visible;
 }
 
 /* =========================
-   📄 PÁGINA — DEFINICIÓN ÚNICA Y LIMPIA
+   📄 PÁGINA — HOJA REAL
 ========================= */
 .page{
   position:absolute;
   inset:0;
 
-  /* fondo sólido estable */
   background:#1a0f08;
-
   border-radius:8px;
-  overflow:hidden;
 
-  /* sombras base */
+  /* ⛔ NO recortar la hoja */
+  overflow:visible;
+
   box-shadow:
-    0 6px 14px rgba(0,0,0,.45),
-    0 18px 38px rgba(0,0,0,.55),
+    0 8px 18px rgba(0,0,0,.45),
+    0 24px 55px rgba(0,0,0,.65),
     inset 0 0 0 1px rgba(255,255,255,.06);
 
-  /* 3D */
+  /* 🔑 giro real */
   transform-origin:left center;
-  transform:rotateY(0deg) translateZ(0);
+  transform:rotateY(0deg) translateZ(2px);
 
   transition:
     transform 1s cubic-bezier(.4,0,.2,1),
     box-shadow .6s ease;
 
-  /* 🔒 ANTI-PARPADEO DEFINITIVO */
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
   transform-style:preserve-3d;
 
-  /* rendimiento */
   will-change:transform;
   z-index:1;
 }
 
 /* =========================
-   SOMBRA DINÁMICA DURANTE GIRO
+   SOMBRA CUANDO SALE LA HOJA
 ========================= */
 .page.turning{
   box-shadow:
-    0 12px 26px rgba(0,0,0,.65),
-    0 30px 60px rgba(0,0,0,.75),
-    inset -8px 0 14px rgba(0,0,0,.28);
+    0 18px 36px rgba(0,0,0,.65),
+    0 45px 90px rgba(0,0,0,.8),
+    inset -10px 0 18px rgba(0,0,0,.35);
 }
 
 /* =========================
-   🖼️ CONTENIDO DE LA PÁGINA
+   🖼️ CONTENIDO
 ========================= */
 .page img{
   width:100%;
@@ -875,16 +871,14 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   object-fit:cover;
   border-radius:inherit;
 
-  /* fondo sólido (nunca blanco) */
   background:#46220f;
 
-  /* evita flicker de imagen */
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
 
 /* =========================
-   ✨ SOMBRA CURVA DEL DOBLEZ
+   ✨ SOMBRA DE DOBLEZ (CURVA)
 ========================= */
 .page::after{
   content:"";
@@ -895,10 +889,10 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   background:linear-gradient(
     90deg,
-    rgba(0,0,0,.5) 0%,
-    rgba(0,0,0,.32) 14%,
-    rgba(0,0,0,.15) 28%,
-    rgba(0,0,0,0) 42%
+    rgba(0,0,0,.55) 0%,
+    rgba(0,0,0,.35) 18%,
+    rgba(0,0,0,.15) 34%,
+    rgba(0,0,0,0) 48%
   );
 
   opacity:0;
@@ -910,15 +904,15 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 /* =========================
-   🔘 BOTONES DE NAVEGACIÓN
+   🔘 BOTONES
 ========================= */
 .nav{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  z-index:5;
+  z-index:10;
 
-  background:rgba(255,255,255,.65);
+  background:rgba(255,255,255,.7);
   backdrop-filter:blur(6px);
 
   border:none;
@@ -930,25 +924,17 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   font-size:clamp(2rem, 5vw, 2.8rem);
 
   box-shadow:
-    0 6px 14px rgba(0,0,0,.35),
-    0 14px 30px rgba(0,0,0,.45);
+    0 8px 20px rgba(0,0,0,.45),
+    0 20px 40px rgba(0,0,0,.55);
 
-  user-select:none;
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    background .2s ease;
+  transition:.25s ease;
 }
 
 .nav.prev{ left:10px; }
 .nav.next{ right:10px; }
 
 .nav:hover{
-  transform:translateY(-50%) scale(1.1);
-  background:rgba(255,255,255,.85);
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.45),
-    0 22px 40px rgba(0,0,0,.55);
+  transform:translateY(-50%) scale(1.12);
 }
 /* =========================
    BOTÓN COTIZA TU EVENTO
