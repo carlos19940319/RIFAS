@@ -199,7 +199,7 @@ body::before {
   white-space: nowrap;
 
  font-family: 'Playfair Display', serif;
-font-size: clamp(1rem, 2.1vw, 1.25rem);
+font-size: clamp(1.1rem, 2.4vw, 1.45rem);
 letter-spacing: 0.14em;
 font-weight: 500;
 
