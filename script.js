@@ -1,10 +1,11 @@
-       /* =====================================================
-   script.js — LA CHONA FINAL DEFINITIVO
+/* =====================================================
+   script.js — LA CHONA FINAL DEFINITIVO (CORREGIDO)
    ✔ SPA estable
    ✔ Carta tipo libro (SIN parpadeo)
    ✔ Una sola hoja
    ✔ Reset limpio al salir
    ✔ Swipe móvil
+   ✔ Carrusel funcional
    ✔ Reloj / Estado
 ===================================================== */
 
@@ -14,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
      FADE IN GENERAL
   ===================================================== */
   document.body.classList.add('show');
+
+  /* =====================================================
+     VARIABLES GLOBALES CONTROLADAS
+  ===================================================== */
+  let libroInit = false;
+  let pageIndex = 0;
+  let locked = false;
+  let firstTurn = true;
 
   /* =====================================================
      SPA — SECCIONES
@@ -29,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* 🔄 Reset libro al salir de carta */
     if (active?.id === 'carta' && id !== 'carta') {
       resetLibro();
-      window._libroInit = false;
+      libroInit = false;
     }
 
     sections.forEach(sec => {
@@ -53,9 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     /* 📖 Inicializar libro SOLO al entrar a carta */
-    if (id === 'carta' && !window._libroInit) {
+    if (id === 'carta' && !libroInit) {
       requestAnimationFrame(initLibro);
-      window._libroInit = true;
+      libroInit = true;
     }
   }
 
@@ -75,11 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
      📖 LIBRO / CARTA — UNA SOLA HOJA
   ===================================================== */
-
-  let pageIndex = 0;
-  let locked = false;
-  let firstTurn = true;
-
   function initLibro() {
 
     const book = document.querySelector('.book');
@@ -87,11 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.querySelector('.nav.next');
     const prevBtn = document.querySelector('.nav.prev');
 
-    if (!book || !pages.length) return;
+    if (!book || !pages.length || !nextBtn || !prevBtn) return;
 
-    /* =========================
-       ESTADO INICIAL
-    ========================= */
+    /* ---------- ESTADO INICIAL ---------- */
     pages.forEach((page, i) => {
       page.classList.remove('turning');
       page.style.transform = 'translateZ(0) rotateY(0deg)';
@@ -106,38 +108,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    /* =========================
-       ACTUALIZAR PÁGINAS
-    ========================= */
     function updatePages() {
-
       pages.forEach((page, i) => {
 
         page.classList.remove('turning');
 
-        /* páginas pasadas */
         if (i < pageIndex) {
           page.style.zIndex = i;
           page.style.transform = 'translateZ(0) rotateY(-180deg)';
         }
-
-        /* página activa */
         else if (i === pageIndex) {
-
           page.style.zIndex = pages.length + 5;
           page.classList.add('turning');
-
-          if (firstTurn) {
-            page.style.transitionDuration = '0.6s';
-            firstTurn = false;
-          } else {
-            page.style.transitionDuration = '1s';
-          }
-
+          page.style.transitionDuration = firstTurn ? '0.6s' : '1s';
+          firstTurn = false;
           page.style.transform = 'translateZ(0) rotateY(0deg)';
         }
-
-        /* páginas futuras */
         else {
           page.style.zIndex = pages.length - i;
           page.style.transform = 'translateZ(0) rotateY(0deg)';
@@ -145,9 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    /* =========================
-       BOTONES
-    ========================= */
+    /* ---------- BOTONES ---------- */
     nextBtn.onclick = () => {
       if (locked || pageIndex >= pages.length - 1) return;
       locked = true;
@@ -164,9 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => locked = false, 900);
     };
 
-    /* =========================
-       SWIPE MÓVIL
-    ========================= */
+    /* ---------- SWIPE ---------- */
     let startX = 0;
 
     book.ontouchstart = e => {
@@ -180,11 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  /* =========================
-     RESET LIBRO
-  ========================= */
   function resetLibro() {
-
     const pages = document.querySelectorAll('.book .page');
     if (!pages.length) return;
 
@@ -200,7 +178,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     requestAnimationFrame(() => {
-      pages.forEach(page => page.style.transitionDuration = '');
+      pages.forEach(p => p.style.transitionDuration = '');
+    });
+  }
+
+  /* =====================================================
+     🎠 CARRUSEL — BOTONES FUNCIONALES
+  ===================================================== */
+  const carousel = document.querySelector('.carousel');
+  const btnLeft = document.querySelector('.btn.left');
+  const btnRight = document.querySelector('.btn.right');
+
+  if (carousel && btnLeft && btnRight) {
+    const scrollAmount = () => carousel.clientWidth * 0.9;
+
+    btnRight.addEventListener('click', () => {
+      carousel.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    });
+
+    btnLeft.addEventListener('click', () => {
+      carousel.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
     });
   }
 
