@@ -1,4 +1,4 @@
-/* ==========================
+de/* ==========================
    style.css — todo tu CSS
    Incluye: CSS base + carrusel + estilos de SPA (fade)
    ========================== */
@@ -1505,4 +1505,22 @@ LIBRO
   margin: 0 auto;        /* centra el bloque */
   line-height: 1.6;      /* mejor distribución del texto */
   font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+}
+/* ===============================
+   NAV RESPONSIVE — NO DESBORDE
+================================ */
+@media (max-width: 768px) {
+
+  .header-unificado nav {
+    flex-wrap: wrap;          /* 🔥 permite saltos de línea */
+    gap: 10px 16px;
+    justify-content: center;
+  }
+
+  .header-unificado nav a {
+    white-space: normal;      /* 🔥 permite romper texto */
+    text-align: center;
+    font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+    letter-spacing: 0.12em;
+  }
 }
