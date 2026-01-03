@@ -1498,3 +1498,11 @@ LIBRO
     transition:none !important;
   }
 }
+/* =========================
+   FIX — CENTRAR RELOJ
+========================= */
+#horario-compacto {
+  display: block;          /* deja de depender del inline */
+  margin: 12px auto 0;     /* 👈 centra horizontal */
+  text-align: center;
+}
