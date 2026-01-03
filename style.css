@@ -1,4 +1,4 @@
- /* ==========================
+/* ==========================
    style.css — todo tu CSS
    Incluye: CSS base + carrusel + estilos de SPA (fade)
    ========================== */
@@ -114,8 +114,8 @@ body::before {
   /* 🔥 centro oscuro para el texto */
   radial-gradient(
     ellipse at center,
-    rgba(0,0,0,.65) 0%,
-    rgba(0,0,0,.55) 35%,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.5) 35%,
     rgba(255,255,255,.10) 70%,
     rgba(255,255,255,.18) 100%
   ),
@@ -124,7 +124,7 @@ body::before {
   linear-gradient(
     180deg,
     rgba(0,0,0,.28),
-    rgba(0,0,0,.22)
+    rgba(0,0,0,.82)
   ),
 
   /* 🖼️ imagen */
