@@ -88,7 +88,7 @@ body::before {
 }
 
 /* =================================================
-   HEADER "LA CHONA" — CON CONTORNO AZUL
+   HEADER "LA CHONA" — LÍNEA AZUL INFERIOR
 ================================================= */
 .header-unificado {
   position: fixed;
@@ -122,13 +122,13 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
 
-  /* 🔵 CONTORNO AZUL (NO MUEVE EL LAYOUT) */
-  outline: 2px solid #1fb6c9;
-  outline-offset: -2px;
+  /* 🔵 SOLO LÍNEA AZUL ABAJO */
+  border-bottom: 2px solid #1fb6c9;
 
   box-shadow:
     0 6px 18px rgba(0,0,0,.55);
 }
+
 
 /* ===== LOGO + TITULO ===== */
 .header-unificado .header-top {
@@ -489,7 +489,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 * { -webkit-tap-highlight-color: transparent; }
 
 /* =========================
-   CARRUSEL EVENTOS / CARTA — FIX TOTAL
+   CARRUSEL EVENTOS / CARTA — FINAL ESTABLE
 ========================= */
 
 #eventos{
@@ -639,29 +639,30 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 /* =========================
-   CONTROLES / BOTONES (FIX)
+   CONTROLES / BOTONES — FIX REAL
 ========================= */
 .controls{
   position:absolute;
   inset:0;
   z-index:30;
-  pointer-events:none; /* 👈 solo botones reciben click */
+  pointer-events:none; /* overlay no bloquea */
 }
 
+/* 🔘 BOTONES FUNCIONALES */
 .btn{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
   z-index:40;
 
-  pointer-events:auto;
+  pointer-events:auto;      /* ✅ CLICK REAL */
   touch-action:manipulation;
 
   background:linear-gradient(
     180deg,
-    #ffeb3b 0%,
-    #fbc02d 55%,
-    #f9a825 100%
+    #1e3a4c 0%,
+    #142c3a 55%,
+    #0f202b 100%
   );
 
   border:none;
@@ -671,8 +672,8 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   cursor:pointer;
 
   box-shadow:
-    0 6px 20px rgba(0,0,0,.35),
-    0 0 0 3px rgba(255,215,0,.25);
+    0 8px 22px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.18);
 
   display:flex;
   align-items:center;
@@ -681,49 +682,51 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   transition:
     transform .25s ease,
     box-shadow .3s ease,
-    background .3s ease;
+    filter .3s ease;
 }
 
-.btn:hover{
-  background:linear-gradient(
-    180deg,
-    #fff176 0%,
-    #fdd835 55%,
-    #f9a825 100%
-  );
-  transform:translateY(-50%) scale(1.1);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,.45),
-    0 0 0 4px rgba(255,215,0,.35);
+/* Hover PC */
+@media (hover:hover){
+  .btn:hover{
+    transform:translateY(-50%) scale(1.12);
+    box-shadow:
+      0 12px 32px rgba(0,0,0,.75),
+      inset 0 0 0 1px rgba(255,255,255,.3);
+    filter:brightness(1.1);
+  }
+}
+
+/* Active */
+.btn:active{
+  transform:translateY(-50%) scale(.96);
 }
 
 /* Flechas */
 .btn svg{
-  width:24px;
-  height:24px;
-  stroke:#5d3b00;
-  stroke-width:2.5;
+  width:22px;
+  height:22px;
+  stroke:#e6f2f5;
+  stroke-width:2.4;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
 
 /* Posición */
-.btn.left{left:6px}
-.btn.right{right:6px}
+.btn.left{ left:8px; }
+.btn.right{ right:8px; }
 
 /* =========================
    MOBILE
 ========================= */
 @media(max-width:640px){
-
-  .carousel-wrap{
-    margin-top:-10px;
+  .btn{
+    width:40px;
+    height:40px;
   }
 
   .slide{
     min-width:96%;
     transform:scale(.96);
-    outline-width:1.5px;
   }
 
   .slide.active{
@@ -736,11 +739,6 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 
   .title{font-size:1.25rem}
   .desc{font-size:.95rem}
-
-  .btn{
-    width:40px;
-    height:40px;
-  }
 }
 
 /* =========================
@@ -762,9 +760,8 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
 }
 
 .dot.active{
-  background:#b22222;
+  background:#1fb6c9;
 }
-
 
 /* =========================
    BOTÓN COTIZA TU EVENTO
@@ -1321,8 +1318,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   }
 }
 /* =========================
-📖 LIBRO / CARTA VIRTUAL — HOJA REAL
-(BORDE SE ADAPTA A LA IMAGEN)
+📖 LIBRO / CARTA VIRTUAL — HOJA REAL (ELEGANTE)
 ========================= */
 
 /* =========================
@@ -1347,12 +1343,13 @@ LIBRO
   height:min(69vh, clamp(450px, 61vw, 580px));
   position:relative;
   max-width:100vw;
+
   transform-style:preserve-3d;
   overflow:visible;
 }
 
 /* =========================
-📄 PÁGINA — SOLO CENTRA
+📄 PÁGINA — HOJA LIMPIA
 ========================= */
 .page{
   position:absolute;
@@ -1361,7 +1358,7 @@ LIBRO
   align-items:center;
   justify-content:center;
 
-  background:transparent;
+  background:none;
   overflow:visible;
 
   transform-origin:left center;
@@ -1373,15 +1370,12 @@ LIBRO
   transform-style:preserve-3d;
 
   will-change:transform;
-  z-index:1;
 }
 
 /* =========================
-🖼️ IMAGEN = HOJA REAL
-(EL BORDE SE ADAPTA)
+🖼️ IMAGEN — SIN MARCO / PREMIUM
 ========================= */
 .page img{
-  /* 🔥 LA IMAGEN MANDA */
   width:auto;
   height:auto;
 
@@ -1389,26 +1383,24 @@ LIBRO
   max-height:100%;
 
   display:block;
-
   object-fit:contain;
-  background:transparent;
 
-  /* 🤍 CONTORNO QUE ABRAZA LA IMAGEN */
-  padding:6px;
-  background:#f5f5f5;
-  border-radius:14px;
+  /* ❌ eliminamos cuadro blanco */
+  padding:0;
+  background:none;
+  border-radius:12px;
 
-  /* 🌫️ SOMBRA FLOTANTE */
+  /* ✅ sombra editorial elegante */
   box-shadow:
-    0 12px 28px rgba(0,0,0,.45),
-    0 30px 70px rgba(0,0,0,.65);
+    0 18px 40px rgba(0,0,0,.35),
+    0 6px 14px rgba(0,0,0,.25);
 
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
 
 /* =========================
-✨ SOMBRA DE DOBLEZ (GIRO)
+✨ SOMBRA DE DOBLEZ — SUAVE
 ========================= */
 .page::after{
   content:"";
@@ -1418,15 +1410,15 @@ LIBRO
 
   background:linear-gradient(
     90deg,
-    rgba(0,0,0,.45) 0%,
-    rgba(0,0,0,.25) 18%,
-    rgba(0,0,0,.12) 35%,
-    rgba(0,0,0,.05) 55%,
+    rgba(0,0,0,.25) 0%,
+    rgba(0,0,0,.15) 18%,
+    rgba(0,0,0,.08) 35%,
+    rgba(0,0,0,.03) 55%,
     rgba(0,0,0,0) 75%
   );
 
   opacity:0;
-  transition:opacity .6s ease;
+  transition:opacity .5s ease;
 }
 
 .page.turning::after{
@@ -1434,15 +1426,15 @@ LIBRO
 }
 
 /* =========================
-🔘 BOTONES
+🔘 BOTONES DE NAVEGACIÓN
 ========================= */
 .nav{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  z-index:10;
+  z-index:20;
 
-  background:rgba(255,255,255,.75);
+  background:rgba(20,32,40,.85);
   backdrop-filter:blur(6px);
   border:none;
 
@@ -1451,40 +1443,58 @@ LIBRO
   border-radius:50%;
   cursor:pointer;
 
+  color:#e6f2f5;
   font-size:clamp(2rem, 5vw, 2.8rem);
 
   box-shadow:
-    0 8px 20px rgba(0,0,0,.45),
-    0 20px 40px rgba(0,0,0,.55);
+    0 10px 26px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.18);
 
-  transition:transform .25s ease;
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
 }
 
 .nav.prev{ left:10px; }
 .nav.next{ right:10px; }
 
-.nav:hover{
-  transform:translateY(-50%) scale(1.12);
+/* Hover solo en PC */
+@media (hover:hover){
+  .nav:hover{
+    transform:translateY(-50%) scale(1.12);
+    filter:brightness(1.1);
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.75),
+      inset 0 0 0 1px rgba(255,255,255,.3);
+  }
 }
 
+/* Active */
+.nav:active{
+  transform:translateY(-50%) scale(.96);
+}
+
+/* =========================
+📱 REDUCCIÓN DE MOVIMIENTO
+========================= */
 @media (prefers-reduced-motion: reduce){
   .menu-book,
-  .carousel,
-  .slide,
-  .book{
+  .book,
+  .page{
     animation:none !important;
     transition:none !important;
   }
 }
-/* =========================
-   FIX — CENTRAR RELOJ (MISMO TAMAÑO)
-========================= */
-#horario-compacto {
-  display: block;          /* permite centrado */
-  margin: 12px auto 0;     /* centra horizontal */
-  text-align: center;
 
-  /* 🟦 CONTORNO SIN CAMBIAR TAMAÑO */
-  outline: 2px solid #1fb6c9;
-  outline-offset: 2px;
+/* =========================
+⏰ HORARIO — CONTORNO AZUL
+========================= */
+#horario-compacto{
+  display:block;
+  margin:12px auto 0;
+  text-align:center;
+
+  outline:2px solid #1fb6c9;
+  outline-offset:2px;
 }
