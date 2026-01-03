@@ -1,4 +1,4 @@
-/* =====================================================
+       /* =====================================================
    script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
    ✔ Carta tipo libro (SIN parpadeo)
