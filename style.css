@@ -198,11 +198,10 @@ body::before {
   text-decoration: none;
   white-space: nowrap;
 
- font-family: 'Libre Baskerville', serif;
-font-size: clamp(0.95rem, 2vw, 1.15rem);
-letter-spacing: 0.12em;
-font-weight: 700;
-text-transform: uppercase;
+ font-family: 'Playfair Display', serif;
+font-size: clamp(1rem, 2.1vw, 1.25rem);
+letter-spacing: 0.14em;
+font-weight: 500;
 
 
   color: #f5f5f5;
