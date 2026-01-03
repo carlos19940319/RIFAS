@@ -77,35 +77,31 @@ body::before {
 }
 
 @keyframes fondoEntrada {
-  from { 
-    opacity: 0; 
-    transform: scale(1.04); 
+  from {
+    opacity: 0;
+    transform: scale(1.04);
   }
-  to { 
-    opacity: 1; 
-    transform: scale(1); 
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
 /* =================================================
-   HEADER "LA CHONA" — CON MARCO AZUL ELEGANTE
+   HEADER "LA CHONA" — CON CONTORNO AZUL
 ================================================= */
 .header-unificado {
   position: fixed;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: calc(100% - 24px);
-  max-width: 1400px;
-
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1002;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 10px 16px;
+  padding: 8px 14px;
 
   background:
     radial-gradient(
@@ -126,13 +122,12 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
 
-  /* 🟦 MARCO AZUL */
-  border: 2px solid #1fb6c9;
-  border-radius: 18px;
+  /* 🔵 CONTORNO AZUL (NO MUEVE EL LAYOUT) */
+  outline: 2px solid #1fb6c9;
+  outline-offset: -2px;
 
   box-shadow:
-    0 0 0 1px rgba(31,182,201,.35),
-    0 12px 32px rgba(0,0,0,.65);
+    0 6px 18px rgba(0,0,0,.55);
 }
 
 /* ===== LOGO + TITULO ===== */
@@ -152,11 +147,17 @@ body::before {
   background: transparent;
   padding: 0;
 
-  box-shadow:
-    0 10px 26px rgba(0,0,0,.65);
+  box-shadow: 0 10px 26px rgba(0,0,0,.65);
 }
 
-/* TITULO — BLANCO, FINO */
+/* 📱 AJUSTE SOLO MÓVIL */
+@media (max-width: 768px) {
+  .header-unificado .header-top img.logo {
+    width: 100px;
+  }
+}
+
+/* TITULO — BLANCO, FINO, RESTAURANTE PREMIUM */
 .header-unificado .header-top .titulo {
   margin: 0;
   font-family: 'Playfair Display SC', serif;
@@ -166,12 +167,11 @@ body::before {
   text-transform: uppercase;
   color: #ffffff;
 
-  text-shadow:
-    0 2px 10px rgba(0,0,0,.65);
+  text-shadow: 0 2px 10px rgba(0,0,0,.65);
 }
 
 /* =================================================
-   NAV — TEXTO PURO (ELEGANTE)
+   NAV — TEXTO PURO (SIN RECUADROS)
 ================================================= */
 .header-unificado nav {
   display: flex;
@@ -181,6 +181,7 @@ body::before {
   max-width: 1100px;
 }
 
+/* LINKS */
 .header-unificado nav a {
   background: transparent !important;
   border: none !important;
@@ -205,14 +206,15 @@ body::before {
 @media (hover:hover) {
   .header-unificado nav a:hover {
     color: #f04a3a;
-    transform: translateY(-1px);
+    transform: scale(1.08);
   }
 }
 
 /* ACTIVO */
 .header-unificado nav a.active {
   color: #f04a3a;
-  text-shadow: 0 0 8px rgba(240,74,58,.55);
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(201,162,77,.65);
 }
 
 /* LIMPIEZA */
@@ -221,30 +223,6 @@ body::before {
   content: none !important;
   display: none !important;
 }
-
-/* =================================================
-   RESPONSIVE
-================================================= */
-@media (max-width: 768px) {
-
-  .header-unificado {
-    top: 8px;
-    width: calc(100% - 16px);
-    border-width: 1.5px;
-    border-radius: 14px;
-  }
-
-  .header-unificado .header-top img.logo {
-    width: 100px;
-  }
-
-  .header-unificado nav a {
-    font-size: 0.95rem;
-    letter-spacing: 0.12em;
-  }
-}
-
-
 
 
 
@@ -1499,10 +1477,14 @@ LIBRO
   }
 }
 /* =========================
-   FIX — CENTRAR RELOJ
+   FIX — CENTRAR RELOJ (MISMO TAMAÑO)
 ========================= */
 #horario-compacto {
-  display: block;          /* deja de depender del inline */
-  margin: 12px auto 0;     /* 👈 centra horizontal */
+  display: block;          /* permite centrado */
+  margin: 12px auto 0;     /* centra horizontal */
   text-align: center;
+
+  /* 🟦 CONTORNO SIN CAMBIAR TAMAÑO */
+  outline: 2px solid #1fb6c9;
+  outline-offset: 2px;
 }
