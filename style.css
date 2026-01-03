@@ -1524,3 +1524,34 @@ LIBRO
     letter-spacing: 0.12em;
   }
 }
+/* =================================================
+   FIX HEADER FIJO — NO ENCIMAR CONTENIDO (FINAL)
+================================================= */
+
+/* el header puede crecer sin romper layout */
+.header-unificado{
+  height: auto;
+}
+
+/* empuja todo el contenido debajo del header */
+body{
+  padding-top: 160px; /* escritorio */
+}
+
+/* 📱 móvil — header más alto por 2 filas */
+@media (max-width: 768px){
+  body{
+    padding-top: 220px; /* ajustado a tu caso */
+  }
+
+  .header-unificado nav{
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-unificado nav a{
+    white-space: normal;
+    text-align: center;
+  }
+}
