@@ -40,6 +40,7 @@ body {
   transition: opacity .8s ease-out;
 }
 
+/* Fondo animado */
 body::before {
   content: "";
   position: fixed;
@@ -53,7 +54,6 @@ body::before {
       rgba(255,255,255,.12) 35%,
       rgba(0,0,0,0) 65%
     ),
-
     linear-gradient(
       90deg,
       rgba(0,0,0,.25) 0%,
@@ -62,19 +62,12 @@ body::before {
       rgba(0,0,0,.08) 75%,
       rgba(0,0,0,.25) 100%
     ),
-
     linear-gradient(
       180deg,
       rgba(10,14,20,.35),
       rgba(5,8,12,.45)
     ),
-
     var(--fondo-img);
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 
   background-size: cover;
   background-position: center;
@@ -95,49 +88,51 @@ body::before {
 }
 
 /* =================================================
-   HEADER "LA CHONA" — LIMPIO / COMPACTO
+   HEADER "LA CHONA" — CON MARCO AZUL ELEGANTE
 ================================================= */
 .header-unificado {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 24px);
+  max-width: 1400px;
+
   z-index: 1002;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 8px 14px;
+  padding: 10px 16px;
 
- background:
-  /* 🔥 centro oscuro para el texto */
-  radial-gradient(
-    ellipse at center,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,.5) 35%,
-    rgba(255,255,255,.10) 70%,
-    rgba(255,255,255,.18) 100%
-  ),
-
-  /* 🌫️ oscurecido vertical muy sutil */
-  linear-gradient(
-    180deg,
-    rgba(0,0,0,.28),
-    rgba(0,0,0,.82)
-  ),
-
-  /* 🖼️ imagen */
-  url("img/tituloo.pn");
-
-
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,.5) 35%,
+      rgba(255,255,255,.10) 70%,
+      rgba(255,255,255,.18) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.28),
+      rgba(0,0,0,.82)
+    ),
+    url("img/tituloo.pn");
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  border-bottom: 1px solid rgba(201,162,77,.35);
-  box-shadow: 0 6px 18px rgba(0,0,0,.55);
+  /* 🟦 MARCO AZUL */
+  border: 2px solid #1fb6c9;
+  border-radius: 18px;
+
+  box-shadow:
+    0 0 0 1px rgba(31,182,201,.35),
+    0 12px 32px rgba(0,0,0,.65);
 }
 
 /* ===== LOGO + TITULO ===== */
@@ -153,7 +148,6 @@ body::before {
 .header-unificado .header-top img.logo {
   width: clamp(120px, 12vw, 160px);
   height: auto;
-
   border-radius: 50%;
   background: transparent;
   padding: 0;
@@ -162,20 +156,12 @@ body::before {
     0 10px 26px rgba(0,0,0,.65);
 }
 
-/* 📱 AJUSTE SOLO MÓVIL */
-@media (max-width: 768px) {
-  .header-unificado .header-top img.logo {
-    width: 100px;
-  }
-}
-
-
-/* TITULO — BLANCO, FINO, RESTAURANTE PREMIUM */
+/* TITULO — BLANCO, FINO */
 .header-unificado .header-top .titulo {
   margin: 0;
   font-family: 'Playfair Display SC', serif;
   font-size: clamp(2.2rem, 5vw, 3rem);
-  letter-spacing: .18em;     /* 🔑 elegancia real */
+  letter-spacing: .18em;
   font-weight: 400;
   text-transform: uppercase;
   color: #ffffff;
@@ -184,9 +170,8 @@ body::before {
     0 2px 10px rgba(0,0,0,.65);
 }
 
-
 /* =================================================
-   NAV — TEXTO PURO (SIN RECUADROS)
+   NAV — TEXTO PURO (ELEGANTE)
 ================================================= */
 .header-unificado nav {
   display: flex;
@@ -196,7 +181,6 @@ body::before {
   max-width: 1100px;
 }
 
-/* LINKS */
 .header-unificado nav a {
   background: transparent !important;
   border: none !important;
@@ -207,49 +191,59 @@ body::before {
   text-decoration: none;
   white-space: nowrap;
 
- font-family: 'Playfair Display', serif;
-font-size: clamp(1.1rem, 2.4vw, 1.45rem);
-
-letter-spacing: 0.14em;
-font-weight: 500;
-
-
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  letter-spacing: 0.14em;
+  font-weight: 500;
 
   color: #f5f5f5;
 
-  transform: scale(1);
-  transition:
-    color .25s ease,
-    transform .25s ease;
+  transition: color .25s ease, transform .25s ease;
 }
 
-/* HOVER — SOLO COLOR + ZOOM */
+/* HOVER */
 @media (hover:hover) {
   .header-unificado nav a:hover {
     color: #f04a3a;
-    transform: scale(1.08);
+    transform: translateY(-1px);
   }
 }
 
-/* ACTIVO — SIN RECUADRO */
+/* ACTIVO */
 .header-unificado nav a.active {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-
   color: #f04a3a;
-  transform: scale(1.1);
-
-  text-shadow:
-    0 0 10px rgba(201,162,77,.65);
+  text-shadow: 0 0 8px rgba(240,74,58,.55);
 }
 
-/* 🧹 LIMPIEZA TOTAL */
+/* LIMPIEZA */
 .header-unificado nav a::before,
 .header-unificado nav a::after {
   content: none !important;
   display: none !important;
 }
+
+/* =================================================
+   RESPONSIVE
+================================================= */
+@media (max-width: 768px) {
+
+  .header-unificado {
+    top: 8px;
+    width: calc(100% - 16px);
+    border-width: 1.5px;
+    border-radius: 14px;
+  }
+
+  .header-unificado .header-top img.logo {
+    width: 100px;
+  }
+
+  .header-unificado nav a {
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+  }
+}
+
 
 
 
