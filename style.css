@@ -8,11 +8,11 @@
   --color-principal: #C00000;
   --color-secundario: #333333;
   --color-fondo-tarjeta: #ffffff;
-  --navbar-bg: rgba(197, 0, 0, 0.45);
+  --navbar-bg: rgba(197, 0, 0, 0);
   --fondo-img: url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg");
   --fondo-header-img: url("img/tituloo.png");
   --fondo-nav-img: url("img/tituloo.png");
-  --fondo-opacidad: 0.4;
+  --fondo-opacidad: 0;
   --header-height: 64px;
   --nav-height: 60px;
 }
@@ -40,7 +40,6 @@ body {
   transition: opacity .8s ease-out;
 }
 
-/* Fondo con imagen + brillo central + costados oscuros */
 body::before {
   content: "";
   position: fixed;
@@ -48,33 +47,34 @@ body::before {
   z-index: -1;
 
   background:
-    /* ✨ brillo central elegante */
     radial-gradient(
       ellipse at center,
-      rgba(255,255,255,.18) 0%,
-      rgba(255,255,255,.08) 30%,
-      rgba(0,0,0,0) 58%
+      rgba(255,255,255,.25) 0%,
+      rgba(255,255,255,.12) 35%,
+      rgba(0,0,0,0) 65%
     ),
 
-    /* 🌑 viñeta lateral (costados más oscuros) */
     linear-gradient(
       90deg,
-      rgba(0,0,0,.55) 0%,
-      rgba(0,0,0,.18) 25%,
-      rgba(0,0,0,.05) 50%,
-      rgba(0,0,0,.18) 75%,
-      rgba(0,0,0,.55) 100%
+      rgba(0,0,0,.25) 0%,
+      rgba(0,0,0,.08) 25%,
+      rgba(0,0,0,.03) 50%,
+      rgba(0,0,0,.08) 75%,
+      rgba(0,0,0,.25) 100%
     ),
 
-    /* 🌘 oscurecido general premium */
     linear-gradient(
       180deg,
-      rgba(10,14,20,.75),
-      rgba(5,8,12,.92)
+      rgba(10,14,20,.35),
+      rgba(5,8,12,.45)
     ),
 
-    /* 🖼️ imagen base */
     var(--fondo-img);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
   background-size: cover;
   background-position: center;
@@ -110,13 +110,27 @@ body::before {
   gap: 4px;
   padding: 8px 14px;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(12,16,22,.92),
-      rgba(8,10,14,.97)
-    ),
-    url("img/tituloo.png");
+ background:
+  /* 🔥 centro oscuro para el texto */
+  radial-gradient(
+    ellipse at center,
+    rgba(0,0,0,.65) 0%,
+    rgba(0,0,0,.55) 35%,
+    rgba(255,255,255,.10) 70%,
+    rgba(255,255,255,.18) 100%
+  ),
+
+  /* 🌫️ oscurecido vertical muy sutil */
+  linear-gradient(
+    180deg,
+    rgba(0,0,0,.28),
+    rgba(0,0,0,.22)
+  ),
+
+  /* 🖼️ imagen */
+  url("img/tituloo.pn");
+
+
 
   background-size: cover;
   background-position: center;
@@ -147,17 +161,20 @@ body::before {
     0 8px 22px rgba(0,0,0,.65);
 }
 
-/* TITULO — BLANCO, FINO Y ELEGANTE */
+/* TITULO — BLANCO, FINO, RESTAURANTE PREMIUM */
 .header-unificado .header-top .titulo {
   margin: 0;
-  font-family: 'Pacifico', cursive;
-  font-size: clamp(1.95rem, 4vw, 2.45rem);
-  letter-spacing: .15px;
+  font-family: 'Playfair Display SC', serif;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  letter-spacing: .18em;     /* 🔑 elegancia real */
   font-weight: 400;
+  text-transform: uppercase;
   color: #ffffff;
 
-  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.65);
 }
+
 
 /* =================================================
    NAV — TEXTO PURO (SIN RECUADROS)
@@ -181,9 +198,12 @@ body::before {
   text-decoration: none;
   white-space: nowrap;
 
-  font-family: 'Pacifico', cursive;
-  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
-  letter-spacing: .7px;
+ font-family: 'Libre Baskerville', serif;
+font-size: clamp(0.95rem, 2vw, 1.15rem);
+letter-spacing: 0.12em;
+font-weight: 700;
+text-transform: uppercase;
+
 
   color: #f5f5f5;
 
@@ -196,7 +216,7 @@ body::before {
 /* HOVER — SOLO COLOR + ZOOM */
 @media (hover:hover) {
   .header-unificado nav a:hover {
-    color: #f0d58c;
+    color: #f04a3a;
     transform: scale(1.08);
   }
 }
@@ -207,7 +227,7 @@ body::before {
   border: none !important;
   box-shadow: none !important;
 
-  color: #c9a24d;
+  color: #f04a3a;
   transform: scale(1.1);
 
   text-shadow:
