@@ -1,3 +1,5 @@
+
+
 /* ==========================
    style.css — todo tu CSS
    Incluye: CSS base + carrusel + estilos de SPA (fade)
@@ -276,54 +278,85 @@ body::before {
   transform:translateX(-50%);
   transition:width .3s ease;
 }
-
-@media (hover:hover){
-  .header-unificado nav a:hover{
-    color:#f04a3a;
-  }
-  .header-unificado nav a:hover::after{
-    width:100%;
-  }
-}
-
+/* =================================================
+   🔥 LINK ACTIVO — SOLO COLOR (SIN FONDO / SIN ZOOM)
+================================================= */
 .header-unificado nav a.active{
-  color:#f04a3a;
+  color: #f04a3a !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  filter: none !important;
 }
 
-.header-unificado nav a.active::after{
-  width:100%;
-}
+
 
 /* =================================================
-   MÓVIL / TABLET
+   🖥️ TAMAÑOS — GAMA ALTA
 ================================================= */
-@media (max-width: 768px) {
-  .header-unificado {
-    padding: 8px 12px;
+@media (min-width: 1200px) {
+
+  .header-unificado{
+    padding: 16px 26px;     /* + alto visual */
+    gap: 10px;              /* más separación vertical */
   }
 
-  .header-unificado .header-top {
-    gap: 16px;
+  .header-unificado .header-top{
+    gap: 32px;              /* logo ↔ título */
   }
 
-  .header-unificado .header-top img.logo {
-    width: 72px;
+  .header-unificado .header-top img.logo{
+    width: 118px;           /* logo más protagonista */
+  }
+
+  .header-unificado .header-top .titulo{
+    font-size: 3.4rem;      /* título más elegante */
+    letter-spacing: .32em;
+  }
+
+  .header-unificado nav{
+    gap: 18px 32px;         /* aire entre links */
+  }
+
+  .header-unificado nav a{
+    font-size: 1.55rem;     /* navegación más legible */
+    padding: 8px 6px;
   }
 }
-
 /* =================================================
-   MÓVILES PEQUEÑOS
+   🖥️ TAMAÑOS — GAMA ALTA
 ================================================= */
-@media (max-width: 480px) {
-  .header-unificado nav {
-    gap: 10px 16px;
+@media (min-width: 1200px) {
+
+  .header-unificado{
+    padding: 16px 26px;     /* + alto visual */
+    gap: 10px;              /* más separación vertical */
   }
 
-  .header-unificado nav a {
-    font-size: 1.15rem;
-    letter-spacing: .14em;
+  .header-unificado .header-top{
+    gap: 32px;              /* logo ↔ título */
+  }
+
+  .header-unificado .header-top img.logo{
+    width: 118px;           /* logo más protagonista */
+  }
+
+  .header-unificado .header-top .titulo{
+    font-size: 3.4rem;      /* título más elegante */
+    letter-spacing: .32em;
+  }
+
+  .header-unificado nav{
+    gap: 18px 32px;         /* aire entre links */
+  }
+
+  .header-unificado nav a{
+    font-size: 1.55rem;     /* navegación más legible */
+    padding: 8px 6px;
   }
 }
+
 
 
 
