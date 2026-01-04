@@ -583,9 +583,9 @@ footer::before{
 /* Quitar tap highlight para móviles */
 * { -webkit-tap-highlight-color: transparent; }
 
-/* =========================
-   CARRUSEL EVENTOS / CARTA — FINAL ESTABLE
-========================= */
+/* =================================================
+   ✨ CARRUSEL EVENTOS / CARTA — ELEGANTE & PREMIUM
+================================================= */
 
 #eventos{
   width:100%;
@@ -614,7 +614,7 @@ footer::before{
   overflow-x:auto;
   scroll-behavior:smooth;
   scroll-snap-type:x mandatory;
-  padding:16px 0;
+  padding:20px 0;
 
   scrollbar-width:none;
   overscroll-behavior-x:contain;
@@ -628,26 +628,25 @@ footer::before{
 }
 
 /* =========================
-   SLIDES
+   SLIDES — CARTA PREMIUM
 ========================= */
 .slide{
   min-width:90%;
   background:#1b1b1b;
-  border-radius:18px;
+  border-radius:22px;
   overflow:hidden;
   position:relative;
   text-align:center;
 
-  outline:2px solid rgba(255,255,255,.85);
-  outline-offset:-2px;
+  border:1px solid rgba(255,255,255,.18);
 
   box-shadow:
-    0 10px 28px rgba(0,0,0,.35),
-    0 0 0 1px rgba(255,255,255,.25);
+    0 18px 40px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.08);
 
   transition:
-    transform .35s ease,
-    box-shadow .35s ease,
+    transform .4s cubic-bezier(.4,0,.2,1),
+    box-shadow .4s ease,
     opacity .35s ease;
 
   transform:scale(.94);
@@ -655,11 +654,25 @@ footer::before{
   scroll-snap-align:center;
 }
 
+/* Borde interior elegante */
+.slide::after{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border-radius:16px;
+  pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* Slide activo */
 .slide.active{
-  transform:scale(1.05);
+  transform:scale(1.06);
+  border-color:rgba(255,255,255,.65);
+
   box-shadow:
-    0 16px 42px rgba(0,0,0,.45),
-    0 0 0 2px rgba(255,255,255,.9);
+    0 28px 65px rgba(0,0,0,.65),
+    0 0 0 1.5px rgba(255,255,255,.75),
+    0 0 22px rgba(31,182,201,.25);
 }
 
 /* ===== DESKTOP ===== */
@@ -671,7 +684,7 @@ footer::before{
 }
 
 /* =========================
-   MEDIA
+   MEDIA (IMAGEN)
 ========================= */
 .media{
   position:relative;
@@ -683,11 +696,11 @@ footer::before{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:transform .35s ease;
+  transition:transform .45s ease;
 }
 
 .slide.active img{
-  transform:scale(1.1);
+  transform:scale(1.12);
 }
 
 /* =========================
@@ -699,58 +712,75 @@ footer::before{
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding:22px;
+  padding:26px;
 
   background:linear-gradient(
     180deg,
     rgba(0,0,0,0) 0%,
-    rgba(0,0,0,.65) 80%
+    rgba(0,0,0,.55) 65%,
+    rgba(0,0,0,.85) 100%
   );
 
   color:#fff;
   text-align:center;
 }
 
+/* =========================
+   BADGE
+========================= */
 .badge{
-  background:rgba(255,255,255,.18);
-  padding:6px 14px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(6px);
+
+  padding:6px 16px;
   border-radius:999px;
+
   font-weight:600;
-  font-size:.85rem;
-  margin-bottom:10px;
+  font-size:.8rem;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+
+  margin-bottom:12px;
   align-self:center;
-}
 
-.title{
-  font-size:1.4rem;
-  margin:4px 0;
-  font-weight:800;
-}
-
-.desc{
-  font-size:1rem;
-  margin-top:6px;
-  line-height:1.35;
+  border:1px solid rgba(255,255,255,.25);
 }
 
 /* =========================
-   CONTROLES / BOTONES — FIX REAL
+   TEXTO
+========================= */
+.title{
+  font-size:1.45rem;
+  margin:6px 0;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+
+.desc{
+  font-size:.95rem;
+  margin-top:8px;
+  line-height:1.45;
+  opacity:.92;
+}
+
+/* =========================
+   CONTROLES
 ========================= */
 .controls{
   position:absolute;
   inset:0;
   z-index:30;
-  pointer-events:none; /* overlay no bloquea */
+  pointer-events:none;
 }
 
-/* 🔘 BOTONES FUNCIONALES */
+/* BOTONES */
 .btn{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
   z-index:40;
 
-  pointer-events:auto;      /* ✅ CLICK REAL */
+  pointer-events:auto;
   touch-action:manipulation;
 
   background:linear-gradient(
@@ -833,7 +863,7 @@ footer::before{
   }
 
   .title{font-size:1.25rem}
-  .desc{font-size:.95rem}
+  .desc{font-size:.9rem}
 }
 
 /* =========================
@@ -843,7 +873,7 @@ footer::before{
   display:flex;
   gap:8px;
   justify-content:center;
-  margin-top:14px;
+  margin-top:16px;
 }
 
 .dot{
@@ -852,10 +882,12 @@ footer::before{
   border-radius:50%;
   background:rgba(255,255,255,.25);
   cursor:pointer;
+  transition:transform .2s ease, background .2s ease;
 }
 
 .dot.active{
   background:#1fb6c9;
+  transform:scale(1.2);
 }
 
 /* =========================
