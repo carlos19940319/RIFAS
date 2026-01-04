@@ -231,9 +231,9 @@ body::before {
 
   font-family: 'Playfair Display', serif;
 
- /* 🔑 texto autoajustable — MÁS GRANDE EN PANTALLAS MEDIAS */
-font-size: clamp(1.05rem, 3.2vw, 1.7rem);
-letter-spacing: clamp(0.10em, 0.8vw, 0.22em);
+ /* 🔑 texto autoajustable */
+  font-size: clamp(0.95rem, 2.6vw, 1.45rem);
+  letter-spacing: clamp(0.08em, 0.6vw, 0.18em);
 
 
   font-weight: 500;
