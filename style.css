@@ -327,7 +327,6 @@ body::before {
 
 
 
-
 /* =================================================
    MAIN
 ================================================= */
@@ -562,8 +561,40 @@ main {
   }
 }
 
-/* Footer */
-footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: center; padding: 8px 10px; font-family: Arial, sans-serif; }
+/* =========================
+   FOOTER — CON LÍNEA DIVISORA SUPERIOR
+========================= */
+footer{
+  position: relative;
+
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  padding: 14px 10px 10px; /* más espacio arriba para la línea */
+  font-family: Arial, sans-serif;
+}
+
+/* 🔵 LÍNEA DIVISORA SUPERIOR (ESTILO HEADER) */
+footer::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:84%;
+  max-width:900px;
+  height:1.5px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(31,182,201,.9),
+    rgba(31,182,201,.9),
+    transparent
+  );
+}
 
 /* Redes flotantes */
 .redes-flotantes {
@@ -961,15 +992,23 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
    🔔 ANIMACIÓN BOTÓN ACTIVO
 ========================= */
 
-.header-unificado nav a.active{
-  position: relative;
+.header-unificado nav a.active::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:inherit;
+  pointer-events:none;
 
-  animation: activePulse 1.8s ease-in-out infinite;
+  background: radial-gradient(
+    circle at center,
+    rgba(244,196,48,.35) 0%,
+    rgba(244,196,48,.15) 35%,
+    rgba(244,196,48,0) 70%
+  );
 
-  box-shadow:
-    0 0 0 2px rgba(244,196,48,.6),
-    0 10px 24px rgba(0,0,0,.75);
+  animation: activeGlow 1.8s ease-in-out infinite;
 }
+
 
 /* brillo suave */
 .header-unificado nav a.active::after{
@@ -989,33 +1028,7 @@ footer { width: 100%; background: rgba(0,0,0,0.6); color: #fff; text-align: cent
   animation: activeGlow 1.8s ease-in-out infinite;
 }
 
-/* =========================
-   🎞️ KEYFRAMES
-========================= */
 
-@keyframes activePulse{
-  0%{
-    transform: scale(1);
-  }
-  50%{
-    transform: scale(1.04);
-  }
-  100%{
-    transform: scale(1);
-  }
-}
-
-@keyframes activeGlow{
-  0%{
-    opacity: .35;
-  }
-  50%{
-    opacity: .75;
-  }
-  100%{
-    opacity: .35;
-  }
-}
 /* =========================
    BOTONES DELIVERY — ESTILO PREMIUM (COMPACTO)
 ========================= */
@@ -1590,16 +1603,47 @@ LIBRO
 }
 
 /* =========================
-⏰ HORARIO — CONTORNO AZUL
+⏰ HORARIO — CENTRADO + LÍNEA SOLO ABAJO
 ========================= */
 #horario-compacto{
-  display:block;
-  margin:12px auto 0;
-  text-align:center;
+  position: relative;
 
-  outline:2px solid #1fb6c9;
-  outline-offset:2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  margin: 12px auto 0;
+  padding: 12px 18px 14px; /* espacio para la línea */
+
+  text-align: center;
+
+  outline: none; /* ❌ sin contorno */
 }
+
+/* 🔵 LÍNEA INFERIOR (IGUAL AL HEADER) */
+#horario-compacto::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:100%;
+  max-width:360px;
+  height:1.5px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(31,182,201,.9),
+    rgba(31,182,201,.9),
+    transparent
+  );
+}
+
+
 .texto-corporativo{
   color: #ffffff;
   text-align: center;
