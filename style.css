@@ -88,7 +88,7 @@ body::before {
 }
 
 /* =================================================
-   HEADER "LA CHONA" — LÍNEA AZUL INFERIOR
+   HEADER "LA CHONA" — OPACO OSCURO (FIX FINAL)
 ================================================= */
 .header-unificado {
   position: fixed;
@@ -100,185 +100,198 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 8px 14px;
+  gap: 6px;
+  padding: 10px 18px;
 
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0,0,0,1) 0%,
-      rgba(0,0,0,.5) 35%,
-      rgba(255,255,255,.10) 70%,
-      rgba(255,255,255,.18) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.28),
-      rgba(0,0,0,.82)
-    ),
-    url("img/tituloo.pn");
+  /* 🖤 fondo opaco elegante — negro más profundo */
+background:
+  linear-gradient(
+    180deg,
+    rgba(0,0,0,.90),
+    rgba(0,0,0,.97)
+  ),
+  radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,.025),
+    transparent 8%
+  );
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+background-image: none;
 
-  /* 🔵 SOLO LÍNEA AZUL ABAJO */
-  border-bottom: 2px solid #1fb6c9;
+  /* ❌ quitamos cualquier línea superior */
+  border-top: none !important;
+  outline: none !important;
 
   box-shadow:
-    0 6px 18px rgba(0,0,0,.55);
+    0 12px 30px rgba(0,0,0,.85);
+
+  backdrop-filter: blur(6px) saturate(105%);
+  -webkit-backdrop-filter: blur(6px) saturate(105%);
 }
 
+/* =================================================
+   LÍNEA DIVISORA — VISIBLE Y ELEGANTE
+================================================= */
+.header-unificado::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
 
-/* ===== LOGO + TITULO ===== */
+  width:84%;
+  max-width:900px;
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(31,182,201,1),
+      rgba(31,182,201,1),
+      transparent
+    );
+
+  opacity:1;
+}
+
+/* ❌ QUITAMOS EL FONDO NEGRO DEL ORNAMENTO */
+.header-unificado::before{
+  content:"✦";
+  position:absolute;
+  bottom:-7px;
+  left:50%;
+  transform:translateX(-50%);
+
+  font-size:11px;
+  color:#1fb6c9;
+
+  background: transparent; /* 🔥 CLAVE */
+  padding:0 6px;
+}
+
+/* =================================================
+   LOGO + TITULO
+================================================= */
 .header-unificado .header-top {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 24px;
   width: 100%;
 }
 
-/* LOGO — MÁS GRANDE / PRO */
 .header-unificado .header-top img.logo {
-  width: clamp(120px, 12vw, 160px);
+  width: clamp(82px, 7.5vw, 104px);
   height: auto;
   border-radius: 50%;
-  background: transparent;
-  padding: 0;
 
-  box-shadow: 0 10px 26px rgba(0,0,0,.65);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.90),
+    0 0 16px rgba(31,182,201,.30);
 }
 
-/* 📱 AJUSTE SOLO MÓVIL */
-@media (max-width: 768px) {
-  .header-unificado .header-top img.logo {
-    width: 100px;
-  }
-}
-
-/* TITULO — BLANCO, FINO, RESTAURANTE PREMIUM */
 .header-unificado .header-top .titulo {
   margin: 0;
   font-family: 'Playfair Display SC', serif;
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  letter-spacing: .18em;
+  font-size: clamp(2.4rem, 6vw, 3.2rem);
+  letter-spacing: .28em;
   font-weight: 400;
   text-transform: uppercase;
   color: #ffffff;
 
-  text-shadow: 0 2px 10px rgba(0,0,0,.65);
+  text-shadow:
+    0 3px 12px rgba(0,0,0,1),
+    0 0 26px rgba(0,0,0,.90);
 }
 
 /* =================================================
-   NAV — TEXTO PURO (SIN RECUADROS)
-================================================= */
-.header-unificado nav {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  width: 100%;
-  max-width: 1100px;
-}
-
-/* LINKS */
-.header-unificado nav a {
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-
-  padding: 4px 2px;
-  text-decoration: none;
-  white-space: nowrap;
-
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
-  letter-spacing: 0.14em;
-  font-weight: 500;
-
-  color: #f5f5f5;
-
-  transition: color .25s ease, transform .25s ease;
-}
-
-/* HOVER */
-@media (hover:hover) {
-  .header-unificado nav a:hover {
-    color: #f04a3a;
-    transform: scale(1.08);
-  }
-}
-
-/* ACTIVO */
-.header-unificado nav a.active {
-  color: #f04a3a;
-  transform: scale(1.1);
-  text-shadow: 0 0 10px rgba(201,162,77,.65);
-}
-
-/* LIMPIEZA */
-.header-unificado nav a::before,
-.header-unificado nav a::after {
-  content: none !important;
-  display: none !important;
-}
-/* =================================================
-   NAV — RESPONSIVE SIN DESBORDE
+   NAV — SIN ZOOM / SOLO LÍNEA
 ================================================= */
 .header-unificado nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;        /* 🔥 permite 2 filas */
-  gap: 10px 18px;
+  flex-wrap: wrap;
+  gap: 12px 22px;
   width: 100%;
   max-width: 1100px;
 }
 
-/* LINKS */
 .header-unificado nav a {
+  position: relative;
+
   background: transparent !important;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
 
-  padding: 4px 2px;
+  padding: 6px 4px;
   text-decoration: none;
 
-  /* 🔥 evita que se salga */
-  white-space: normal;
-  text-align: center;
-
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1rem, 3.5vw, 1.45rem);
-  letter-spacing: 0.14em;
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  letter-spacing: .18em;
   font-weight: 500;
+
   color: #f5f5f5;
 
-  transition: color .25s ease, transform .25s ease;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.95),
+    0 0 18px rgba(0,0,0,.85);
+
+  transform: none !important;
+
+  transition: color .25s ease;
 }
 
-/* HOVER */
-@media (hover:hover) {
-  .header-unificado nav a:hover {
-    color: #f04a3a;
-    transform: scale(1.06);
+/* LÍNEA ACTIVA */
+.header-unificado nav a::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-6px;
+
+  width:0;
+  height:1px;
+
+  background:#1fb6c9;
+  transform:translateX(-50%);
+  transition:width .3s ease;
+}
+
+@media (hover:hover){
+  .header-unificado nav a:hover{
+    color:#f04a3a;
+  }
+  .header-unificado nav a:hover::after{
+    width:100%;
   }
 }
 
-/* ACTIVO */
-.header-unificado nav a.active {
-  color: #f04a3a;
-  transform: scale(1.08);
-  text-shadow: 0 0 10px rgba(201,162,77,.65);
+.header-unificado nav a.active{
+  color:#f04a3a;
 }
 
-/* LIMPIEZA */
-.header-unificado nav a::before,
-.header-unificado nav a::after {
-  content: none !important;
-  display: none !important;
+.header-unificado nav a.active::after{
+  width:100%;
+}
+
+/* =================================================
+   MÓVIL
+================================================= */
+@media (max-width: 768px) {
+  .header-unificado {
+    padding: 8px 12px;
+  }
+
+  .header-unificado .header-top {
+    gap: 16px;
+  }
+
+  .header-unificado .header-top img.logo {
+    width: 72px;
+  }
 }
 
 
@@ -1562,4 +1575,33 @@ LIBRO
   line-height: 1.6;      /* mejor distribución del texto */
   font-size: clamp(0.95rem, 2.5vw, 1.05rem);
 }
+/* =================================================
+   FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
+================================================= */
 
+/* 🔥 elimina highlight móvil (Chrome / Android / iOS) */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 🔥 elimina foco visual del navegador */
+.header-unificado a,
+.header-unificado a:focus,
+.header-unificado a:active,
+.header-unificado a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 🔥 evita flash por estado active */
+.header-unificado nav a:active {
+  background: transparent !important;
+  color: inherit;
+}
+
+/* 🔥 refuerzo extra para Chrome / Edge */
+.header-unificado nav a {
+  -webkit-user-select: none;
+  user-select: none;
+}
