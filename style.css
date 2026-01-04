@@ -231,10 +231,9 @@ body::before {
 
   font-family: 'Playfair Display', serif;
 
- /* 🔑 texto autoajustable */
+  /* 🔑 texto autoajustable */
   font-size: clamp(0.95rem, 2.6vw, 1.45rem);
   letter-spacing: clamp(0.08em, 0.6vw, 0.18em);
-
 
   font-weight: 500;
   color: #f5f5f5;
@@ -860,7 +859,7 @@ footer::before{
 }
 
 /* =========================
-   BOTÓN COTIZA TU EVENTO
+   BOTÓN COTIZA TU EVENTO — ROJO 3D PREMIUM
 ========================= */
 
 .overlay-content {
@@ -872,69 +871,67 @@ footer::before{
 
 .btn-cotiza {
   margin-bottom: 14px;
-  padding: 12px 26px;
+  padding: 13px 28px;
 
+  /* 🔴 rojo elegante tipo marca */
   background: linear-gradient(
     180deg,
-    #ffeb3b 0%,
-    #fbc02d 60%,
-    #f9a825 100%
+    #ff5a4a 0%,
+    #f04a3a 55%,
+    #c93428 100%
   );
 
-  color: #4a2c00;
+  color: #ffffff;
   font-weight: 800;
   font-size: 1rem;
+  letter-spacing: .4px;
   text-decoration: none;
+
   border-radius: 999px;
+  border: none;
 
+  /* 🧱 efecto 3D real */
   box-shadow:
-    0 6px 18px rgba(0,0,0,.35),
-    0 0 0 3px rgba(255,215,0,.25);
+    0 10px 22px rgba(0,0,0,.45),
+    inset 0 2px 0 rgba(255,255,255,.25),
+    inset 0 -3px 0 rgba(0,0,0,.25);
 
-  transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
+  transition:
+    transform .2s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
 }
 
-/* Hover */
-.btn-cotiza:hover {
-  background: linear-gradient(
-    180deg,
-    #fff176 0%,
-    #fdd835 60%,
-    #f9a825 100%
-  );
-  transform: translateY(-2px) scale(1.05);
-  box-shadow:
-    0 10px 26px rgba(0,0,0,.45),
-    0 0 0 4px rgba(255,215,0,.35);
+/* ✨ HOVER — SE ELEVA (PC) */
+@media (hover:hover){
+  .btn-cotiza:hover{
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow:
+      0 16px 34px rgba(0,0,0,.55),
+      inset 0 2px 0 rgba(255,255,255,.35),
+      inset 0 -3px 0 rgba(0,0,0,.3);
+  }
 }
 
-/* 📱 Mobile */
-@media (max-width: 640px) {
-  .btn-cotiza {
+/* 📱 ACTIVE — PRESIONADO REAL */
+.btn-cotiza:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.45);
+}
+
+/* 📱 MOBILE */
+@media (max-width: 640px){
+  .btn-cotiza{
     font-size: .95rem;
-    padding: 11px 22px;
+    padding: 12px 24px;
+    letter-spacing: .3px;
   }
 }
-/* =========================
-   🔍 ZOOM SUAVE AL TOCAR
-========================= */
 
-.book{
-  transition: transform .45s cubic-bezier(.4,0,.2,1);
-  cursor: zoom-in;
-}
-
-.book.zoom{
-  transform: scale(1.06);
-  cursor: zoom-out;
-}
-
-/* En móvil un poco menos de zoom */
-@media (max-width: 768px){
-  .book.zoom{
-    transform: scale(1.04);
-  }
-}
 /* =========================
    🎞️ ANIMACIÓN DE ENTRADA
 ========================= */
@@ -1281,11 +1278,12 @@ footer::before{
   text-decoration:none;
 
   background:linear-gradient(
-    180deg,
-    #ffeb3b 0%,
-    #fbc02d 60%,
-    #f9a825 100%
-  );
+  180deg,
+  #ff5a4a 0%,
+  #f04a3a 55%,
+  #c93428 100%
+);
+
 
   box-shadow:
     0 8px 22px rgba(0,0,0,.45),
@@ -1583,6 +1581,9 @@ LIBRO
 }
 
 
+/* =================================================
+   TEXTO CORPORATIVO — BASE (MÓVIL FIRST)
+================================================= */
 .texto-corporativo{
   color: #ffffff;
 
@@ -1636,6 +1637,8 @@ LIBRO
     padding-top: 14px;
   }
 }
+
+
 
 /* =================================================
    FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
@@ -1721,4 +1724,3 @@ LIBRO
   font-size: clamp(0.78rem, 2.1vw, 1.45rem);
   letter-spacing: clamp(0.05em, 0.45vw, 0.18em);
 }
-
