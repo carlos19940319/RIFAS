@@ -88,7 +88,7 @@ body::before {
 }
 
 /* =================================================
-   HEADER "LA CHONA" — LÍNEA AZUL INFERIOR (AJUSTADO)
+   HEADER "LA CHONA" — LÍNEA AZUL INFERIOR
 ================================================= */
 .header-unificado {
   position: fixed;
@@ -116,16 +116,19 @@ body::before {
       rgba(0,0,0,.28),
       rgba(0,0,0,.82)
     ),
-    url("img/tituloo.png"); /* ✅ EXTENSIÓN CORRECTA */
+    url("img/tituloo.pn");
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
+  /* 🔵 SOLO LÍNEA AZUL ABAJO */
   border-bottom: 2px solid #1fb6c9;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,.55);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.55);
 }
+
 
 /* ===== LOGO + TITULO ===== */
 .header-unificado .header-top {
@@ -134,10 +137,9 @@ body::before {
   justify-content: center;
   gap: 14px;
   width: 100%;
-  flex-wrap: wrap; /* 🔥 evita encimes */
 }
 
-/* LOGO — PRO */
+/* LOGO — MÁS GRANDE / PRO */
 .header-unificado .header-top img.logo {
   width: clamp(120px, 12vw, 160px);
   height: auto;
@@ -155,7 +157,7 @@ body::before {
   }
 }
 
-/* TITULO */
+/* TITULO — BLANCO, FINO, RESTAURANTE PREMIUM */
 .header-unificado .header-top .titulo {
   margin: 0;
   font-family: 'Playfair Display SC', serif;
@@ -164,11 +166,63 @@ body::before {
   font-weight: 400;
   text-transform: uppercase;
   color: #ffffff;
-  text-align: center;
 
   text-shadow: 0 2px 10px rgba(0,0,0,.65);
 }
 
+/* =================================================
+   NAV — TEXTO PURO (SIN RECUADROS)
+================================================= */
+.header-unificado nav {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* LINKS */
+.header-unificado nav a {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  padding: 4px 2px;
+  text-decoration: none;
+  white-space: nowrap;
+
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  letter-spacing: 0.14em;
+  font-weight: 500;
+
+  color: #f5f5f5;
+
+  transition: color .25s ease, transform .25s ease;
+}
+
+/* HOVER */
+@media (hover:hover) {
+  .header-unificado nav a:hover {
+    color: #f04a3a;
+    transform: scale(1.08);
+  }
+}
+
+/* ACTIVO */
+.header-unificado nav a.active {
+  color: #f04a3a;
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(201,162,77,.65);
+}
+
+/* LIMPIEZA */
+.header-unificado nav a::before,
+.header-unificado nav a::after {
+  content: none !important;
+  display: none !important;
+}
 /* =================================================
    NAV — RESPONSIVE SIN DESBORDE
 ================================================= */
