@@ -1477,31 +1477,7 @@ LIBRO
   -webkit-backface-visibility:hidden;
 }
 
-/* =========================
-✨ SOMBRA DE DOBLEZ — SUAVE
-========================= */
-.page::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
 
-  background:linear-gradient(
-    90deg,
-    rgba(0,0,0,.25) 0%,
-    rgba(0,0,0,.15) 18%,
-    rgba(0,0,0,.08) 35%,
-    rgba(0,0,0,.03) 55%,
-    rgba(0,0,0,0) 75%
-  );
-
-  opacity:0;
-  transition:opacity .5s ease;
-}
-
-.page.turning::after{
-  opacity:1;
-}
 
 /* =========================
 🔘 BOTONES DE NAVEGACIÓN
@@ -1633,6 +1609,34 @@ LIBRO
     0 1px 2px rgba(0,0,0,.9),
     0 0 10px rgba(0,0,0,.6);
 }
+/* =================================================
+   📱 TEXTO CORPORATIVO — COMPACTO Y FULL WIDTH
+================================================= */
+@media (max-width: 640px) {
+
+  .texto-corporativo{
+    max-width: 100%;              /* ocupa todo el ancho */
+    padding: 0 16px;              /* margen lateral cómodo */
+    margin: 0 auto;
+
+    text-align: left;             /* más natural en móvil */
+    line-height: 1.55;            /* más compacto */
+    letter-spacing: 0.01em;
+
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+
+    /* quitamos look pesado */
+    text-shadow:
+      0 1px 2px rgba(0,0,0,.85);
+  }
+}
+@media (max-width: 640px) {
+  .texto-corporativo{
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 14px;
+  }
+}
+
 /* =================================================
    FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
 ================================================= */
