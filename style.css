@@ -1613,65 +1613,76 @@ LIBRO
 }
 
 
+
 /* =================================================
-   TEXTO CORPORATIVO — BASE (MÓVIL FIRST)
+   TEXTO CORPORATIVO — TODAS LAS PANTALLAS
 ================================================= */
 .texto-corporativo{
-  color: #ffffff;
+  color:#ffffff;
 
-  /* 📐 ancho óptimo de lectura (más aire lateral) */
-  max-width: 920px;
-  padding: 0 clamp(14px, 4vw, 28px);
-  margin: 0 auto;
+  /* 📐 ancho de lectura adaptable */
+  max-width: min(920px, 94vw);
+  padding-inline:clamp(14px, 3.5vw, 32px);
+  margin-inline:auto;
 
-  /* 🖋️ tipografía elegante */
-  font-family: 'Inter', system-ui, Arial, sans-serif;
-  font-weight: 400;
+  /* 🔥 control vertical (sin huecos exagerados) */
+  margin-block-start:clamp(6px, 1.8vh, 18px);
+  margin-block-end:clamp(12px, 3.5vh, 32px);
 
-  /* 📖 lectura fluida */
-  font-size: clamp(1.02rem, 2.8vw, 1.15rem);
-  line-height: 1.75;
-  letter-spacing: 0.015em;
+  /* 🖋️ tipografía */
+  font-family:'Inter', system-ui, Arial, sans-serif;
+  font-weight:400;
 
-  /* 🎯 alineación elegante */
-  text-align: center;
-  text-wrap: balance;
+  /* 📖 tamaño fluido real */
+  font-size:clamp(0.95rem, 1.4vw, 1.15rem);
+  line-height:clamp(1.45, 1.6vw, 1.7);
+  letter-spacing:.012em;
 
-  /* 🌫️ contraste premium */
+  /* 🎯 alineación adaptable */
+  text-align:center;
+  text-wrap:balance;
+
+  /* 🌫️ sombra sutil */
   text-shadow:
-    0 1px 2px rgba(0,0,0,.9),
-    0 0 10px rgba(0,0,0,.6);
+    0 1px 2px rgba(0,0,0,.8);
 }
+
 /* =================================================
-   📱 TEXTO CORPORATIVO — COMPACTO Y FULL WIDTH
+   📱 MÓVIL — MÁS COMPACTO Y NATURAL
 ================================================= */
-@media (max-width: 640px) {
-
+@media (max-width:640px){
   .texto-corporativo{
-    max-width: 100%;              /* ocupa todo el ancho */
-    padding: 0 16px;              /* margen lateral cómodo */
-    margin: 0 auto;
+    text-align:left;
 
-    text-align: left;             /* más natural en móvil */
-    line-height: 1.55;            /* más compacto */
-    letter-spacing: 0.01em;
+    margin-block-start:6px;
+    margin-block-end:20px;
 
-    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
-
-    /* quitamos look pesado */
-    text-shadow:
-      0 1px 2px rgba(0,0,0,.85);
-  }
-}
-@media (max-width: 640px) {
-  .texto-corporativo{
-    border-top: 1px solid rgba(255,255,255,.12);
-    padding-top: 14px;
+    line-height:1.5;
+    font-size:clamp(0.95rem, 3.6vw, 1.05rem);
   }
 }
 
+/* =================================================
+   💻 LAPTOP — AJUSTE FINO
+================================================= */
+@media (min-width:641px) and (max-width:1024px){
+  .texto-corporativo{
+    max-width:880px;
+    font-size:clamp(1rem, 1.6vw, 1.12rem);
+    line-height:1.65;
+  }
+}
 
-
+/* =================================================
+   🖥️ DESKTOP GRANDE / TV
+================================================= */
+@media (min-width:1440px){
+  .texto-corporativo{
+    max-width:1000px;
+    font-size:1.15rem;
+    line-height:1.7;
+  }
+}
 /* =================================================
    FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
 ================================================= */
