@@ -1680,3 +1680,23 @@ LIBRO
     animation: none !important;
   }
 }
+/* =================================================
+   FIX — NAV NO BAJA HASTA EL ÚLTIMO MOMENTO
+   (solo refina, no reemplaza)
+================================================= */
+.header-unificado nav {
+  gap: clamp(4px, 1.2vw, 22px); /* el espacio se reduce más */
+}
+
+/* =================================================
+   FIX — TEXTO SE REDUCE MÁS ANTES DE BAJAR
+================================================= */
+.header-unificado nav a {
+  white-space: nowrap;        /* nunca se parte el texto */
+  min-width: max-content;     /* no se aplasta */
+
+  /* ↓ deja que el texto baje MÁS antes de wrap */
+  font-size: clamp(0.78rem, 2.1vw, 1.45rem);
+  letter-spacing: clamp(0.05em, 0.45vw, 0.18em);
+}
+
