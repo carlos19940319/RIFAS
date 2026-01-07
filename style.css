@@ -1235,52 +1235,10 @@ footer::before{
   background:rgba(128,0,0,.25);
   border:1px solid rgba(255,0,0,.4);
 }
-.btn-bonito{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
 
-  padding:12px 26px;
-  border-radius:999px;
-
-  font-family:'Pacifico', cursive;
-  font-size:1.05rem;
-  letter-spacing:.6px;
-
-  color:#4a2c00;
-  text-decoration:none;
-
-  background:linear-gradient(
-  180deg,
-  #ff5a4a 0%,
-  #f04a3a 55%,
-  #c93428 100%
-);
-
-
-  box-shadow:
-    0 8px 22px rgba(0,0,0,.45),
-    0 0 0 3px rgba(255,215,0,.25);
-
-  transition:
-    transform .25s ease,
-    box-shadow .3s ease,
-    filter .3s ease;
-
-  position:relative;
-}
-
-@media (hover:hover){
-  .btn-bonito:hover{
-    transform:translateY(-2px) scale(1.06);
-    box-shadow:
-      0 14px 34px rgba(0,0,0,.55),
-      0 0 0 4px rgba(255,215,0,.35);
-    filter:brightness(1.05);
-  }
-}
-
-/* 📍 CONTENEDOR CENTRADO */
+/* =========================
+   📍 CONTENEDOR CENTRADO
+========================= */
 .btn-center{
   display:flex;
   justify-content:center;
@@ -1289,7 +1247,9 @@ footer::before{
   margin:24px auto;
 }
 
-/* 🔘 BOTÓN PREMIUM */
+/* =========================
+   🔴 BOTÓN PREMIUM — ROJO ELEGANTE
+========================= */
 .btn-bonito{
   position:relative;
   display:inline-flex;
@@ -1304,19 +1264,22 @@ footer::before{
   letter-spacing:.6px;
   text-align:center;
 
-  color:#4a2c00;
+  color:#ffffff;
   text-decoration:none;
 
+  /* 🔴 rojo corporativo */
   background:linear-gradient(
     180deg,
-    #fff176 0%,
-    #fbc02d 55%,
-    #f9a825 100%
+    #ff5a4a 0%,
+    #f04a3a 55%,
+    #c93428 100%
   );
 
+  /* 🧱 profundidad premium */
   box-shadow:
     0 10px 26px rgba(0,0,0,.55),
-    0 0 0 3px rgba(255,215,0,.28);
+    inset 0 2px 0 rgba(255,255,255,.25),
+    inset 0 -3px 0 rgba(0,0,0,.25);
 
   transition:
     transform .25s ease,
@@ -1326,7 +1289,7 @@ footer::before{
   overflow:hidden;
 }
 
-/* ✨ BRILLO SUPERIOR */
+/* ✨ BRILLO SUPERIOR SUAVE */
 .btn-bonito::before{
   content:"";
   position:absolute;
@@ -1336,27 +1299,33 @@ footer::before{
 
   background:linear-gradient(
     180deg,
-    rgba(255,255,255,.55),
+    rgba(255,255,255,.45),
     rgba(255,255,255,0) 60%
   );
 
   opacity:.35;
 }
 
-/* ⭐ EFECTO HOVER (PC) */
+/* ⭐ HOVER — PC */
 @media (hover:hover){
   .btn-bonito:hover{
-    transform:translateY(-2px) scale(1.06);
+    transform:translateY(-2px) scale(1.05);
+    filter:brightness(1.06);
+
     box-shadow:
       0 16px 36px rgba(0,0,0,.65),
-      0 0 0 4px rgba(255,215,0,.4);
-    filter:brightness(1.06);
+      inset 0 2px 0 rgba(255,255,255,.35),
+      inset 0 -3px 0 rgba(0,0,0,.3);
   }
 }
 
-/* 📱 ACTIVE (TOQUE) */
+/* 📱 ACTIVE — TOQUE REAL */
 .btn-bonito:active{
-  transform:scale(.95);
+  transform:scale(.96);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.45);
 }
 
 /* 📱 MOBILE */
@@ -1364,8 +1333,10 @@ footer::before{
   .btn-bonito{
     font-size:.95rem;
     padding:13px 24px;
+    letter-spacing:.45px;
   }
 }
+
 /* =========================
 📖 LIBRO / CARTA VIRTUAL — HOJA REAL (ELEGANTE)
 ========================= */
@@ -1596,34 +1567,34 @@ LIBRO
   }
 }
 
-/* =================================================
-   📱 TEXTO CORPORATIVO — MÓVIL (PEGADO + CONTRASTE)
+//* =================================================
+   📱 TEXTO CORPORATIVO — MÓVIL (CENTRADO + SIN FONDO)
 ================================================= */
 @media (max-width: 640px){
 
   .texto-corporativo{
     max-width: 100%;
-    padding: 10px 16px;     /* 🔑 controla el aire real */
-    margin: 4px auto 10px;  /* 🔑 se pega al header */
+    padding: 10px 16px;     /* aire lateral controlado */
+    margin: 4px auto 10px;  /* pegado visual al header */
 
-    text-align: left;
+    /* ✅ CENTRADO REAL */
+    text-align: center;
+
     line-height: 1.45;
     letter-spacing: 0.01em;
 
     font-size: clamp(0.95rem, 3.8vw, 1.05rem);
 
-    /* 🔑 contraste garantizado */
-    color: #ffffff;
-    background: linear-gradient(
-      180deg,
-      rgba(0,0,0,.6),
-      rgba(0,0,0,.35)
-    );
-    border-radius: 10px;
+    /* ✅ SIN FONDO */
+    background: none;
+    border-radius: 0;
 
+    color: #ffffff;
+
+    /* ✅ contraste sin caja negra */
     text-shadow:
-      0 2px 4px rgba(0,0,0,.95),
-      0 0 12px rgba(0,0,0,.85);
+      0 2px 4px rgba(0,0,0,.9),
+      0 0 10px rgba(0,0,0,.6);
   }
 }
 
