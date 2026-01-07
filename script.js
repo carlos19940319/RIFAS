@@ -183,23 +183,33 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     🎠 CARRUSEL — BOTONES FUNCIONALES
-  ===================================================== */
-  const carousel = document.querySelector('.carousel');
-  const btnLeft = document.querySelector('.btn.left');
-  const btnRight = document.querySelector('.btn.right');
+   🎠 CARRUSELES — SOPORTE PARA VARIOS (CORRECTO)
+===================================================== */
+document.querySelectorAll('.carousel-wrap').forEach(wrap => {
 
-  if (carousel && btnLeft && btnRight) {
-    const scrollAmount = () => carousel.clientWidth * 0.9;
+  const carousel = wrap.querySelector('.carousel');
+  const btnLeft  = wrap.querySelector('.btn.left');
+  const btnRight = wrap.querySelector('.btn.right');
 
-    btnRight.addEventListener('click', () => {
-      carousel.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+  if (!carousel || !btnLeft || !btnRight) return;
+
+  const scrollAmount = () => carousel.clientWidth * 0.9;
+
+  btnRight.addEventListener('click', () => {
+    carousel.scrollBy({
+      left: scrollAmount(),
+      behavior: 'smooth'
     });
+  });
 
-    btnLeft.addEventListener('click', () => {
-      carousel.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+  btnLeft.addEventListener('click', () => {
+    carousel.scrollBy({
+      left: -scrollAmount(),
+      behavior: 'smooth'
     });
-  }
+  });
+
+});
 
   /* =====================================================
      ⏰ RELOJ / ESTADO
