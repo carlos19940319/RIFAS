@@ -1882,3 +1882,87 @@ LIBRO
   cursor:pointer;
   box-shadow:0 8px 20px rgba(37,211,102,.35);
 }
+/* =================================================
+   📱 AJUSTE FINO SECCIONES BAJO HEADER (MÓVIL)
+================================================= */
+@media (max-width: 640px){
+
+  /* todas las secciones */
+  .page-section{
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* sección eventos específicamente */
+  #eventos{
+    padding-top: 6px !important;   /* pegado visual */
+  }
+
+}
+
+
+
+
+
+
+
+
+/* =================================================
+   ✨ ANIMACIÓN SUAVE TEXTO CORPORATIVO
+================================================= */
+.texto-corporativo{
+  opacity:0;
+  transform:translateY(12px);
+  animation:fadeSube .9s ease-out forwards;
+  animation-delay:.15s;
+}
+
+@keyframes fadeSube{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+/* =================================================
+   📱 PEGAR TEXTO AL HEADER (MÓVIL)
+================================================= */
+@media (max-width:640px){
+
+  #eventos{
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  #eventos .texto-corporativo{
+    margin-top: 4px;   /* 👈 aquí se pega */
+  }
+
+}
+/* =================================================
+   📱 SUBIR CARRUSEL EVENTOS (MÓVIL)
+================================================= */
+@media (max-width:640px){
+
+  #eventos-carrusel{
+    margin-top: 6px;   /* antes estaba más abajo */
+  }
+
+}
+
+@media (max-width:640px){
+
+  #eventos{
+    padding-top: 0 !important;
+  }
+
+  #eventos .texto-corporativo{
+    margin-top: 2px;
+  }
+
+  #eventos-carrusel{
+    margin-top: 4px;
+  }
+
+}
+
+
