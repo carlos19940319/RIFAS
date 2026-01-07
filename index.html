@@ -195,29 +195,34 @@
   </main>
 </section>
 
-  <!-- ========================================================= -->
+ <!-- ========================================================= -->
 <!-- SECCIÓN 4 — EVENTOS -->
 <!-- ========================================================= -->
 <section id="eventos" class="page-section">
   <main class="contenido">
 
     <p class="texto-corporativo">
- En La Chona llevamos el auténtico sabor mexicano a tu empresa y eventos, con un servicio puntual, confiable y bien presentado.
-</p>
+      En La Chona llevamos el auténtico sabor de la cocina mexicana directamente a tu empresa y eventos especiales,
+      con un servicio puntual, confiable y cuidadosamente presentado.
+    </p>
 
     <!-- Carrusel -->
     <section id="eventos-carrusel" aria-label="Carrusel de eventos">
       <div class="carousel-wrap">
 
-        <div class="carousel" id="carousel" tabindex="0">
+        <div class="carousel" tabindex="0">
 
           <!-- EVENTO 1 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 1">
+              <img src="img/Desayuno.jpeg" alt="Desayuno empresarial">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Desayuno empresarial"
+                     data-productos='["Chilaquiles","Huevos al gusto","Pan dulce","Café","Jugo"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -226,10 +231,14 @@
           <!-- EVENTO 2 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 2">
+              <img src="img/desayuno ej.jpeg" alt="Coffee break corporativo">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Coffee break corporativo"
+                     data-productos='["Café","Té","Galletas","Pan dulce"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -238,10 +247,14 @@
           <!-- EVENTO 3 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 3">
+              <img src="img/desayuno ejecutivo.jpeg" alt="Box lunch ejecutivo">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Box lunch ejecutivo"
+                     data-productos='["Box lunch","Agua","Refresco","Postre"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -250,10 +263,14 @@
           <!-- EVENTO 4 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 4">
+              <img src="img/eventos.jpeg" alt="Evento corporativo">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Evento corporativo"
+                     data-productos='["Platillo fuerte","Guarnición","Bebidas","Postre"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -262,10 +279,14 @@
           <!-- EVENTO 5 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 5">
+              <img src="img/eventos.jpeg" alt="Evento social">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Evento social"
+                     data-productos='["Tacos","Salsas","Agua","Refrescos"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -274,10 +295,14 @@
           <!-- EVENTO 6 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 6">
+              <img src="img/1.jpeg" alt="Capacitación empresarial">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Capacitación empresarial"
+                     data-productos='["Coffee break","Box lunch","Agua","Café"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -286,10 +311,14 @@
           <!-- EVENTO 7 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 7">
+              <img src="img/eventos.jpeg" alt="Junta ejecutiva">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Junta ejecutiva"
+                     data-productos='["Box lunch","Café","Galletas"]'>
+                    Cotizar este evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -299,19 +328,10 @@
 
         <!-- CONTROLES -->
         <div class="controls">
-          <button class="btn left" id="prevBtn" aria-label="Anterior">
-            <svg viewBox="0 0 24 24">
-              <path d="M15 6 L9 12 L15 18"/>
-            </svg>
-          </button>
-          <button class="btn right" id="nextBtn" aria-label="Siguiente">
-            <svg viewBox="0 0 24 24">
-              <path d="M9 6 L15 12 L9 18"/>
-            </svg>
-          </button>
+          <button class="btn left" id="prevBtn">‹</button>
+          <button class="btn right" id="nextBtn">›</button>
         </div>
 
-        <!-- DOTS -->
         <div class="dots" id="dots"></div>
 
       </div>
@@ -319,102 +339,132 @@
 
   </main>
 </section>
+
 <!-- ========================================================= -->
-<!-- SECCIÓN 5 — EVENTOS -->
+<!-- SECCIÓN 5 — EVENTOS EMPRESARIALES -->
 <!-- ========================================================= -->
 <section id="empresa" class="page-section">
   <main class="contenido">
 
+    <p class="texto-corporativo">
+      Ofrecemos soluciones gastronómicas de alta calidad para empresas,
+      especializadas en box lunch y alimentos para juntas, capacitaciones,
+      eventos internos y celebraciones corporativas.
+    </p>
 
-    </div>
-<p class="texto-corporativo">
-   Ofrecemos soluciones gastronómicas de alta calidad para empresas, especializadas en box lunch y alimentos para juntas, capacitaciones, eventos internos y celebraciones corporativas.
-</p>
     <!-- Carrusel -->
-    <section id="eventos-carrusel" aria-label="Carrusel de eventos">
+    <section id="empresa-carrusel" aria-label="Carrusel de eventos empresariales">
       <div class="carousel-wrap">
 
-        <div class="carousel" id="carousel" tabindex="0">
+        <div class="carousel" tabindex="0">
 
-          <!-- EVENTO 1 -->
+          <!-- EVENTO EMPRESA 1 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 1">
+              <img src="img/box lonch empresarial.jpg" alt="Box lunch empresarial">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Box lunch empresarial"
+                     data-productos='["Box lunch","Agua","Refresco","Postre"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- EVENTO 2 -->
+          <!-- EVENTO EMPRESA 2 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 2">
+              <img src="img/junta ejecutiva.jpg" alt="Junta ejecutiva">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Junta ejecutiva"
+                     data-productos='["Coffee break","Café","Galletas","Agua"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- EVENTO 3 -->
+          <!-- EVENTO EMPRESA 3 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 3">
+              <img src="img/comida Capacitación empresarial.jpg" alt="Capacitación empresarial">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Capacitación empresarial"
+                     data-productos='["Coffee break","Box lunch","Agua","Café"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- EVENTO 4 -->
+          <!-- EVENTO EMPRESA 4 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 4">
+              <img src="img/Desayuno corporativo.jpg" alt="Desayuno corporativo">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Desayuno corporativo"
+                     data-productos='["Chilaquiles","Huevos al gusto","Pan dulce","Café","Jugo"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- EVENTO 5 -->
+          <!-- EVENTO EMPRESA 5 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 5">
+              <img src="img/Comida corrida empresarial.jpg" alt="Comida corrida empresarial">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Comida corrida empresarial"
+                     data-productos='["Sopa","Platillo fuerte","Agua del día","Postre"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- EVENTO 6 -->
+          <!-- EVENTO EMPRESA 6 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 6">
+              <img src="img/Evento interno de empresa.jpg" alt="Evento interno de empresa">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Evento interno de empresa"
+                     data-productos='["Tacos","Salsas","Agua","Refrescos"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- EVENTO 7 -->
+          <!-- EVENTO EMPRESA 7 -->
           <article class="slide">
             <div class="media">
-              <img src="img/desayunoe2.png" alt="Evento 7">
+              <img src="img/Celebración corporativa.jpg" alt="Celebración corporativa">
               <div class="overlay">
                 <div class="overlay-content">
-                  <a href="#" class="btn-cotiza">Cotiza tu evento</a>
+                  <a href="#" class="btn-cotiza"
+                     data-evento="Celebración corporativa"
+                     data-productos='["Platillo fuerte","Guarnición","Bebidas","Postre"]'>
+                    Cotiza tu evento
+                  </a>
                 </div>
               </div>
             </div>
@@ -424,26 +474,19 @@
 
         <!-- CONTROLES -->
         <div class="controls">
-          <button class="btn left" id="prevBtn" aria-label="Anterior">
-            <svg viewBox="0 0 24 24">
-              <path d="M15 6 L9 12 L15 18"/>
-            </svg>
-          </button>
-          <button class="btn right" id="nextBtn" aria-label="Siguiente">
-            <svg viewBox="0 0 24 24">
-              <path d="M9 6 L15 12 L9 18"/>
-            </svg>
-          </button>
+          <button class="btn left" aria-label="Anterior">‹</button>
+          <button class="btn right" aria-label="Siguiente">›</button>
         </div>
 
         <!-- DOTS -->
-        <div class="dots" id="dots"></div>
+        <div class="dots"></div>
 
       </div>
     </section>
 
   </main>
 </section>
+
 
   <!-- FOOTER -->
   <footer style="width:100%; background:rgba(0,0,0,0.5); color:#fff; text-align:center; padding:12px 8px; box-sizing:border-box; font-family:Arial,sans-serif;">
@@ -454,6 +497,31 @@ Dirección: Av. Reolín Barejon, La Estacion<br>52006 Lerma de Villada, Méx., M
   </footer>
 <!-- JS externo -->
 <script src="script.js" defer></script>
+
+
+
+<div class="modal-cotiza" id="modalCotiza">
+  <div class="cotiza-box elegante">
+
+    <div class="cotiza-header">
+      <h3 id="tituloEvento">Cotización</h3>
+      <button id="cerrarCotiza" class="cerrar">✕</button>
+    </div>
+
+    <div id="listaProductos" class="lista-elegante"></div>
+
+    <div class="resumen elegante">
+      <h4>Resumen de cotización</h4>
+      <ul id="resumenLista"></ul>
+    </div>
+
+    <button id="enviarWhats" class="btn-whatsapp">
+      Enviar cotización por WhatsApp
+    </button>
+
+  </div>
+</div>
+
 
 </body>
 </html>
