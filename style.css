@@ -1613,68 +1613,65 @@ LIBRO
 }
 
 
-
 /* =================================================
-   TEXTO CORPORATIVO — CENTRADO REAL (AJUSTADO)
+   TEXTO CORPORATIVO — BASE (MÓVIL FIRST)
 ================================================= */
 .texto-corporativo{
-  color:#ffffff;
+  color: #ffffff;
 
-  /* 📐 ancho de lectura estable */
-  max-width:920px;
-  width:100%;
+  /* 📐 ancho óptimo de lectura (más aire lateral) */
+  max-width: 920px;
+  padding: 0 clamp(14px, 4vw, 28px);
+  margin: 0 auto;
 
-  /* 🎯 centrado absoluto incluso dentro de main */
-  margin:clamp(10px, 2vh, 18px) auto
-         clamp(16px, 3vh, 32px);
+  /* 🖋️ tipografía elegante */
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  font-weight: 400;
 
-  /* 🧱 padding interno simétrico REAL */
-  padding:0 clamp(18px, 4vw, 40px);
+  /* 📖 lectura fluida */
+  font-size: clamp(1.02rem, 2.8vw, 1.15rem);
+  line-height: 1.75;
+  letter-spacing: 0.015em;
 
-  /* 🖋️ tipografía corporativa */
-  font-family:'Inter', system-ui, Arial, sans-serif;
-  font-weight:400;
+  /* 🎯 alineación elegante */
+  text-align: center;
+  text-wrap: balance;
 
-  /* 📖 lectura equilibrada */
-  font-size:clamp(1rem, 3.4vw, 1.15rem);
-  line-height:1.6;
-  letter-spacing:0.015em;
-
-  /* 🎯 centrado visual */
-  text-align:center;
-
-  /* 🔒 estabilidad Android */
-  text-wrap:normal;
-  box-sizing:border-box;
-
-  /* 🌫️ contraste */
+  /* 🌫️ contraste premium */
   text-shadow:
-    0 1px 2px rgba(0,0,0,.85);
+    0 1px 2px rgba(0,0,0,.9),
+    0 0 10px rgba(0,0,0,.6);
 }
-
-
-
 /* =================================================
-   💻 LAPTOP — AJUSTE FINO
+   📱 TEXTO CORPORATIVO — COMPACTO Y FULL WIDTH
 ================================================= */
-@media (min-width:641px) and (max-width:1024px){
+@media (max-width: 640px) {
+
   .texto-corporativo{
-    max-width:880px;
-    font-size:clamp(1rem, 1.6vw, 1.12rem);
-    line-height:1.65;
+    max-width: 100%;              /* ocupa todo el ancho */
+    padding: 0 16px;              /* margen lateral cómodo */
+    margin: 0 auto;
+
+    text-align: left;             /* más natural en móvil */
+    line-height: 1.55;            /* más compacto */
+    letter-spacing: 0.01em;
+
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+
+    /* quitamos look pesado */
+    text-shadow:
+      0 1px 2px rgba(0,0,0,.85);
+  }
+}
+@media (max-width: 640px) {
+  .texto-corporativo{
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 14px;
   }
 }
 
-/* =================================================
-   🖥️ DESKTOP GRANDE / TV
-================================================= */
-@media (min-width:1440px){
-  .texto-corporativo{
-    max-width:1000px;
-    font-size:1.15rem;
-    line-height:1.7;
-  }
-}
+
+
 /* =================================================
    FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
 ================================================= */
@@ -1758,4 +1755,130 @@ LIBRO
   /* ↓ deja que el texto baje MÁS antes de wrap */
   font-size: clamp(0.78rem, 2.1vw, 1.45rem);
   letter-spacing: clamp(0.05em, 0.45vw, 0.18em);
+}
+
+
+/* ==============================
+   MODAL COTIZACIÓN — ELEGANTE
+============================== */
+
+.modal-cotiza{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.modal-cotiza.activo{
+  display:flex;
+}
+
+/* Caja principal */
+.cotiza-box.elegante{
+  background:#fafafa;
+  width:min(460px,92%);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  font-family:'Libre Baskerville', serif;
+}
+
+/* Header */
+.cotiza-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #e5e5e5;
+  padding-bottom:10px;
+}
+
+.cotiza-header h3{
+  font-size:1.3rem;
+  color:#2b2b2b;
+}
+
+.cerrar{
+  background:none;
+  border:none;
+  font-size:1.2rem;
+  cursor:pointer;
+  color:#666;
+}
+
+/* Lista de productos */
+.lista-elegante .producto{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px dashed #ddd;
+}
+
+.lista-elegante span{
+  font-size:.95rem;
+  color:#333;
+}
+
+/* Controles + / − */
+.controles{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.controles button{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:none;
+  font-weight:bold;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.mas{
+  background:#1f9d55;
+  color:#fff;
+}
+
+.menos{
+  background:#eee;
+  color:#333;
+}
+
+/* Resumen */
+.resumen.elegante{
+  margin-top:16px;
+  padding-top:12px;
+  border-top:2px solid #e0e0e0;
+}
+
+.resumen.elegante h4{
+  font-size:.95rem;
+  margin-bottom:6px;
+  color:#555;
+}
+
+.resumen.elegante ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+  font-size:.9rem;
+}
+
+/* Botón WhatsApp */
+.btn-whatsapp{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(180deg,#25D366,#1ebc5a);
+  color:#fff;
+  font-weight:600;
+  font-size:.95rem;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(37,211,102,.35);
 }
