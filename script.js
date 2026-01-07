@@ -242,3 +242,67 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 });
+
+
+const modal = document.getElementById("modalCotiza");
+const cerrar = document.getElementById("cerrarCotiza");
+const enviar = document.getElementById("enviarWhats");
+const tituloEvento = document.getElementById("tituloEvento");
+const listaProductos = document.getElementById("listaProductos");
+const resumenLista = document.getElementById("resumenLista");
+
+let carrito = {};
+let eventoActual = "";
+
+document.querySelectorAll(".btn-cotiza").forEach(btn=>{
+  btn.addEventListener("click", e=>{
+    e.preventDefault();
+
+    eventoActual = btn.dataset.evento;
+    tituloEvento.textContent = eventoActual;
+    carrito = {};
+    listaProductos.innerHTML = "";
+    resumenLista.innerHTML = "";
+
+    JSON.parse(btn.dataset.productos).forEach(p=>{
+      carrito[p] = 0;
+      listaProductos.innerHTML += `
+        <div class="producto">
+          <span>${p}</span>
+          <div class="controles">
+            <button class="menos" data-p="${p}">−</button>
+            <span id="c-${p}">0</span>
+            <button class="mas" data-p="${p}">+</button>
+          </div>
+        </div>`;
+    });
+
+    modal.classList.add("activo");
+  });
+});
+
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("mas")) carrito[e.target.dataset.p]++;
+  if(e.target.classList.contains("menos") && carrito[e.target.dataset.p] > 0)
+    carrito[e.target.dataset.p]--;
+
+  resumenLista.innerHTML="";
+  for(let p in carrito){
+    document.getElementById(`c-${p}`).textContent = carrito[p];
+    if(carrito[p]>0) resumenLista.innerHTML += `<li>• ${p} — ${carrito[p]}</li>`;
+  }
+});
+
+enviar.addEventListener("click", ()=>{
+  let msg = `Hola, quiero cotizar el evento:%0A${eventoActual}%0A%0A`;
+  let ok=false;
+  for(let p in carrito){
+    if(carrito[p]>0){ ok=true; msg+=`• ${p} — ${carrito[p]}%0A`; }
+  }
+  if(!ok){ alert("Agrega productos"); return; }
+  window.open(`https://wa.me/5217223943462?text=${msg}`,"_blank");
+});
+
+cerrar.addEventListener("click",()=>modal.classList.remove("activo"));
+
+
