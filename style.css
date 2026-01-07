@@ -584,24 +584,28 @@ footer::before{
 * { -webkit-tap-highlight-color: transparent; }
 
 /* =================================================
-   ✨ CARRUSEL EVENTOS / CARTA — ELEGANTE & PREMIUM
+   ✨ CARRUSEL EVENTOS / CARTA — PREMIUM FINAL
 ================================================= */
 
-#eventos{
+/* =========================
+   SECCIÓN EVENTOS
+========================= */
+#eventos,
+#empresa{
   width:100%;
   font-family:Inter, system-ui, Roboto, Arial;
-  padding-top:16px;
-  padding-bottom:40px;
+  padding-top:12px;
+  padding-bottom:56px;
 }
 
 /* =========================
    CONTENEDOR GENERAL
 ========================= */
 .carousel-wrap{
-  max-width:1100px;
-  margin:-18px auto 0;
+  max-width:1180px;
+  margin:-12px auto 0;
   position:relative;
-  padding:0 12px;
+  padding:0 16px;
   box-sizing:border-box;
 }
 
@@ -610,11 +614,11 @@ footer::before{
 ========================= */
 .carousel{
   display:flex;
-  gap:20px;
+  gap:22px;
   overflow-x:auto;
   scroll-behavior:smooth;
   scroll-snap-type:x mandatory;
-  padding:20px 0;
+  padding:22px 0;
 
   scrollbar-width:none;
   overscroll-behavior-x:contain;
@@ -628,59 +632,60 @@ footer::before{
 }
 
 /* =========================
-   SLIDES — CARTA PREMIUM
+   SLIDE — TARJETA PREMIUM
 ========================= */
 .slide{
   min-width:90%;
-  background:#1b1b1b;
-  border-radius:22px;
+  background:#141414;
+  border-radius:24px;
   overflow:hidden;
   position:relative;
   text-align:center;
 
-  border:1px solid rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.15);
 
   box-shadow:
-    0 18px 40px rgba(0,0,0,.45),
-    inset 0 0 0 1px rgba(255,255,255,.08);
+    0 22px 50px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.06);
 
   transition:
-    transform .4s cubic-bezier(.4,0,.2,1),
-    box-shadow .4s ease,
+    transform .45s cubic-bezier(.4,0,.2,1),
+    box-shadow .45s ease,
     opacity .35s ease;
 
-  transform:scale(.94);
-  opacity:1;
+  transform:scale(.93);
+  opacity:.9;
   scroll-snap-align:center;
 }
 
-/* Borde interior elegante */
+/* Borde interior sutil */
 .slide::after{
   content:"";
   position:absolute;
-  inset:10px;
-  border-radius:16px;
+  inset:12px;
+  border-radius:18px;
   pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
 }
 
 /* Slide activo */
 .slide.active{
-  transform:scale(1.06);
-  border-color:rgba(255,255,255,.65);
+  transform:scale(1.05);
+  opacity:1;
+  border-color:rgba(255,255,255,.55);
 
   box-shadow:
-    0 28px 65px rgba(0,0,0,.65),
-    0 0 0 1.5px rgba(255,255,255,.75),
-    0 0 22px rgba(31,182,201,.25);
+    0 34px 80px rgba(0,0,0,.75),
+    0 0 0 1.5px rgba(255,255,255,.6),
+    0 0 26px rgba(31,182,201,.22);
 }
 
 /* ===== DESKTOP ===== */
 @media(min-width:900px){
-  .slide{min-width:45%}
+  .slide{ min-width:45%; }
 }
 @media(min-width:1200px){
-  .slide{min-width:32%}
+  .slide{ min-width:32%; }
 }
 
 /* =========================
@@ -696,15 +701,17 @@ footer::before{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:transform .45s ease;
+  filter:saturate(1.05) contrast(1.05);
+  transition:transform .6s ease, filter .6s ease;
 }
 
 .slide.active img{
-  transform:scale(1.12);
+  transform:scale(1.15);
+  filter:saturate(1.15) contrast(1.1);
 }
 
 /* =========================
-   OVERLAY TEXTO
+   OVERLAY
 ========================= */
 .overlay{
   position:absolute;
@@ -712,13 +719,13 @@ footer::before{
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding:26px;
+  padding:30px 26px;
 
   background:linear-gradient(
     180deg,
     rgba(0,0,0,0) 0%,
-    rgba(0,0,0,.55) 65%,
-    rgba(0,0,0,.85) 100%
+    rgba(0,0,0,.45) 55%,
+    rgba(0,0,0,.88) 100%
   );
 
   color:#fff;
@@ -726,21 +733,21 @@ footer::before{
 }
 
 /* =========================
-   BADGE
+   BADGE (OPCIONAL)
 ========================= */
 .badge{
-  background:rgba(255,255,255,.12);
-  backdrop-filter:blur(6px);
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(8px);
 
-  padding:6px 16px;
+  padding:6px 18px;
   border-radius:999px;
 
   font-weight:600;
-  font-size:.8rem;
-  letter-spacing:.5px;
+  font-size:.75rem;
+  letter-spacing:.6px;
   text-transform:uppercase;
 
-  margin-bottom:12px;
+  margin-bottom:14px;
   align-self:center;
 
   border:1px solid rgba(255,255,255,.25);
@@ -750,17 +757,17 @@ footer::before{
    TEXTO
 ========================= */
 .title{
-  font-size:1.45rem;
+  font-size:1.5rem;
   margin:6px 0;
-  font-weight:900;
+  font-weight:800;
   letter-spacing:.4px;
 }
 
 .desc{
   font-size:.95rem;
   margin-top:8px;
-  line-height:1.45;
-  opacity:.92;
+  line-height:1.5;
+  opacity:.9;
 }
 
 /* =========================
@@ -785,8 +792,8 @@ footer::before{
 
   background:linear-gradient(
     180deg,
-    #1e3a4c 0%,
-    #142c3a 55%,
+    #223e52 0%,
+    #162e3d 55%,
     #0f202b 100%
   );
 
@@ -797,8 +804,8 @@ footer::before{
   cursor:pointer;
 
   box-shadow:
-    0 8px 22px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(255,255,255,.18);
+    0 10px 28px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(255,255,255,.15);
 
   display:flex;
   align-items:center;
@@ -815,7 +822,7 @@ footer::before{
   .btn:hover{
     transform:translateY(-50%) scale(1.12);
     box-shadow:
-      0 12px 32px rgba(0,0,0,.75),
+      0 14px 36px rgba(0,0,0,.8),
       inset 0 0 0 1px rgba(255,255,255,.3);
     filter:brightness(1.1);
   }
@@ -837,8 +844,8 @@ footer::before{
 }
 
 /* Posición */
-.btn.left{ left:8px; }
-.btn.right{ right:8px; }
+.btn.left{ left:10px; }
+.btn.right{ right:10px; }
 
 /* =========================
    MOBILE
@@ -851,19 +858,19 @@ footer::before{
 
   .slide{
     min-width:96%;
-    transform:scale(.96);
+    transform:scale(.97);
   }
 
   .slide.active{
-    transform:scale(1.02);
+    transform:scale(1.01);
   }
 
   .media{
     aspect-ratio:3 / 4;
   }
 
-  .title{font-size:1.25rem}
-  .desc{font-size:.9rem}
+  .title{ font-size:1.25rem; }
+  .desc{ font-size:.9rem; }
 }
 
 /* =========================
@@ -873,7 +880,7 @@ footer::before{
   display:flex;
   gap:8px;
   justify-content:center;
-  margin-top:16px;
+  margin-top:18px;
 }
 
 .dot{
@@ -887,8 +894,9 @@ footer::before{
 
 .dot.active{
   background:#1fb6c9;
-  transform:scale(1.2);
+  transform:scale(1.25);
 }
+
 
 /* =========================
    BOTÓN COTIZA TU EVENTO — ROJO 3D PREMIUM
@@ -2050,3 +2058,115 @@ LIBRO
 }
 
 
+/* =================================================
+   🧩 NORMALIZADOR VERTICAL GLOBAL — LA CHONA
+   (evita espacios fantasmas entre bloques)
+================================================= */
+
+/* 🔑 Regla base: nada exagerado en vertical */
+section,
+main,
+.page-section,
+.hero,
+.grid,
+.menu-book,
+.carousel-wrap,
+footer {
+  margin-top: clamp(6px, 1.2vh, 20px);
+  margin-bottom: clamp(10px, 2vh, 32px);
+}
+
+/* =================================================
+   HEADER → CONTENIDO (AJUSTE FINO)
+================================================= */
+main {
+  padding-top: calc(var(--header-height) + var(--nav-height) + clamp(10px, 2vh, 20px));
+}
+
+/* =================================================
+   TEXTO CORPORATIVO — SIN AIRE EXTRA
+================================================= */
+.texto-corporativo {
+  margin-top: clamp(4px, 1vh, 14px);
+  margin-bottom: clamp(8px, 1.5vh, 22px);
+}
+
+/* =================================================
+   CARRUSEL — MÁS PEGADO AL TEXTO
+================================================= */
+#eventos-carrusel,
+#empresa-carrusel {
+  margin-top: clamp(4px, 1vh, 14px);
+}
+
+/* =================================================
+   HERO / BIENVENIDA
+================================================= */
+.hero {
+  padding-top: clamp(6px, 1.5vh, 18px);
+  padding-bottom: clamp(10px, 2vh, 26px);
+}
+
+/* =================================================
+   GRID / CARDS
+================================================= */
+.grid {
+  margin-top: clamp(10px, 2vh, 28px);
+}
+
+/* =================================================
+   FOOTER — COMPACTO
+================================================= */
+footer {
+  padding-top: clamp(10px, 2vh, 18px);
+  padding-bottom: clamp(8px, 1.5vh, 14px);
+}
+
+/* =================================================
+   📱 MÓVIL — COMPACTACIÓN REAL
+================================================= */
+@media (max-width: 640px) {
+
+  section,
+  main,
+  .page-section,
+  .hero,
+  .grid,
+  .menu-book,
+  .carousel-wrap {
+    margin-top: 4px !important;
+    margin-bottom: 10px !important;
+  }
+
+  main {
+    padding-top: calc(var(--header-height) + var(--nav-height) + 6px);
+  }
+
+  .texto-corporativo {
+    margin-top: 2px !important;
+    margin-bottom: 10px !important;
+    line-height: 1.45;
+  }
+
+  #eventos-carrusel,
+  #empresa-carrusel {
+    margin-top: 4px !important;
+  }
+
+  .hero {
+    padding-top: 4px;
+    padding-bottom: 10px;
+  }
+}
+
+/* =================================================
+   🖥️ PANTALLAS MUY ALTAS (tablets verticales)
+================================================= */
+@media (min-height: 900px) {
+
+  section,
+  .page-section {
+    margin-top: clamp(8px, 1.5vh, 18px);
+    margin-bottom: clamp(14px, 2.5vh, 30px);
+  }
+}
