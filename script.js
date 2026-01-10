@@ -1,27 +1,24 @@
 /* =====================================================
-   script.js — LA CHONA FINAL DEFINITIVO (CORREGIDO)
+   script.js — LA CHONA FINAL DEFINITIVO
    ✔ SPA estable
-   ✔ Carta tipo libro (SIN parpadeo)
-   ✔ Una sola hoja
-   ✔ Reset limpio al salir
+   ✔ Libro carta SIN parpadeo
+   ✔ Animación rápida e interrumpible
+   ✔ Botones bloqueados en extremos
    ✔ Swipe móvil
+   ✔ Reset limpio
    ✔ Carrusel funcional
    ✔ Reloj / Estado
 ===================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* =====================================================
-     FADE IN GENERAL
-  ===================================================== */
   document.body.classList.add('show');
 
   /* =====================================================
-     VARIABLES GLOBALES CONTROLADAS
+     VARIABLES GLOBALES
   ===================================================== */
   let libroInit = false;
   let pageIndex = 0;
-  let locked = false;
   let firstTurn = true;
 
   /* =====================================================
@@ -35,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const active = document.querySelector('.page-section.active');
 
-    /* 🔄 Reset libro al salir de carta */
     if (active?.id === 'carta' && id !== 'carta') {
       resetLibro();
       libroInit = false;
@@ -61,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    /* 📖 Inicializar libro SOLO al entrar a carta */
     if (id === 'carta' && !libroInit) {
       requestAnimationFrame(initLibro);
       libroInit = true;
@@ -82,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =====================================================
-     📖 LIBRO / CARTA — UNA SOLA HOJA
+     📖 LIBRO / CARTA — RÁPIDO + SIN PARPADEO
   ===================================================== */
   function initLibro() {
 
@@ -93,9 +88,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!book || !pages.length || !nextBtn || !prevBtn) return;
 
-    /* ---------- ESTADO INICIAL ---------- */
+    /* 🔒 controla estado de botones */
+    function updateNavButtons(){
+      if (pageIndex === 0) {
+        prevBtn.classList.add('disabled');
+      } else {
+        prevBtn.classList.remove('disabled');
+      }
+
+      if (pageIndex === pages.length - 1) {
+        nextBtn.classList.add('disabled');
+      } else {
+        nextBtn.classList.remove('disabled');
+      }
+    }
+
+    /* ----- estado inicial ----- */
     pages.forEach((page, i) => {
-      page.classList.remove('turning');
       page.style.transform = 'translateZ(0) rotateY(0deg)';
       page.style.zIndex = pages.length - i;
       page.style.willChange = 'transform';
@@ -110,45 +119,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updatePages() {
       pages.forEach((page, i) => {
-
-        page.classList.remove('turning');
-
         if (i < pageIndex) {
           page.style.zIndex = i;
-          page.style.transform = 'translateZ(0) rotateY(-180deg)';
+          page.style.transform = 'rotateY(-180deg)';
         }
         else if (i === pageIndex) {
           page.style.zIndex = pages.length + 5;
-          page.classList.add('turning');
-          page.style.transitionDuration = firstTurn ? '0.6s' : '1s';
+          page.style.transitionDuration = firstTurn ? '0.45s' : '0.55s';
           firstTurn = false;
-          page.style.transform = 'translateZ(0) rotateY(0deg)';
+          page.style.transform = 'rotateY(0deg)';
         }
         else {
           page.style.zIndex = pages.length - i;
-          page.style.transform = 'translateZ(0) rotateY(0deg)';
+          page.style.transform = 'rotateY(0deg)';
         }
       });
+
+      updateNavButtons();
     }
 
-    /* ---------- BOTONES ---------- */
+    /* ▶️ NEXT */
     nextBtn.onclick = () => {
-      if (locked || pageIndex >= pages.length - 1) return;
-      locked = true;
-      pageIndex++;
-      updatePages();
-      setTimeout(() => locked = false, 900);
+      if (pageIndex >= pages.length - 1) return;
+
+      const currentPage = pages[pageIndex];
+
+      currentPage.style.transition = 'none';
+      currentPage.offsetHeight;
+      currentPage.style.transition = '';
+      currentPage.style.transform = 'rotateY(-180deg)';
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          pageIndex++;
+          updatePages();
+        });
+      });
     };
 
+    /* ◀️ PREV */
     prevBtn.onclick = () => {
-      if (locked || pageIndex <= 0) return;
-      locked = true;
-      pageIndex--;
-      updatePages();
-      setTimeout(() => locked = false, 900);
+      if (pageIndex <= 0) return;
+
+      const page = pages[pageIndex - 1];
+
+      page.style.transition = 'none';
+      page.offsetHeight;
+      page.style.transition = '';
+      page.style.transform = 'rotateY(0deg)';
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          pageIndex--;
+          updatePages();
+        });
+      });
     };
 
-    /* ---------- SWIPE ---------- */
+    /* 👉 SWIPE MÓVIL */
     let startX = 0;
 
     book.ontouchstart = e => {
@@ -160,6 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (diff > 60) nextBtn.click();
       if (diff < -60) prevBtn.click();
     };
+
+    /* estado inicial botones */
+    updateNavButtons();
   }
 
   function resetLibro() {
@@ -167,49 +198,39 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!pages.length) return;
 
     pageIndex = 0;
-    locked = false;
     firstTurn = true;
 
     pages.forEach((page, i) => {
-      page.classList.remove('turning');
-      page.style.transitionDuration = '0s';
+      page.style.transition = 'none';
       page.style.transform = 'rotateY(0deg)';
       page.style.zIndex = pages.length - i;
     });
 
     requestAnimationFrame(() => {
-      pages.forEach(p => p.style.transitionDuration = '');
+      pages.forEach(p => p.style.transition = '');
     });
   }
 
   /* =====================================================
-   🎠 CARRUSELES — SOPORTE PARA VARIOS (CORRECTO)
-===================================================== */
-document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+     🎠 CARRUSELES
+  ===================================================== */
+  document.querySelectorAll('.carousel-wrap').forEach(wrap => {
 
-  const carousel = wrap.querySelector('.carousel');
-  const btnLeft  = wrap.querySelector('.btn.left');
-  const btnRight = wrap.querySelector('.btn.right');
+    const carousel = wrap.querySelector('.carousel');
+    const btnLeft  = wrap.querySelector('.btn.left');
+    const btnRight = wrap.querySelector('.btn.right');
 
-  if (!carousel || !btnLeft || !btnRight) return;
+    if (!carousel || !btnLeft || !btnRight) return;
 
-  const scrollAmount = () => carousel.clientWidth * 0.9;
+    const scrollAmount = () => carousel.clientWidth * 0.9;
 
-  btnRight.addEventListener('click', () => {
-    carousel.scrollBy({
-      left: scrollAmount(),
-      behavior: 'smooth'
-    });
+    btnRight.onclick = () =>
+      carousel.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+
+    btnLeft.onclick  = () =>
+      carousel.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+
   });
-
-  btnLeft.addEventListener('click', () => {
-    carousel.scrollBy({
-      left: -scrollAmount(),
-      behavior: 'smooth'
-    });
-  });
-
-});
 
   /* =====================================================
      ⏰ RELOJ / ESTADO
@@ -245,14 +266,14 @@ document.querySelectorAll('.carousel-wrap').forEach(wrap => {
   actualizarReloj();
   actualizarEstado();
 
-  /* =====================================================
-     © FOOTER
-  ===================================================== */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 });
 
+/* =====================================================
+   MODAL COTIZACIÓN (SIN CAMBIOS)
+===================================================== */
 
 const modal = document.getElementById("modalCotiza");
 const cerrar = document.getElementById("cerrarCotiza");
@@ -265,7 +286,7 @@ let carrito = {};
 let eventoActual = "";
 
 document.querySelectorAll(".btn-cotiza").forEach(btn=>{
-  btn.addEventListener("click", e=>{
+  btn.onclick = e => {
     e.preventDefault();
 
     eventoActual = btn.dataset.evento;
@@ -288,7 +309,7 @@ document.querySelectorAll(".btn-cotiza").forEach(btn=>{
     });
 
     modal.classList.add("activo");
-  });
+  };
 });
 
 document.addEventListener("click", e=>{
@@ -299,11 +320,12 @@ document.addEventListener("click", e=>{
   resumenLista.innerHTML="";
   for(let p in carrito){
     document.getElementById(`c-${p}`).textContent = carrito[p];
-    if(carrito[p]>0) resumenLista.innerHTML += `<li>• ${p} — ${carrito[p]}</li>`;
+    if(carrito[p]>0)
+      resumenLista.innerHTML += `<li>• ${p} — ${carrito[p]}</li>`;
   }
 });
 
-enviar.addEventListener("click", ()=>{
+enviar.onclick = () => {
   let msg = `Hola, quiero cotizar el evento:%0A${eventoActual}%0A%0A`;
   let ok=false;
   for(let p in carrito){
@@ -311,8 +333,6 @@ enviar.addEventListener("click", ()=>{
   }
   if(!ok){ alert("Agrega productos"); return; }
   window.open(`https://wa.me/5217223943462?text=${msg}`,"_blank");
-});
+};
 
-cerrar.addEventListener("click",()=>modal.classList.remove("activo"));
-
-
+cerrar.onclick = () => modal.classList.remove("activo");
