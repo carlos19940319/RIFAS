@@ -1482,6 +1482,13 @@ LIBRO
     transition:none !important;
   }
 }
+.nav.disabled{
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(100%);
+  box-shadow: none;
+  transform: translateY(-50%) scale(0.95);
+}
 
 /* =========================
 ⏰ HORARIO — CENTRADO + LÍNEA SOLO ABAJO
@@ -2063,5 +2070,79 @@ footer {
     top:10px;
     font-size:.9rem;
     padding:8px 16px;
+  }
+}
+/* =================================================
+   🛡️ MODO ESTABLE PARA MÓVILES DE BAJA GAMA
+   Detecta pantallas chicas + bajo rendimiento
+================================================= */
+
+@media (max-width: 480px) {
+
+  /* 🔥 FONDO: quitar fixed (causa parpadeos) */
+  body::before{
+    position:absolute;
+    background-attachment: scroll;
+    animation:none;
+  }
+
+  /* 🔥 ELIMINAMOS BLUR PESADO */
+  *,
+  *::before,
+  *::after{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    filter:none !important;
+  }
+
+  /* 🔥 SOMBRAS SIMPLES (NO múltiples capas) */
+  .card,
+  .slide,
+  .page img,
+  .book,
+  .header-unificado{
+    box-shadow: 0 6px 14px rgba(0,0,0,.45) !important;
+  }
+
+  /* 🔥 TEXTO MÁS LIMPIO */
+  body,
+  .texto-corporativo,
+  .card-info,
+  .overlay,
+  .header-unificado nav a{
+    text-shadow: 0 1px 2px rgba(0,0,0,.9) !important;
+  }
+
+  /* 🔥 CARTA / LIBRO — proporción fija */
+  .book{
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .page img{
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+
+  /* 🔥 NAV MÁS SIMPLE */
+  .header-unificado{
+    backdrop-filter:none;
+    background: rgba(0,0,0,.75);
+  }
+
+  /* 🔥 BOTONES MÁS GRANDES (evita errores táctiles) */
+  .nav,
+  .btn{
+    width:48px;
+    height:48px;
+  }
+
+  /* 🔥 DESACTIVAR ANIMACIONES PESADAS */
+  *{
+    animation:none !important;
+    transition: none !important;
   }
 }
