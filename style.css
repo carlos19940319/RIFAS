@@ -1877,7 +1877,7 @@ LIBRO
 }
 
 /* ==============================
-   BOTÓN WHATSAPP
+   BOTÓN WHATSAPP — ELEGANTE / SOBRIO
 ============================== */
 .btn-whatsapp{
   width:100%;
@@ -1886,20 +1886,48 @@ LIBRO
   border:none;
   border-radius:999px;
 
-  background:linear-gradient(180deg,#25D366,#1ebc5a);
-  color:#fff;
+  /* verde más apagado */
+  background:linear-gradient(
+    180deg,
+    #2fbf71,
+    #1e9f5a
+  );
+
+  color:#ffffff;
   font-weight:600;
   font-size:.95rem;
   cursor:pointer;
 
-  box-shadow:0 10px 25px rgba(37,211,102,.45);
-  transition:transform .2s, box-shadow .2s;
+  /* sombra neutra (NO verde) */
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.18);
+
+  transition:
+    transform .2s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
 }
 
-.btn-whatsapp:hover{
-  transform:translateY(-1px);
-  box-shadow:0 14px 30px rgba(37,211,102,.6);
+/* Hover PC */
+@media (hover:hover){
+  .btn-whatsapp:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.04); /* leve */
+    box-shadow:
+      0 12px 26px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.22);
+  }
 }
+
+/* Active móvil */
+.btn-whatsapp:active{
+  transform:translateY(0);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
 
 /* =================================================
    📱 AJUSTE FINO SECCIONES BAJO HEADER (MÓVIL)
@@ -2070,79 +2098,5 @@ footer {
     top:10px;
     font-size:.9rem;
     padding:8px 16px;
-  }
-}
-/* =================================================
-   🛡️ MODO ESTABLE PARA MÓVILES DE BAJA GAMA
-   Detecta pantallas chicas + bajo rendimiento
-================================================= */
-
-@media (max-width: 480px) {
-
-  /* 🔥 FONDO: quitar fixed (causa parpadeos) */
-  body::before{
-    position:absolute;
-    background-attachment: scroll;
-    animation:none;
-  }
-
-  /* 🔥 ELIMINAMOS BLUR PESADO */
-  *,
-  *::before,
-  *::after{
-    backdrop-filter:none !important;
-    -webkit-backdrop-filter:none !important;
-    filter:none !important;
-  }
-
-  /* 🔥 SOMBRAS SIMPLES (NO múltiples capas) */
-  .card,
-  .slide,
-  .page img,
-  .book,
-  .header-unificado{
-    box-shadow: 0 6px 14px rgba(0,0,0,.45) !important;
-  }
-
-  /* 🔥 TEXTO MÁS LIMPIO */
-  body,
-  .texto-corporativo,
-  .card-info,
-  .overlay,
-  .header-unificado nav a{
-    text-shadow: 0 1px 2px rgba(0,0,0,.9) !important;
-  }
-
-  /* 🔥 CARTA / LIBRO — proporción fija */
-  .book{
-    width: 100%;
-    max-width: 360px;
-    height: auto;
-    aspect-ratio: 3 / 4;
-  }
-
-  .page img{
-    width: 100%;
-    height: auto;
-    max-height: none;
-  }
-
-  /* 🔥 NAV MÁS SIMPLE */
-  .header-unificado{
-    backdrop-filter:none;
-    background: rgba(0,0,0,.75);
-  }
-
-  /* 🔥 BOTONES MÁS GRANDES (evita errores táctiles) */
-  .nav,
-  .btn{
-    width:48px;
-    height:48px;
-  }
-
-  /* 🔥 DESACTIVAR ANIMACIONES PESADAS */
-  *{
-    animation:none !important;
-    transition: none !important;
   }
 }
