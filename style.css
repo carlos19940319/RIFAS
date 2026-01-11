@@ -1533,40 +1533,41 @@ LIBRO
   );
 }
 
-
 /* =================================================
-   TEXTO CORPORATIVO — BASE (MÓVIL FIRST)
+   TEXTO CORPORATIVO — AMPLIO / ELEGANTE
 ================================================= */
 .texto-corporativo{
-  color: #ffffff;
+  color:#ffffff;
 
-  /* 📐 ancho óptimo de lectura */
-  max-width: 920px;
-  padding: 0 clamp(14px, 4vw, 28px);
-  margin: 0 auto 14px;
+  /* 🔑 USAMOS MÁS ANCHO REAL */
+  max-width: min(1200px, 92vw);
+  margin: 0 auto 22px;
 
-  /* 🖋️ tipografía */
+  /* aire lateral real */
+  padding: 0 clamp(18px, 5vw, 60px);
+
+  /* tipografía */
   font-family: 'Inter', system-ui, Arial, sans-serif;
   font-weight: 400;
 
-  /* 📖 lectura fluida */
-  font-size: clamp(1.02rem, 2.8vw, 1.15rem);
+  /* lectura cómoda */
+  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
   line-height: 1.75;
-  letter-spacing: 0.015em;
+  letter-spacing: 0.02em;
 
-  /* 🎯 alineación */
-  text-align: center;
-  text-wrap: balance;
+  /* 🔑 CAMBIO CLAVE */
+  text-align: center;          /* puedes cambiar a left si quieres aún más ancho visual */
+  text-wrap: pretty;
 
-  /* 🌫️ contraste */
+  /* contraste */
   text-shadow:
     0 1px 2px rgba(0,0,0,.9),
-    0 0 10px rgba(0,0,0,.6);
+    0 0 10px rgba(0,0,0,.5);
 
-  /* ✨ entrada suave */
+  /* entrada suave */
   opacity: 0;
   transform: translateY(10px);
-  animation: textoFade .8s ease-out forwards;
+  animation: textoFade .7s ease-out forwards;
 }
 
 @keyframes textoFade{
@@ -1575,6 +1576,8 @@ LIBRO
     transform: translateY(0);
   }
 }
+
+
 
 
 
