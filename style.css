@@ -1565,41 +1565,43 @@ LIBRO
   );
 }
 
-
 /* =================================================
-   TEXTO CORPORATIVO — PROPORCIONADO / PREMIUM
+   TEXTO CORPORATIVO — ANCHO REAL / FLUIDO
 ================================================= */
 .texto-corporativo{
   color:#ffffff;
 
-  /* 🔑 ancho real, sin verse encajonado */
-  max-width: 960px;
+  /* 🔑 OCUPA CASI TODO EL ANCHO REAL */
+  width: 100%;
+  max-width: min(1200px, 96vw);
   margin: 0 auto 18px;
 
-  /* aire lateral controlado */
-  padding: 0 clamp(16px, 4vw, 32px);
+  /* menos aire lateral */
+  padding: 0 clamp(12px, 2.5vw, 24px);
 
   /* tipografía */
   font-family: 'Inter', system-ui, Arial, sans-serif;
   font-weight: 400;
 
-  /* 📖 lectura equilibrada */
-  font-size: clamp(1.02rem, 2.4vw, 1.12rem);
-  line-height: 1.55;              /* 👈 CLAVE: menos alto */
-  letter-spacing: 0.012em;        /* 👈 menos separación */
+  /* tamaño correcto (ya aprobado) */
+  font-size: clamp(0.98rem, 2.2vw, 1.08rem);
 
-  /* 🔑 mejor proporción visual */
+  /* 🔑 MENOS ALTURA ENTRE LÍNEAS */
+  line-height: 1.45;
+  letter-spacing: 0.008em;
+
+  /* 🔑 MÁS HORIZONTAL */
   text-align: center;
-  text-wrap: balance;
+  text-wrap: normal;   /* 👈 CLAVE: permite líneas largas */
 
   /* contraste elegante */
   text-shadow:
     0 1px 2px rgba(0,0,0,.85),
-    0 0 8px rgba(0,0,0,.45);
+    0 0 6px rgba(0,0,0,.4);
 
   /* entrada suave */
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
   animation: textoFade .6s ease-out forwards;
 }
 
@@ -1611,16 +1613,28 @@ LIBRO
 }
 
 /* =================================================
-   📱 MÓVIL — MÁS NATURAL, MENOS ALTO
+   📱 MÓVIL — CASI ANCHO COMPLETO
 ================================================= */
 @media (max-width: 768px){
   .texto-corporativo{
-    max-width: 94%;
-    padding: 0 16px;
+    max-width: 100%;
+    padding: 0 14px;
 
-    font-size: 0.98rem;
-    line-height: 1.48;   /* 👈 evita que se vea largo */
-    letter-spacing: 0.01em;
+    font-size: 0.96rem;
+    line-height: 1.42;
+    letter-spacing: 0.006em;
+
+    text-align: center;
+  }
+}
+
+/* =================================================
+   💻 DESKTOP — SE VE MÁS “LARGO”
+================================================= */
+@media (min-width: 1024px){
+  .texto-corporativo{
+    text-align: justify;
+    text-align-last: center; /* mantiene elegancia */
   }
 }
 
