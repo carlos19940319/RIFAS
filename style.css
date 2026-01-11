@@ -356,9 +356,8 @@ main {
 ================================================= */
 .img-bienvenida{
   display:block;
-
   width:100%;
-  max-width:clamp(420px, 58vw, 660px);
+  max-width:clamp(460px, 62vw, 720px);
   margin:0 auto;
 
   height:auto;
@@ -366,7 +365,6 @@ main {
   border-radius:0;
   box-shadow:none;
 
-  /* ✨ profundidad editorial */
   filter:
     drop-shadow(0 6px 16px rgba(0,0,0,.35))
     drop-shadow(0 1px 3px rgba(255,255,255,.15));
@@ -378,7 +376,6 @@ main {
   will-change:transform, opacity;
 }
 
-/* 🎬 Animación */
 @keyframes heroLuxury{
   to{
     opacity:1;
@@ -386,36 +383,28 @@ main {
   }
 }
 
-/* =================================================
-   💻 LAPTOP / TABLET
-================================================= */
+/* 💻 LAPTOP / TABLET */
 @media (max-width:1200px){
   .img-bienvenida{
-    max-width:clamp(400px, 66vw, 600px);
+    max-width:clamp(440px, 70vw, 680px);
   }
 }
 
-/* =================================================
-   📱 MÓVIL — UN POCO MÁS GRANDE, CONTROLADO
-================================================= */
+/* 📱 MÓVIL */
 @media (max-width:768px){
   .img-bienvenida{
-    max-width:88%;              /* 👈 antes 82% */
-    margin:10px auto 4px;       /* más aire, no se encime */
+    max-width:90%;
+    margin:10px auto 4px;
 
-    filter:
-      drop-shadow(0 4px 10px rgba(0,0,0,.35)); /* sombra suave */
-
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));
     transform:translateY(6px) scale(.99);
   }
 }
 
-/* =================================================
-   📱 MÓVIL PEQUEÑO — AJUSTE FINO
-================================================= */
+/* 📱 MÓVIL PEQUEÑO */
 @media (max-width:480px){
   .img-bienvenida{
-    max-width:92%;              /* 👈 crece, pero nunca 100% */
+    max-width:92%;
     margin:12px auto 6px;
   }
 }
