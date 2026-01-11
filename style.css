@@ -39,7 +39,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  transition: opacity .8s ease-out;
+  transition: opacity .1s ease-out;
 }
 
 /* =========================
@@ -353,12 +353,10 @@ main {
 
   /* =================================================
    🖼️ IMAGEN BIENVENIDA — LUJO EDITORIAL REAL
-   Estilo: restaurante premium / Michelin
 ================================================= */
 .img-bienvenida{
   display:block;
 
-  /* 📐 proporción elegante, no invasiva */
   width:100%;
   max-width:clamp(420px, 58vw, 660px);
   margin:0 auto;
@@ -368,12 +366,11 @@ main {
   border-radius:0;
   box-shadow:none;
 
-  /* ✨ profundidad editorial (muy fina) */
+  /* ✨ profundidad editorial */
   filter:
     drop-shadow(0 6px 16px rgba(0,0,0,.35))
     drop-shadow(0 1px 3px rgba(255,255,255,.15));
 
-  /* 🎞️ animación de lujo */
   opacity:0;
   transform:translateY(14px) scale(.965);
   animation:heroLuxury 1.35s cubic-bezier(.4,0,.2,1) forwards;
@@ -381,7 +378,7 @@ main {
   will-change:transform, opacity;
 }
 
-/* 🎬 Animación editorial */
+/* 🎬 Animación */
 @keyframes heroLuxury{
   to{
     opacity:1;
@@ -399,28 +396,30 @@ main {
 }
 
 /* =================================================
-   📱 MÓVIL — SOBRIO, FINO, NO GIGANTE
+   📱 MÓVIL — UN POCO MÁS GRANDE, CONTROLADO
 ================================================= */
 @media (max-width:768px){
   .img-bienvenida{
-    max-width:82%;
-    margin:6px auto 2px;
+    max-width:88%;              /* 👈 antes 82% */
+    margin:10px auto 4px;       /* más aire, no se encime */
 
-    /* ❌ sin sombras en móvil (editorial limpio) */
-    filter:none;
+    filter:
+      drop-shadow(0 4px 10px rgba(0,0,0,.35)); /* sombra suave */
 
-    transform:translateY(6px) scale(.985);
+    transform:translateY(6px) scale(.99);
   }
 }
 
 /* =================================================
-   📱 MÓVIL PEQUEÑO — ULTRA FINO
+   📱 MÓVIL PEQUEÑO — AJUSTE FINO
 ================================================= */
 @media (max-width:480px){
   .img-bienvenida{
-    max-width:78%;
+    max-width:92%;              /* 👈 crece, pero nunca 100% */
+    margin:12px auto 6px;
   }
 }
+
 
 
 /* =========================
@@ -1568,40 +1567,40 @@ LIBRO
 
 
 /* =================================================
-   TEXTO CORPORATIVO — AMPLIO / ELEGANTE
+   TEXTO CORPORATIVO — PROPORCIONADO / PREMIUM
 ================================================= */
 .texto-corporativo{
   color:#ffffff;
 
-  /* 🔑 USAMOS MÁS ANCHO REAL */
-  max-width: min(1200px, 92vw);
-  margin: 0 auto 22px;
+  /* 🔑 ancho real, sin verse encajonado */
+  max-width: 960px;
+  margin: 0 auto 18px;
 
-  /* aire lateral real */
-  padding: 0 clamp(18px, 5vw, 60px);
+  /* aire lateral controlado */
+  padding: 0 clamp(16px, 4vw, 32px);
 
   /* tipografía */
   font-family: 'Inter', system-ui, Arial, sans-serif;
   font-weight: 400;
 
-  /* lectura cómoda */
-  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
-  line-height: 1.75;
-  letter-spacing: 0.02em;
+  /* 📖 lectura equilibrada */
+  font-size: clamp(1.02rem, 2.4vw, 1.12rem);
+  line-height: 1.55;              /* 👈 CLAVE: menos alto */
+  letter-spacing: 0.012em;        /* 👈 menos separación */
 
-  /* 🔑 CAMBIO CLAVE */
-  text-align: center;          /* puedes cambiar a left si quieres aún más ancho visual */
-  text-wrap: pretty;
+  /* 🔑 mejor proporción visual */
+  text-align: center;
+  text-wrap: balance;
 
-  /* contraste */
+  /* contraste elegante */
   text-shadow:
-    0 1px 2px rgba(0,0,0,.9),
-    0 0 10px rgba(0,0,0,.5);
+    0 1px 2px rgba(0,0,0,.85),
+    0 0 8px rgba(0,0,0,.45);
 
   /* entrada suave */
   opacity: 0;
-  transform: translateY(10px);
-  animation: textoFade .7s ease-out forwards;
+  transform: translateY(8px);
+  animation: textoFade .6s ease-out forwards;
 }
 
 @keyframes textoFade{
@@ -1611,8 +1610,19 @@ LIBRO
   }
 }
 
+/* =================================================
+   📱 MÓVIL — MÁS NATURAL, MENOS ALTO
+================================================= */
+@media (max-width: 768px){
+  .texto-corporativo{
+    max-width: 94%;
+    padding: 0 16px;
 
-
+    font-size: 0.98rem;
+    line-height: 1.48;   /* 👈 evita que se vea largo */
+    letter-spacing: 0.01em;
+  }
+}
 
 
 /* =================================================
