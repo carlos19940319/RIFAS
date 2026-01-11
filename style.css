@@ -1,612 +1,2126 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>La chona</title>
-  <!-- 🔽 AQUÍ PEGA LA FUENTE -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
-   
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
-  <link rel="icon" href="img/logo.png" type="image/png">
 
-  <!-- CSS externo -->
-  <link rel="stylesheet" href="style.css">
+/* ==========================
+   style.css — todo tu CSS
+   Incluye: CSS base + carrusel + estilos de SPA (fade)
+   ========================== */
 
-  <!-- SEO -->
-  <meta name="google-site-verification" content="LQZOjQew5_GIjOqafnr1L3Y0WsEU06BC2rNpjLsLfow" />
-  <meta name="msvalidate.01" content="B0C5292EF3AB318E5B3555BE967BDF1A" />
+/* 📌 Variables editables */
+:root {
+  --color-principal: #C00000;
+  --color-secundario: #333333;
+  --color-fondo-tarjeta: #ffffff;
+  --navbar-bg: rgba(197, 0, 0, 0);
+  --fondo-img: url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg");
+  --fondo-header-img: url("img/tituloo.pn");
+  --fondo-nav-img: url("img/tituloo.png");
+  --fondo-opacidad: 0;
+  --header-height: 64px;
+  --nav-height: 60px;
+}
+/* =========================
+   RESET
+========================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
-  <!-- Datos estructurados -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "La Bonanza",
-    "url": "https://www.labonanza.pizza/",
-    "logo": "https://www.labonanza.pizza/img/logo.png"
+/* =========================
+   BODY Y FONDO — MODERNO ELEGANTE (ADAPTADO)
+========================= */
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  color: var(--color-secundario);
+  position: relative;
+  overflow-x: hidden;
+
+  background: #0b0f14;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transition: opacity .8s ease-out;
+}
+
+/* Fondo animado */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,.25) 0%,
+      rgba(255,255,255,.12) 35%,
+      rgba(0,0,0,0) 65%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.25) 0%,
+      rgba(0,0,0,.08) 25%,
+      rgba(0,0,0,.03) 50%,
+      rgba(0,0,0,.08) 75%,
+      rgba(0,0,0,.25) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(10,14,20,.35),
+      rgba(5,8,12,.45)
+    ),
+    var(--fondo-img);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  animation: fondoEntrada 2.8s ease-out forwards;
+}
+
+@keyframes fondoEntrada {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
   }
-  </script>
-</head>
-<body>
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =================================================
+   HEADER "LA CHONA" — NEGRO TRANSLÚCIDO OPACO
+================================================= */
+.header-unificado {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1002;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+
+  /* 🖤 NEGRO TRANSPARENTE OPACO (VIDRIO ELEGANTE) */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.05),
+      rgba(0,0,0,.3)
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,10),
+      transparent 60%
+    );
+
+  border: none !important;
+  outline: none !important;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.75);
+
+  backdrop-filter: blur(10px) saturate(115%);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+}
+
+/* =================================================
+   LÍNEA DIVISORA INFERIOR
+================================================= */
+.header-unificado::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:84%;
+  max-width:900px;
+  height:1.5px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(31,182,201,.9),
+      rgba(31,182,201,.9),
+      transparent
+    );
+}
+
+/* ORNAMENTO */
+.header-unificado::before{
+  content:"✦";
+  position:absolute;
+  bottom:-7px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  color:#1fb6c9;
+  background: transparent;
+  padding:0 6px;
+}
+
+/* =================================================
+   LOGO + TÍTULO
+================================================= */
+.header-unificado .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.header-unificado .header-top img.logo {
+  width: clamp(82px, 7.5vw, 104px);
+  height: auto;
+  border-radius: 50%;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.85),
+    0 0 14px rgba(31,182,201,.35);
+}
+
+.header-unificado .header-top .titulo {
+  margin: 0;
+  font-family: 'Playfair Display SC', serif;
+  font-size: clamp(2.3rem, 6vw, 3.2rem);
+  letter-spacing: .28em;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 3px 14px rgba(0,0,0,1),
+    0 0 22px rgba(0,0,0,.9);
+}
+
+/* =================================================
+   NAV — AUTOADAPTATIVO / NO SE JUNTAN
+================================================= */
+.header-unificado nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 🔑 ajuste automático real */
+  flex-wrap: wrap;
+  gap: clamp(8px, 2.5vw, 22px);
+
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* =================================================
+   LINKS DEL NAV (AUTO TAMAÑO + ESPACIO)
+================================================= */
+.header-unificado nav a {
+  position: relative;
+
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  /* 🔑 evita que se junten */
+  min-width: max-content;
+
+  padding: clamp(4px, 0.8vw, 6px) clamp(2px, 0.6vw, 4px);
+  text-decoration: none;
+
+  font-family: 'Playfair Display', serif;
+
+  /* 🔑 texto autoajustable */
+  font-size: clamp(0.95rem, 2.6vw, 1.45rem);
+  letter-spacing: clamp(0.08em, 0.6vw, 0.18em);
+
+  font-weight: 500;
+  color: #f5f5f5;
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.95),
+    0 0 16px rgba(0,0,0,.85);
+
+  transition: color .25s ease;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* 🔥 BLOQUEA SELECCIÓN VISUAL */
+.header-unificado nav a::selection,
+.header-unificado nav a::-moz-selection {
+  background: transparent;
+}
+
+/* 🔥 ELIMINA FOCUS / ACTIVE */
+.header-unificado nav a:focus,
+.header-unificado nav a:focus-visible,
+.header-unificado nav a:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* =================================================
+   LÍNEA ACTIVA
+================================================= */
+.header-unificado nav a::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-6px;
+  width:0;
+  height:1px;
+  background:#1fb6c9;
+  transform:translateX(-50%);
+  transition:width .3s ease;
+}
+
+/* =================================================
+   LINK ACTIVO
+================================================= */
+.header-unificado nav a.active{
+  color: #f04a3a !important;
+}
+
+/* =================================================
+   MAIN
+================================================= */
+main {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 14px;
+  padding-top: calc(var(--header-height) + var(--nav-height) + 22px);
+}
 
 
 
-  <!-- ✨ BOTONES FLOTANTES DE REDES -->
-<div class="redes-flotantes">
+
+/* =================================================
+   RESPONSIVE
+================================================= */
+@media (max-width: 768px) {
+
+  .header-unificado {
+    padding: 8px 12px;
+  }
+
+  .header-unificado .header-top img.logo {
+    width: 48px;
+  }
+
+  .header-unificado .header-top .titulo {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+  }
+
+  .header-unificado nav a {
+    padding: 7px 10px;
+    font-size: clamp(.8rem, 3vw, .95rem);
+    transform: none;
+  }
+}
 
 
 
-  <!-- 📍 MAPS -->
-  <a href="https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Calle+Amado+Nervo+14-MZ+016,+San+Miguel,+52740+Ocoyoacac,+Méx"
-     target="_blank"
-     rel="noopener">
 
-    <img src="img/UB.png"
-         class="img-red"
-         alt="Cómo llegar"
-         onerror="this.style.display='none';">
-  </a>
-  <!-- whatsapp -->
-  <a href="https://wa.me/5217223943462?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20su%20restaurante"
-   target="_blank"
-   class="icono">
+/* =========================
+   HERO
+========================= */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(10px, 3vw, 30px);
+  width: 100%;
+}
 
-  <img src="img/WAA.png"
-       class="img-red"
-       alt="WhatsApp"
-       onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-brands fa-whatsapp\'></i>';">
-</a>
+/* =========================
+   AJUSTE EXTRA SOLO MÓVIL
+========================= */
+@media (max-width: 768px) {
+  .welcome-text h2 {
+    margin-top: -26px;
+  }
+}
 
-
-<!-- 📍 uber -->
-  <a href="https://www.ubereats.com/store-browse-uuid/ca04b577-e2b4-5e09-914d-5b4da59a6085?diningMode=DELIVERY"
-     target="_blank"
-     rel="noopener">
-
-    <img src="img/UBER.jpg"
-         class="img-red"
-         alt="Cómo llegar"
-         onerror="this.style.display='none';">
-  </a>  
-
-
-<!-- 📍 didi -->
-  <a href="https://share.google/VPY40RKNvdc3fso96"
-     target="_blank"
-     rel="noopener">
-
-    <img src="img/DIDIF.jpeg"
-         class="img-red"
-         alt="Cómo llegar"
-         onerror="this.style.display='none';">
-  </a>  
-
-
-  <!-- Facebook -->
-  <a href="https://www.facebook.com/share/16qNEc7rG2/"
-     target="_blank"
-     class="icono">
-
-    <img src="img/facce.png"
-         class="img-red"
-         alt="Facebook"
-         onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-brands fa-facebook-f\'></i>';">
-  </a>
-
-</div>
-
-
-  <!-- HEADER UNIFICADO -->
-  <div class="header-unificado">
-    <div class="header-top">
-      <img src="img/20260102_111919359.png" alt="Logo" class="logo">
-      <h2 class="titulo">La Chona</h2>
-
-    </div>
-
-    <nav>
-      <a href="#inicio" data-target="inicio">Bienvenida</a>
-      <a href="#carta" data-target="carta">Carta</a>
-      <a href="#eventos" data-target="eventos">¡Catering!</a>
-      <a href="#empresa" data-target="empresa">Empresarial</a>
-    
-
-    </nav>
-  </div>
-
-  <!-- ========================================================= -->
-  <!-- SECCIÓN 1 — INICIO -->
-  <!-- ========================================================= -->
-  <section id="inicio" class="page-section active">
-    <main class="contenido">
-      <div class="welcome-text">
   
-    
-      <section class="hero">
-        <img src="img/20260102_111919359.png" class="img-bienvenida" alt="Bienvenida">
-
-      </section>
-    
-
-
-  <p class="texto-corporativo">
-  Somos una empresa gastronómica especializada en cocina mexicana auténtica para eventos especiales y catering empresarial, con soluciones prácticas y de alta calidad para empresas.
-</p>
-
-<!-- Horario compacto -->
-<div id="horario-compacto" style="text-align:center; font-family:Arial,sans-serif; margin-bottom:20px; font-size:0.95em;">
-  <div id="reloj" style="margin-bottom:4px; font-weight:bold;"></div>
-
-  <div id="estado"
-       style="margin-bottom:4px; font-weight:bold; display:inline-block; padding:2px 6px; border-radius:4px; transition: all 0.3s;">
-  </div>
-
-  
-      <li style="padding:1px 0;">
-      <strong>Horario de atención</strong> </li>
-  <ul id="dias" style="list-style:none; padding:0; margin:0;">
-    <li style="padding:1px 0;">
-      <strong>Lunes a sábado:</strong> 8:45 a.m. a 5:00 p.m.
-    </li>
-  </ul>
-</div>
-    </main>
-  </section>
-<!-- ========================================================= -->
-<!-- SECCIÓN 2 — CARTA -->
-<!-- ========================================================= -->
-<section id="carta" class="page-section">
-  <main class="contenido">
-
-   
-    <!-- 📖 MENÚ TIPO LIBRO -->
-    <div class="menu-book">
-
-      <button class="nav prev" aria-label="Página anterior">‹</button>
-
-      <div class="book">
-<div class="page"><img src="img/file_00000000a44c71f5b7866bfc06348bc4.png" alt="Desayunos"></div>
-        <div class="page"><img src="img/desayunos.png" alt="Desayunos"></div>
-        <div class="page"><img src="img/desayunoe2.png" alt="Desayuno especial"></div>
-        <div class="page"><img src="img/corrida.png" alt="Comida corrida"></div>
-        <div class="page"><img src="img/amburguesas2.png" alt="Hamburguesas"></div>
-        <div class="page"><img src="img/tortas.png" alt="Tortas"></div>
-        <div class="page"><img src="img/hot.png" alt="Hot cakes"></div>
-        <div class="page"><img src="img/enchiladas.png" alt="Enchiladas"></div>
-        <div class="page"><img src="img/chila.png" alt="Chilaquiles"></div>
-        <div class="page"><img src="img/san.png" alt="Sándwiches"></div>
-        <div class="page"><img src="img/cakes.png" alt="Pasteles"></div>
-        <div class="page"><img src="img/wa.png" alt="Waffles"></div>
-      </div>
-
-      <button class="nav next" aria-label="Página siguiente">›</button>
-
-    </div>
-     <p class="texto-corporativo">
-  En La Chona integramos tradición y sazón con un enfoque profesional, ofreciendo una carta flexible que se adapta a cada gusto y paladar.
-</p>
-<div class="btn-center">
-  <a href="https://share.google/664lutxpPiE2c7NFF"
-     target="_blank"
-     rel="noopener"
-     class="btn-bonito">
-    Regálanos un comentario y califícanos
-  </a>
-</div>
-
-  </main>
-</section>
-
- <!-- ========================================================= -->
-<!-- SECCIÓN 4 — EVENTOS -->
-<!-- ========================================================= -->
-<section id="eventos" class="page-section">
-  <main class="contenido">
-
-   
-
-    <!-- Carrusel -->
-    <section id="eventos-carrusel" aria-label="Carrusel de eventos">
-      <div class="carousel-wrap">
-
-        <div class="carousel" tabindex="0">
-
-          <!-- EVENTO 1 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/Desayuno.jpeg" alt="Desayuno empresarial">
-
-    <div class="titulo-imagen">
-      Desayuno empresarial
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Desayuno empresarial"
-           data-productos='["Chilaquiles","Huevos al gusto","Pan dulce","Café","Jugo"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO 2 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/desayuno ej.jpeg" alt="Coffee break corporativo">
-
-    <div class="titulo-imagen">
-      Coffee break corporativo
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Coffee break corporativo"
-           data-productos='["Café","Té","Galletas","Pan dulce"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO 3 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/desayuno ejecutivo.jpeg" alt="Box lunch ejecutivo">
-
-    <div class="titulo-imagen">
-      Box lunch ejecutivo
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Box lunch ejecutivo"
-           data-productos='["Box lunch","Agua","Refresco","Postre"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO 4 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/eventos.jpeg" alt="Evento corporativo">
-
-    <div class="titulo-imagen">
-      Evento corporativo
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Evento corporativo"
-           data-productos='["Platillo fuerte","Guarnición","Bebidas","Postre"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO 5 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/eventos.jpeg" alt="Evento social">
-
-    <div class="titulo-imagen">
-      Evento social
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Evento social"
-           data-productos='["Tacos","Salsas","Agua","Refrescos"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO 6 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/1.jpeg" alt="Capacitación empresarial">
-
-    <div class="titulo-imagen">
-      Capacitación empresarial
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Capacitación empresarial"
-           data-productos='["Coffee break","Box lunch","Agua","Café"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO 7 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/eventos.jpeg" alt="Junta ejecutiva">
-
-    <div class="titulo-imagen">
-      Junta ejecutiva
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Junta ejecutiva"
-           data-productos='["Box lunch","Café","Galletas"]'>
-          Cotizar este evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-        </div>
-
-        <!-- CONTROLES -->
-        <div class="controls">
-          <button class="btn left" id="prevBtn">‹</button>
-          <button class="btn right" id="nextBtn">›</button>
-        </div>
-
-        <div class="dots" id="dots"></div>
-
-      </div>
-      <p class="texto-corporativo">
-      En La Chona llevamos el auténtico sabor de la cocina mexicana directamente a tu empresa y eventos especiales,
-      con un servicio puntual, confiable y cuidadosamente presentado.
-    </p>
-    </section>
-     
-
-  </main>
-</section>
-
-
-<!-- ========================================================= -->
-<!-- SECCIÓN 5 — EVENTOS EMPRESARIALES -->
-<!-- ========================================================= -->
-<section id="empresa" class="page-section">
-  <main class="contenido">
-
-    
-
-    <!-- Carrusel -->
-    <section id="empresa-carrusel" aria-label="Carrusel de eventos empresariales">
-      <div class="carousel-wrap">
-
-        <div class="carousel" tabindex="0">
-
-          <!-- EVENTO EMPRESA 1 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/box lonch empresarial.jpg" alt="Box lunch empresarial">
-
-    <div class="titulo-imagen">
-      Box lunch empresarial
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Box lunch empresarial"
-           data-productos='["Box lunch","Agua","Refresco","Postre"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO EMPRESA 2 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/junta ejecutiva.jpg" alt="Junta ejecutiva">
-
-    <div class="titulo-imagen">
-      Junta ejecutiva
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Junta ejecutiva"
-           data-productos='["Coffee break","Café","Galletas","Agua"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO EMPRESA 3 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/comida Capacitación empresarial.jpg" alt="Capacitación empresarial">
-
-    <div class="titulo-imagen">
-      Capacitación empresarial
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Capacitación empresarial"
-           data-productos='["Coffee break","Box lunch","Agua","Café"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO EMPRESA 4 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/Desayuno corporativo.jpg" alt="Desayuno corporativo">
-
-    <div class="titulo-imagen">
-      Desayuno corporativo
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Desayuno corporativo"
-           data-productos='["Chilaquiles","Huevos al gusto","Pan dulce","Café","Jugo"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO EMPRESA 5 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/Comida corrida empresarial.jpg" alt="Comida corrida empresarial">
-
-    <div class="titulo-imagen">
-      Comida corrida empresarial
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Comida corrida empresarial"
-           data-productos='["Sopa","Platillo fuerte","Agua del día","Postre"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO EMPRESA 6 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/Evento interno de empresa.jpg" alt="Evento interno de empresa">
-
-    <div class="titulo-imagen">
-      Evento interno de empresa
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Evento interno de empresa"
-           data-productos='["Tacos","Salsas","Agua","Refrescos"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-<!-- EVENTO EMPRESA 7 -->
-<article class="slide">
-  <div class="media">
-    <img src="img/Celebración corporativa.jpg" alt="Celebración corporativa">
-
-    <div class="titulo-imagen">
-      Celebración corporativa
-    </div>
-
-    <div class="overlay">
-      <div class="overlay-content">
-        <a href="#" class="btn-cotiza"
-           data-evento="Celebración corporativa"
-           data-productos='["Platillo fuerte","Guarnición","Bebidas","Postre"]'>
-          Cotiza tu evento
-        </a>
-      </div>
-    </div>
-  </div>
-</article>
-
-
-        </div>
-
-         <!-- CONTROLES -->
-        <div class="controls">
-          <button class="btn left" id="prevBtn">‹</button>
-          <button class="btn right" id="nextBtn">›</button>
-        </div>
-
-
-        <!-- DOTS -->
-        <div class="dots"></div>
-
-      </div>
-      <p class="texto-corporativo">
-      Ofrecemos soluciones gastronómicas de alta calidad para empresas,
-      especializadas en box lunch y alimentos para juntas, capacitaciones,
-      eventos internos y celebraciones corporativas.
-    </p>
-    </section>
-
-  </main>
-</section>
-
-
-  <!-- FOOTER -->
-  <footer style="width:100%; background:rgba(0,0,0,0.5); color:#fff; text-align:center; padding:12px 8px; box-sizing:border-box; font-family:Arial,sans-serif;">
-    <div class="footer-direccion" style="margin-bottom:10px; font-size:14px; line-height:1.4;">
-      
-Dirección: Av. Reolín Barejon, La Estacion<br>52006 Lerma de Villada, Méx., Mexico</div>
-    <div>© <span id="year"></span> . ❤</div>
-  </footer>
-<!-- JS externo -->
-<script src="script.js" defer></script>
-
-
-
-<div class="modal-cotiza" id="modalCotiza">
-  <div class="cotiza-box elegante">
-
-    <div class="cotiza-header">
-      <h3 id="tituloEvento">Cotización</h3>
-      <button id="cerrarCotiza" class="cerrar">✕</button>
-    </div>
-
-    <div id="listaProductos" class="lista-elegante"></div>
-
-    <div class="resumen elegante">
-      <h4>Resumen de cotización</h4>
-      <ul id="resumenLista"></ul>
-    </div>
-
-    <button id="enviarWhats" class="btn-whatsapp">
-      Enviar cotización por WhatsApp
-    </button>
-
-  </div>
-</div>
-
-
-</body>
-</html>
+
+
+/* Imagen bienvenida – presentación premium */
+.img-bienvenida {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+
+  /* 🤍 sombra blanca elegante */
+  filter: drop-shadow(0 16px 36px rgba(255, 255, 255, 0.35));
+
+  animation: heroReveal 1.8s ease-out both;
+  will-change: transform, opacity;
+}
+
+/* Animación elegante */
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 📱 MÓVIL: quitamos sombra */
+@media (max-width: 768px) {
+  .img-bienvenida {
+    filter: none !important;
+  }
+}
+
+
+/* =========================
+   GRID — LIMPIO Y AIREADO
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:clamp(14px, 2.5vw, 26px);
+  margin-top:clamp(18px, 4vw, 42px);
+}
+
+/* =========================
+   CARD — PREMIUM MODERNA
+========================= */
+.card{
+  position:relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.55)
+    ),
+    url("img/leña.jpg") center/cover no-repeat;
+
+  border-radius:22px;
+  overflow:hidden;
+  aspect-ratio:3 / 4;
+
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+
+  transition:
+    transform .45s cubic-bezier(.4,0,.2,1),
+    box-shadow .45s ease;
+}
+
+/* HOVER ELEGANTE */
+@media (hover:hover){
+  .card:hover{
+    transform:translateY(-6px) scale(1.035);
+    box-shadow:
+      0 26px 60px rgba(0,0,0,.6),
+      inset 0 0 0 1px rgba(255,255,255,.12);
+  }
+}
+
+/* =========================
+   MEDIA — IMAGEN
+========================= */
+.card img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+
+  background:transparent;
+  padding:12px;
+
+  transition:transform .6s ease;
+}
+
+/* zoom suave imagen */
+@media (hover:hover){
+  .card:hover img{
+    transform:scale(1.05);
+  }
+}
+
+/* =========================
+   OVERLAY TEXTO
+========================= */
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,.55) 70%
+  );
+  pointer-events:none;
+}
+
+/* =========================
+   INFO
+========================= */
+.card-info{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:16px 18px;
+  z-index:2;
+  text-align:center;
+}
+
+/* NOMBRE */
+.card-info .name{
+  font-family:'Inter', sans-serif;
+  font-size:1.05rem;
+  font-weight:700;
+  letter-spacing:.4px;
+  color:#fff;
+
+  text-shadow:0 2px 6px rgba(0,0,0,.8);
+}
+
+/* PRECIO */
+.card-info .price{
+  margin-top:4px;
+  font-size:.95rem;
+  font-weight:800;
+  color:#f4c430;
+
+  text-shadow:0 2px 6px rgba(0,0,0,.9);
+}
+
+/* =========================
+   MOBILE REFINADO
+========================= */
+@media (max-width:640px){
+  .grid{
+    gap:16px;
+  }
+
+  .card{
+    border-radius:18px;
+  }
+
+  .card-info{
+    padding:14px;
+  }
+}
+
+/* =========================
+   FOOTER — CON LÍNEA DIVISORA SUPERIOR
+========================= */
+footer{
+  position: relative;
+
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  padding: 14px 10px 10px; /* más espacio arriba para la línea */
+  font-family: Arial, sans-serif;
+}
+
+/* 🔵 LÍNEA DIVISORA SUPERIOR (ESTILO HEADER) */
+footer::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:84%;
+  max-width:900px;
+  height:1.5px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(31,182,201,.9),
+    rgba(31,182,201,.9),
+    transparent
+  );
+}
+
+/* Redes flotantes */
+.redes-flotantes {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+}
+.redes-flotantes a { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; }
+.redes-flotantes img { width: 48px; height: 48px; object-fit: contain; filter: none; border-radius: 50%; transition: transform 0.2s ease-in-out; }
+.redes-flotantes img:hover { transform: scale(1.15); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-unificado .header-top img.logo { width: 48px; }
+  .header-unificado .header-top .titulo { font-size: clamp(0.9rem, 4vw, 1.6rem); }
+  .header-unificado nav a { font-size: clamp(0.7rem, 2.5vw, 0.95rem); padding: 8px 10px; }
+  .img-bienvenida { width: 95%; }
+}
+
+/* Quitar tap highlight para móviles */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* =================================================
+   ✨ CARRUSEL EVENTOS / CARTA — SÓLIDO & PREMIUM
+================================================= */
+
+/* =========================
+   SECCIÓN EVENTOS
+========================= */
+#eventos,
+#empresa{
+  width:100%;
+  font-family:Inter, system-ui, Roboto, Arial;
+  padding-top:12px;
+  padding-bottom:48px;
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+.carousel-wrap{
+  max-width:1180px;
+  margin:-10px auto 0;
+  position:relative;
+  padding:0 16px;
+}
+
+/* =========================
+   CARRUSEL
+========================= */
+.carousel{
+  display:flex;
+  gap:22px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:18px 0;
+
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{ display:none; }
+
+/* =========================
+   SLIDE — TARJETA SÓLIDA
+========================= */
+.slide{
+  min-width:90%;
+  background:#0e0e0e; /* 🔥 fondo real */
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  scroll-snap-align:center;
+
+  border:2px solid rgba(255,255,255,.12);
+
+  box-shadow:
+    0 28px 70px rgba(0,0,0,.85);
+
+  transition:
+    transform .35s cubic-bezier(.4,0,.2,1),
+    box-shadow .35s ease;
+
+  transform:scale(.95);
+}
+
+/* Activo */
+.slide.active{
+  transform:scale(1.04);
+  border-color:#ffffff;
+
+  box-shadow:
+    0 40px 95px rgba(0,0,0,.95);
+}
+
+/* ===== DESKTOP ===== */
+@media(min-width:900px){ .slide{ min-width:45%; } }
+@media(min-width:1200px){ .slide{ min-width:32%; } }
+
+/* =========================
+   MEDIA (IMAGEN) — SÓLIDA
+========================= */
+.media{
+  position:relative;
+  background:#000; /* 🔑 respaldo sólido */
+  aspect-ratio:4 / 5;
+}
+
+.media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+
+  /* 🔥 SIN TRANSPARENCIA */
+  opacity:1;
+  filter:none;
+
+  transition:transform .5s ease;
+}
+
+.slide.active img{
+  transform:scale(1.08);
+}
+
+/* =========================
+   OVERLAY — FUERTE
+========================= */
+.overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:26px;
+
+ background:linear-gradient(
+  180deg,
+  rgba(0,0,0,0) 35%,
+  rgba(0,0,0,.55) 70%,
+  rgba(0,0,0,.75) 100%
+);
+
+
+  color:#fff;
+  text-align:center;
+}
+
+/* =========================
+   TEXTO
+========================= */
+.title{
+  font-size:1.4rem;
+  font-weight:900;
+  letter-spacing:.4px;
+  margin:4px 0;
+}
+
+.desc{
+  font-size:.95rem;
+  line-height:1.45;
+  opacity:1;
+}
+
+/* =========================
+   CONTROLES — CARRUSEL
+========================= */
+.controls{
+  position:absolute;
+  inset:0;
+  z-index:30;
+  pointer-events:none;
+}
+
+/* =========================
+   BOTÓN IZQ / DER
+========================= */
+.btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:auto;
+
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+
+  /* 🖤 NEGRO DIFUMINADO (VIDRIO) */
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  /* ✨ profundidad premium */
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.85),
+    inset 0 0 0 1.5px rgba(255,255,255,.25);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  /* 🔑 FLECHA DE TEXTO */
+  color:#ffffff;            /* 👈 flecha blanca */
+  font-size:26px;
+  font-weight:600;
+  line-height:1;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+/* =========================
+   FLECHA SVG (SI EXISTE)
+========================= */
+.btn svg{
+  width:22px;
+  height:22px;
+  stroke:#ffffff;           /* 👈 flecha SVG blanca */
+  stroke-width:3;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================
+   POSICIÓN
+========================= */
+.btn.left{ left:10px; }
+.btn.right{ right:10px; }
+
+/* =========================
+   HOVER (PC)
+========================= */
+@media (hover:hover){
+  .btn:hover{
+    background:rgba(0,0,0,.75);
+    transform:translateY(-50%) scale(1.1);
+    box-shadow:
+      0 18px 42px rgba(0,0,0,.95),
+      inset 0 0 0 1.5px rgba(255,255,255,.35);
+  }
+}
+
+/* =========================
+   ACTIVE (TOQUE)
+========================= */
+.btn:active{
+  transform:translateY(-50%) scale(.96);
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media(max-width:640px){
+  .btn{
+    width:40px;
+    height:40px;
+    font-size:22px;
+  }
+
+  .btn svg{
+    width:20px;
+    height:20px;
+    stroke-width:2.6;
+  }
+}
+
+
+/* =========================
+   BOTÓN COTIZA TU EVENTO — ROJO 3D PREMIUM
+========================= */
+
+.overlay-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.btn-cotiza {
+  margin-bottom: 14px;
+  padding: 13px 28px;
+
+  /* 🔴 rojo elegante tipo marca */
+  background: linear-gradient(
+    180deg,
+    #ff5a4a 0%,
+    #f04a3a 55%,
+    #c93428 100%
+  );
+
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: .4px;
+  text-decoration: none;
+
+  border-radius: 999px;
+  border: none;
+
+  /* 🧱 efecto 3D real */
+  box-shadow:
+    0 10px 22px rgba(0,0,0,.45),
+    inset 0 2px 0 rgba(255,255,255,.25),
+    inset 0 -3px 0 rgba(0,0,0,.25);
+
+  transition:
+    transform .2s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
+}
+
+/* ✨ HOVER — SE ELEVA (PC) */
+@media (hover:hover){
+  .btn-cotiza:hover{
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow:
+      0 16px 34px rgba(0,0,0,.55),
+      inset 0 2px 0 rgba(255,255,255,.35),
+      inset 0 -3px 0 rgba(0,0,0,.3);
+  }
+}
+
+/* 📱 ACTIVE — PRESIONADO REAL */
+.btn-cotiza:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.45);
+}
+
+/* 📱 MOBILE */
+@media (max-width: 640px){
+  .btn-cotiza{
+    font-size: .95rem;
+    padding: 12px 24px;
+    letter-spacing: .3px;
+  }
+}
+
+/* =========================
+   🎞️ ANIMACIÓN DE ENTRADA
+========================= */
+
+.menu-book{
+  opacity: 0;
+  transform: translateY(30px) scale(.96);
+  animation: entradaLibro 1.4s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes entradaLibro{
+  to{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+/* =========================
+   🔔 ANIMACIÓN BOTÓN ACTIVO
+========================= */
+
+.header-unificado nav a.active::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(244,196,48,.35) 0%,
+    rgba(244,196,48,.15) 35%,
+    rgba(244,196,48,0) 70%
+  );
+
+  animation: activeGlow 1.8s ease-in-out infinite;
+}
+
+
+/* brillo suave */
+.header-unificado nav a.active::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(244,196,48,.35) 0%,
+    rgba(244,196,48,.15) 35%,
+    rgba(244,196,48,0) 70%
+  );
+
+  animation: activeGlow 1.8s ease-in-out infinite;
+}
+
+
+/* =========================
+   BOTONES DELIVERY — ESTILO PREMIUM (COMPACTO)
+========================= */
+
+.delivery-buttons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;              /* 🔽 antes 16px */
+  margin:22px auto;      /* 🔽 antes 26px */
+  flex-wrap:wrap;
+}
+
+/* 🔘 BOTÓN BASE */
+.btn-delivery{
+  position:relative;
+  padding:10px 18px;     /* 🔽 antes 13px 22px */
+  border-radius:999px;
+
+  font-weight:800;
+  font-size:.85rem;      /* 🔽 antes .95rem */
+  letter-spacing:.35px;
+  text-decoration:none;
+  color:#fff;
+
+  min-width:110px;       /* 🔽 antes 130px */
+  text-align:center;
+
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.18);
+
+  transition:
+    transform .25s ease,
+    box-shadow .3s ease,
+    filter .3s ease;
+}
+
+/* ✨ brillo suave superior */
+.btn-delivery::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.35),
+    rgba(255,255,255,0) 55%
+  );
+
+  opacity:.3;            /* 🔽 un poco más sutil */
+}
+
+/* =========================
+   COLORES POR PLATAFORMA
+========================= */
+
+/* 🖤 UBER EATS */
+.btn-delivery.uber{
+  background:linear-gradient(
+    180deg,
+    #111 0%,
+    #000 100%
+  );
+}
+
+/* 🟠 DIDI FOOD */
+.btn-delivery.didi{
+  background:linear-gradient(
+    180deg,
+    #ff8a1d 0%,
+    #ff6a00 100%
+  );
+}
+
+/* 🟢 WHATSAPP */
+.btn-delivery.whatsapp{
+  background:linear-gradient(
+    180deg,
+    #34e17a 0%,
+    #1fa855 100%
+  );
+}
+
+/* =========================
+   ✨ HOVER / ACTIVE
+========================= */
+@media (hover:hover){
+  .btn-delivery:hover{
+    transform:translateY(-2px) scale(1.05); /* 🔽 menos exagerado */
+    box-shadow:
+      0 12px 28px rgba(0,0,0,.45),
+      inset 0 0 0 1px rgba(255,255,255,.25);
+    filter:brightness(1.04);
+  }
+}
+
+.btn-delivery:active{
+  transform:scale(.96);
+}
+
+/* =========================
+   📱 MOBILE
+========================= */
+@media (max-width:640px){
+  .btn-delivery{
+    font-size:.82rem;
+    padding:9px 16px;
+    min-width:100px;
+  }
+}
+/* =========================
+   MODAL COTIZADOR – LA CHONA
+========================= */
+
+.modal-cotiza{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modal-cotiza.activo{
+  display:flex;
+}
+
+.modal-box{
+  background:#1a1a1a;
+  color:#fff;
+  width:92%;
+  max-width:420px;
+  border-radius:20px;
+  padding:22px;
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.7),
+    inset 0 0 0 2px rgba(244,196,48,.35);
+}
+
+.modal-box h3{
+  margin:0;
+  text-align:center;
+  font-family:'Pacifico', cursive;
+  font-size:1.7rem;
+  color:#f4c430;
+  text-shadow:2px 2px 0 #000;
+}
+
+.subtitulo{
+  text-align:center;
+  font-size:.9rem;
+  opacity:.85;
+  margin-bottom:14px;
+}
+
+/* grupos */
+.grupo{
+  margin-bottom:12px;
+}
+
+.grupo h4{
+  margin:6px 0;
+  font-size:1rem;
+  color:#f4c430;
+}
+
+.modal-box label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  border-radius:10px;
+  font-size:.95rem;
+  cursor:pointer;
+  background:rgba(255,255,255,.04);
+  margin-bottom:6px;
+}
+
+.modal-box input[type="checkbox"]{
+  accent-color:#f4c430;
+}
+
+/* textarea */
+.modal-box textarea{
+  width:100%;
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:none;
+  resize:none;
+  min-height:70px;
+  background:#111;
+  color:#fff;
+  font-size:.9rem;
+}
+
+/* botones */
+.modal-actions{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
+}
+
+.modal-actions button{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.modal-actions button:first-child{
+  background:#333;
+  color:#fff;
+}
+
+.modal-actions button:last-child{
+  background:linear-gradient(
+    180deg,
+    #34e17a 0%,
+    #1fa855 100%
+  );
+  color:#0b3d1d;
+}
+/* =========================
+   ⏰ HORARIO / RELOJ — VISIBILIDAD UNIVERSAL
+========================= */
+
+#horario-compacto{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:12px;
+
+  /* fondo adaptable a cualquier imagen */
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+
+  /* borde sutil */
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.12);
+}
+
+#reloj,
+#estado,
+#horario-compacto h2,
+#horario-compacto li{
+  color:#fff;
+
+  /* sombra de texto para contraste real */
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.9),
+    0 0 8px rgba(0,0,0,.6);
+}
+
+/* Estado Abierto */
+#estado.abierto{
+  background:rgba(0,128,0,.25);
+  border:1px solid rgba(0,255,0,.4);
+}
+
+/* Estado Cerrado */
+#estado.cerrado{
+  background:rgba(128,0,0,.25);
+  border:1px solid rgba(255,0,0,.4);
+}
+
+/* =========================
+   📍 CONTENEDOR CENTRADO
+========================= */
+.btn-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  margin:24px auto;
+}
+
+/* =========================
+   🔴 BOTÓN PREMIUM — ROJO ELEGANTE
+========================= */
+.btn-bonito{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:14px 30px;
+  border-radius:999px;
+
+  font-family:'Pacifico', cursive;
+  font-size:1.05rem;
+  letter-spacing:.6px;
+  text-align:center;
+
+  color:#ffffff;
+  text-decoration:none;
+
+  /* 🔴 rojo corporativo */
+  background:linear-gradient(
+    180deg,
+    #ff5a4a 0%,
+    #f04a3a 55%,
+    #c93428 100%
+  );
+
+  /* 🧱 profundidad premium */
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.55),
+    inset 0 2px 0 rgba(255,255,255,.25),
+    inset 0 -3px 0 rgba(0,0,0,.25);
+
+  transition:
+    transform .25s ease,
+    box-shadow .3s ease,
+    filter .3s ease;
+
+  overflow:hidden;
+}
+
+/* ✨ BRILLO SUPERIOR SUAVE */
+.btn-bonito::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.45),
+    rgba(255,255,255,0) 60%
+  );
+
+  opacity:.35;
+}
+
+/* ⭐ HOVER — PC */
+@media (hover:hover){
+  .btn-bonito:hover{
+    transform:translateY(-2px) scale(1.05);
+    filter:brightness(1.06);
+
+    box-shadow:
+      0 16px 36px rgba(0,0,0,.65),
+      inset 0 2px 0 rgba(255,255,255,.35),
+      inset 0 -3px 0 rgba(0,0,0,.3);
+  }
+}
+
+/* 📱 ACTIVE — TOQUE REAL */
+.btn-bonito:active{
+  transform:scale(.96);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.45);
+}
+
+/* 📱 MOBILE */
+@media (max-width:640px){
+  .btn-bonito{
+    font-size:.95rem;
+    padding:13px 24px;
+    letter-spacing:.45px;
+  }
+}
+
+/* =========================
+📖 LIBRO / CARTA VIRTUAL — HOJA REAL (ELEGANTE)
+========================= */
+
+/* =========================
+CONTENEDOR GENERAL
+========================= */
+.menu-book{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1800px;
+  margin:clamp(20px, 4vw, 40px) auto;
+  width:100%;
+  position:relative;
+  overflow:visible;
+}
+
+/* =========================
+LIBRO
+========================= */
+.book{
+  width:clamp(350px, 82vw, 900px);
+  height:min(69vh, clamp(450px, 61vw, 580px));
+  position:relative;
+  max-width:100vw;
+
+  transform-style:preserve-3d;
+  overflow:visible;
+}
+
+/* =========================
+📄 PÁGINA — HOJA LIMPIA
+========================= */
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:none;
+  overflow:visible;
+
+  transform-origin:left center;
+  transform:rotateY(0deg);
+
+  transition:transform 1s cubic-bezier(.4,0,.2,1);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transform-style:preserve-3d;
+
+  will-change:transform;
+}
+
+/* =========================
+🖼️ IMAGEN — LIMPIA / CONTORNO SUTIL
+========================= */
+.page img{
+  width:auto;
+  height:auto;
+
+  max-width:100%;
+  max-height:100%;
+
+  display:block;
+  object-fit:contain;
+
+  padding:0;
+  background:none;
+  border-radius:12px;
+
+  /* 🤍 CONTORNO BLANCO MUY DELGADO (NO MARCO) */
+  outline: 0.5px solid rgba(255,255,255,.65);
+  outline-offset: -0.5px;
+
+  /* ❌ sin sombra (evita hojas apiladas) */
+  box-shadow:none;
+
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+
+
+
+
+/* =========================
+🔘 BOTONES DE NAVEGACIÓN
+========================= */
+.nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:20;
+
+  background:rgba(20,32,40,.85);
+  backdrop-filter:blur(6px);
+  border:none;
+
+  width:clamp(44px, 6vw, 60px);
+  height:clamp(44px, 6vw, 60px);
+  border-radius:50%;
+  cursor:pointer;
+
+  color:#e6f2f5;
+  font-size:clamp(2rem, 5vw, 2.8rem);
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.18);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
+}
+
+.nav.prev{ left:10px; }
+.nav.next{ right:10px; }
+
+/* Hover solo en PC */
+@media (hover:hover){
+  .nav:hover{
+    transform:translateY(-50%) scale(1.12);
+    filter:brightness(1.1);
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.75),
+      inset 0 0 0 1px rgba(255,255,255,.3);
+  }
+}
+
+/* Active */
+.nav:active{
+  transform:translateY(-50%) scale(.96);
+}
+
+/* =========================
+📱 REDUCCIÓN DE MOVIMIENTO
+========================= */
+@media (prefers-reduced-motion: reduce){
+  .menu-book,
+  .book,
+  .page{
+    animation:none !important;
+    transition:none !important;
+  }
+}
+.nav.disabled{
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(100%);
+  box-shadow: none;
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* =========================
+⏰ HORARIO — CENTRADO + LÍNEA SOLO ABAJO
+========================= */
+#horario-compacto{
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  margin: 12px auto 0;
+  padding: 12px 18px 14px; /* espacio para la línea */
+
+  text-align: center;
+
+  outline: none; /* ❌ sin contorno */
+}
+
+/* 🔵 LÍNEA INFERIOR (IGUAL AL HEADER) */
+#horario-compacto::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:100%;
+  max-width:360px;
+  height:1.5px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(31,182,201,.9),
+    rgba(31,182,201,.9),
+    transparent
+  );
+}
+
+
+/* =================================================
+   TEXTO CORPORATIVO — AMPLIO / ELEGANTE
+================================================= */
+.texto-corporativo{
+  color:#ffffff;
+
+  /* 🔑 USAMOS MÁS ANCHO REAL */
+  max-width: min(1200px, 92vw);
+  margin: 0 auto 22px;
+
+  /* aire lateral real */
+  padding: 0 clamp(18px, 5vw, 60px);
+
+  /* tipografía */
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  font-weight: 400;
+
+  /* lectura cómoda */
+  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+
+  /* 🔑 CAMBIO CLAVE */
+  text-align: center;          /* puedes cambiar a left si quieres aún más ancho visual */
+  text-wrap: pretty;
+
+  /* contraste */
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.9),
+    0 0 10px rgba(0,0,0,.5);
+
+  /* entrada suave */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: textoFade .7s ease-out forwards;
+}
+
+@keyframes textoFade{
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+/* =================================================
+   FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
+================================================= */
+
+/* 🔥 elimina highlight móvil (Chrome / Android / iOS) */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 🔥 elimina foco visual del navegador */
+.header-unificado a,
+.header-unificado a:focus,
+.header-unificado a:active,
+.header-unificado a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 🔥 evita flash por estado active */
+.header-unificado nav a:active {
+  background: transparent !important;
+  color: inherit;
+}
+
+/* 🔥 refuerzo extra para Chrome / Edge */
+.header-unificado nav a {
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* =================================================
+   FIX DEFINITIVO — ACTIVE SIN ZOOM EN MÓVIL
+================================================= */
+@media (max-width: 768px) {
+  .header-unificado nav a.active {
+    animation: none !important;
+    transform: none !important;
+    box-shadow:
+      0 0 0 2px rgba(244,196,48,.4),
+      0 6px 16px rgba(0,0,0,.55);
+  }
+
+  .header-unificado nav a.active::after {
+    animation: none !important;
+  }
+}
+/* =================================================
+   FIX DEFINITIVO — ACTIVE SIN ZOOM EN MÓVIL
+   (NO reemplaza nada, solo corrige móviles)
+================================================= */
+@media (max-width: 768px) {
+  .header-unificado nav a.active {
+    animation: none !important;
+    transform: none !important;
+
+    /* mantenemos brillo elegante sin zoom */
+    box-shadow:
+      0 0 0 2px rgba(244,196,48,.4),
+      0 6px 16px rgba(0,0,0,.55);
+  }
+
+  .header-unificado nav a.active::after {
+    animation: none !important;
+  }
+}
+/* =================================================
+   FIX — NAV NO BAJA HASTA EL ÚLTIMO MOMENTO
+   (solo refina, no reemplaza)
+================================================= */
+.header-unificado nav {
+  gap: clamp(4px, 1.2vw, 22px); /* el espacio se reduce más */
+}
+
+/* =================================================
+   FIX — TEXTO SE REDUCE MÁS ANTES DE BAJAR
+================================================= */
+.header-unificado nav a {
+  white-space: nowrap;        /* nunca se parte el texto */
+  min-width: max-content;     /* no se aplasta */
+
+  /* ↓ deja que el texto baje MÁS antes de wrap */
+  font-size: clamp(0.78rem, 2.1vw, 1.45rem);
+  letter-spacing: clamp(0.05em, 0.45vw, 0.18em);
+}
+
+/* ==============================
+   MODAL COTIZACIÓN — PREMIUM
+============================== */
+
+.modal-cotiza{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  backdrop-filter: blur(3px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.modal-cotiza.activo{
+  display:flex;
+}
+
+/* ==============================
+   TARJETA PRINCIPAL
+============================== */
+.cotiza-box.elegante{
+  position:relative;
+  width:min(480px,94%);
+  border-radius:22px;
+  overflow:hidden;
+
+  /* 🖼️ IMAGEN DE FONDO */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.55),
+      rgba(0,0,0,.75)
+    ),
+    url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg"); /* 👈 CAMBIA AQUÍ TU IMAGEN */
+  background-size:cover;
+  background-position:center;
+
+  padding:22px;
+  box-shadow:0 35px 90px rgba(0,0,0,.45);
+
+  font-family:'Libre Baskerville', serif;
+  color:#fff;
+
+  animation:modalEntrada .5s ease;
+}
+
+/* Animación entrada */
+@keyframes modalEntrada{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ==============================
+   HEADER
+============================== */
+.cotiza-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:12px;
+  margin-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.25);
+}
+
+.cotiza-header h3{
+  font-size:1.35rem;
+  font-weight:600;
+  color:#fff;
+}
+
+.cerrar{
+  background:rgba(255,255,255,.15);
+  border:none;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  font-size:1.1rem;
+  cursor:pointer;
+  color:#fff;
+  transition:.25s;
+}
+.cerrar:hover{
+  background:rgba(255,255,255,.3);
+}
+
+/* ==============================
+   LISTA PRODUCTOS
+============================== */
+.lista-elegante .producto{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px dashed rgba(255,255,255,.25);
+}
+
+.lista-elegante span{
+  font-size:.95rem;
+  line-height:1.3;
+  color:#fff;
+}
+
+.lista-elegante small{
+  font-size:.8rem;
+  opacity:.85;
+}
+
+/* ==============================
+   CONTROLES
+============================== */
+.controles{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.controles span{
+  min-width:18px;
+  text-align:center;
+}
+
+.controles button{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:none;
+  font-weight:bold;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.mas{
+  background:#25D366;
+  color:#fff;
+}
+
+.menos{
+  background:rgba(255,255,255,.75);
+  color:#222;
+}
+
+/* ==============================
+   RESUMEN — LISTA PREMIUM
+============================== */
+.resumen.elegante{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.25);
+}
+
+.resumen.elegante h4{
+  font-size:.85rem;
+  margin-bottom:10px;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+  color:#f4c430;
+  opacity:.9;
+}
+
+/* LISTA */
+.resumen.elegante ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* ITEM */
+.resumen.elegante li{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:8px 12px;
+  border-radius:12px;
+
+  background:rgba(255,255,255,.06);
+  backdrop-filter: blur(4px);
+
+  font-size:.9rem;
+  color:#ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.12);
+
+  animation: itemIn .25s ease both;
+}
+
+/* nombre producto */
+.resumen.elegante li span{
+  opacity:.95;
+}
+
+/* cantidad */
+.resumen-elegante-cant{
+  font-weight:700;
+  font-size:.85rem;
+  color:#f4c430;
+}
+
+/* animación entrada */
+@keyframes itemIn{
+  from{
+    opacity:0;
+    transform:translateY(6px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+
+/* TOTAL */
+.total{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.25);
+  text-align:right;
+  font-size:1rem;
+  color:#fff;
+}
+
+/* ==============================
+   BOTÓN WHATSAPP — ELEGANTE / SOBRIO
+============================== */
+.btn-whatsapp{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+
+  /* verde más apagado */
+  background:linear-gradient(
+    180deg,
+    #2fbf71,
+    #1e9f5a
+  );
+
+  color:#ffffff;
+  font-weight:600;
+  font-size:.95rem;
+  cursor:pointer;
+
+  /* sombra neutra (NO verde) */
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.18);
+
+  transition:
+    transform .2s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
+}
+
+/* Hover PC */
+@media (hover:hover){
+  .btn-whatsapp:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.04); /* leve */
+    box-shadow:
+      0 12px 26px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.22);
+  }
+}
+
+/* Active móvil */
+.btn-whatsapp:active{
+  transform:translateY(0);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+
+/* =================================================
+   📱 AJUSTE FINO SECCIONES BAJO HEADER (MÓVIL)
+================================================= */
+@media (max-width: 640px){
+
+  /* todas las secciones */
+  .page-section{
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* sección eventos específicamente */
+  #eventos{
+    padding-top: 6px !important;   /* pegado visual */
+  }
+
+}
+
+
+
+
+}
+
+/* =================================================
+   🧩 NORMALIZADOR VERTICAL GLOBAL — LA CHONA
+   (evita espacios fantasmas entre bloques)
+================================================= */
+
+/* 🔑 Regla base: nada exagerado en vertical */
+section,
+main,
+.page-section,
+.hero,
+.grid,
+.menu-book,
+.carousel-wrap,
+footer {
+  margin-top: clamp(6px, 1.2vh, 20px);
+  margin-bottom: clamp(10px, 2vh, 32px);
+}
+
+/* =================================================
+   HEADER → CONTENIDO (AJUSTE FINO)
+================================================= */
+main {
+  padding-top: calc(var(--header-height) + var(--nav-height) + clamp(10px, 2vh, 20px));
+}
+
+
+
+/* =================================================
+   CARRUSEL — MÁS PEGADO AL TEXTO
+================================================= */
+#eventos-carrusel,
+#empresa-carrusel {
+  margin-top: clamp(4px, 1vh, 14px);
+}
+
+/* =================================================
+   HERO / BIENVENIDA
+================================================= */
+.hero {
+  padding-top: clamp(6px, 1.5vh, 18px);
+  padding-bottom: clamp(10px, 2vh, 26px);
+}
+
+/* =================================================
+   GRID / CARDS
+================================================= */
+.grid {
+  margin-top: clamp(10px, 2vh, 28px);
+}
+
+/* =================================================
+   FOOTER — COMPACTO
+================================================= */
+footer {
+  padding-top: clamp(10px, 2vh, 18px);
+  padding-bottom: clamp(8px, 1.5vh, 14px);
+}
+
+/* =================================================
+   📱 MÓVIL — COMPACTACIÓN REAL
+================================================= */
+@media (max-width: 640px) {
+
+  section,
+  main,
+  .page-section,
+  .hero,
+  .grid,
+  .menu-book,
+  .carousel-wrap {
+    margin-top: 4px !important;
+    margin-bottom: 10px !important;
+  }
+
+  main {
+    padding-top: calc(var(--header-height) + var(--nav-height) + 6px);
+  }
+
+  .
+   {
+    margin-top: 2px !important;
+    margin-bottom: 10px !important;
+    line-height: 1.45;
+  }
+
+  #eventos-carrusel,
+  #empresa-carrusel {
+    margin-top: 4px !important;
+  }
+
+  .hero {
+    padding-top: 4px;
+    padding-bottom: 10px;
+  }
+}
+
+/* =================================================
+   🖥️ PANTALLAS MUY ALTAS (tablets verticales)
+================================================= */
+@media (min-height: 900px) {
+
+  section,
+  .page-section {
+    margin-top: clamp(8px, 1.5vh, 18px);
+    margin-bottom: clamp(14px, 2.5vh, 30px);
+  }
+}
+/* =========================
+   🏷️ TÍTULO SOBRE IMAGEN — EVENTOS
+========================= */
+.titulo-imagen{
+  position:absolute;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5;
+
+  padding:10px 22px;
+  border-radius:999px;
+
+  /* 🖤 fondo SOLO del texto */
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  color:#ffffff;
+  font-family:'Inter', system-ui, Arial, sans-serif;
+  font-weight:800;
+  font-size:1.05rem;
+  letter-spacing:.4px;
+  text-align:center;
+  white-space:nowrap;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(255,255,255,.25);
+
+  pointer-events:none; /* no estorba al botón */
+}
+
+/* 📱 MÓVIL — más compacto */
+@media (max-width:640px){
+  .titulo-imagen{
+    top:10px;
+    font-size:.9rem;
+    padding:8px 16px;
+  }
+}
