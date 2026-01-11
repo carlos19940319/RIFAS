@@ -89,6 +89,8 @@ body::before {
   transform: translateZ(0);
   will-change: auto;
 }
+
+
 /* =================================================
    HEADER "LA CHONA" — NEGRO TRANSLÚCIDO OPACO
 ================================================= */
@@ -349,43 +351,74 @@ main {
   }
 }
 
-  
+  /* =================================================
+   🖼️ IMAGEN BIENVENIDA — LUJO EDITORIAL REAL
+   Estilo: restaurante premium / Michelin
+================================================= */
+.img-bienvenida{
+  display:block;
 
+  /* 📐 proporción elegante, no invasiva */
+  width:100%;
+  max-width:clamp(420px, 58vw, 660px);
+  margin:0 auto;
 
-/* Imagen bienvenida – presentación premium */
-.img-bienvenida {
-  display: block;
-  width: 100%;
-  max-width: 900px;
-  height: auto;
+  height:auto;
+  background:transparent;
+  border-radius:0;
+  box-shadow:none;
 
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
+  /* ✨ profundidad editorial (muy fina) */
+  filter:
+    drop-shadow(0 6px 16px rgba(0,0,0,.35))
+    drop-shadow(0 1px 3px rgba(255,255,255,.15));
 
-  /* 🤍 sombra blanca elegante */
-  filter: drop-shadow(0 16px 36px rgba(255, 255, 255, 0.35));
+  /* 🎞️ animación de lujo */
+  opacity:0;
+  transform:translateY(14px) scale(.965);
+  animation:heroLuxury 1.35s cubic-bezier(.4,0,.2,1) forwards;
 
-  animation: heroReveal 1.8s ease-out both;
-  will-change: transform, opacity;
+  will-change:transform, opacity;
 }
 
-/* Animación elegante */
-@keyframes heroReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(16px) scale(0.97);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+/* 🎬 Animación editorial */
+@keyframes heroLuxury{
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
   }
 }
 
-/* 📱 MÓVIL: quitamos sombra */
-@media (max-width: 768px) {
-  .img-bienvenida {
-    filter: none !important;
+/* =================================================
+   💻 LAPTOP / TABLET
+================================================= */
+@media (max-width:1200px){
+  .img-bienvenida{
+    max-width:clamp(400px, 66vw, 600px);
+  }
+}
+
+/* =================================================
+   📱 MÓVIL — SOBRIO, FINO, NO GIGANTE
+================================================= */
+@media (max-width:768px){
+  .img-bienvenida{
+    max-width:82%;
+    margin:6px auto 2px;
+
+    /* ❌ sin sombras en móvil (editorial limpio) */
+    filter:none;
+
+    transform:translateY(6px) scale(.985);
+  }
+}
+
+/* =================================================
+   📱 MÓVIL PEQUEÑO — ULTRA FINO
+================================================= */
+@media (max-width:480px){
+  .img-bienvenida{
+    max-width:78%;
   }
 }
 
