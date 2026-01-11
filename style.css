@@ -1576,37 +1576,6 @@ LIBRO
   }
 }
 
-//* =================================================
-   📱 TEXTO CORPORATIVO — MÓVIL (CENTRADO + SIN FONDO)
-================================================= */
-@media (max-width: 640px){
-
-  .texto-corporativo{
-    max-width: 100%;
-    padding: 10px 16px;     /* aire lateral controlado */
-    margin: 4px auto 10px;  /* pegado visual al header */
-
-    /* ✅ CENTRADO REAL */
-    text-align: center;
-
-    line-height: 1.45;
-    letter-spacing: 0.01em;
-
-    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
-
-    /* ✅ SIN FONDO */
-    background: none;
-    border-radius: 0;
-
-    color: #ffffff;
-
-    /* ✅ contraste sin caja negra */
-    text-shadow:
-      0 2px 4px rgba(0,0,0,.9),
-      0 0 10px rgba(0,0,0,.6);
-  }
-}
-
 
 
 /* =================================================
