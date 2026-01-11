@@ -42,32 +42,39 @@ body {
   transition: opacity .8s ease-out;
 }
 
-/* Fondo animado */
+/* =========================
+   FONDO ESTABLE — FIX ANDROID / iOS
+========================= */
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100svh; /* 🔑 CLAVE: evita cambios al ocultar barra */
+
   z-index: -1;
 
   background:
     radial-gradient(
       ellipse at center,
-      rgba(255,255,255,.25) 0%,
-      rgba(255,255,255,.12) 35%,
+      rgba(255,255,255,.22) 0%,
+      rgba(255,255,255,.10) 35%,
       rgba(0,0,0,0) 65%
     ),
     linear-gradient(
       90deg,
-      rgba(0,0,0,.25) 0%,
-      rgba(0,0,0,.08) 25%,
+      rgba(0,0,0,.22) 0%,
+      rgba(0,0,0,.07) 25%,
       rgba(0,0,0,.03) 50%,
-      rgba(0,0,0,.08) 75%,
-      rgba(0,0,0,.25) 100%
+      rgba(0,0,0,.07) 75%,
+      rgba(0,0,0,.22) 100%
     ),
     linear-gradient(
       180deg,
       rgba(10,14,20,.35),
-      rgba(5,8,12,.45)
+      rgba(5,8,12,.55)
     ),
     var(--fondo-img);
 
@@ -75,20 +82,13 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
 
-  animation: fondoEntrada 2.8s ease-out forwards;
-}
+  /* ❌ eliminamos animaciones que rompen Android */
+  animation: none;
 
-@keyframes fondoEntrada {
-  from {
-    opacity: 0;
-    transform: scale(1.04);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  /* 🔒 estabilidad total */
+  transform: translateZ(0);
+  will-change: auto;
 }
-
 /* =================================================
    HEADER "LA CHONA" — NEGRO TRANSLÚCIDO OPACO
 ================================================= */
