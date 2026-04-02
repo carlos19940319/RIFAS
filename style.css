@@ -14,7 +14,7 @@
   --fondo-img: url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg");
   --fondo-header-img: url("img/tituloo.pn");
   --fondo-nav-img: url("img/tituloo.png");
-  --fondo-opacidad: 0;
+  --fondo-opacidad: 0.2;
   --header-height: 64px;
   --nav-height: 60px;
 }
@@ -56,32 +56,25 @@ body::before {
 
   z-index: -1;
 
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(255,255,255,.22) 0%,
-      rgba(255,255,255,.10) 35%,
-      rgba(0,0,0,0) 65%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,.22) 0%,
-      rgba(0,0,0,.07) 25%,
-      rgba(0,0,0,.03) 50%,
-      rgba(0,0,0,.07) 75%,
-      rgba(0,0,0,.22) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(10,14,20,.60),
-      rgba(5,8,12,.80)
-    ),
-    var(--fondo-img);
+ background:
+  radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,.12) 0%,
+    rgba(255,255,255,.03) 40%,
+    rgba(0,0,0,0) 70%
+  ),
+  linear-gradient(
+    180deg,
+    rgba(0,0,0,.25),
+    rgba(0,0,0,.50)
+  ),
+  var(--fondo-img);
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
 
+filter: brightness(1.05) contrast(1.20) saturate(1.30);
   /* ❌ eliminamos animaciones que rompen Android */
   animation: none;
 
@@ -92,7 +85,7 @@ body::before {
 
 
 /* =================================================
-   HEADER "LA CHONA" — NEGRO TRANSLÚCIDO OPACO
+   HEADER "LA CHONA" — NEGRO ELEGANTE PREMIUM
 ================================================= */
 .header-unificado {
   position: fixed;
@@ -107,27 +100,27 @@ body::before {
   gap: 6px;
   padding: 10px 18px;
 
-  /* 🖤 NEGRO TRANSPARENTE OPACO (VIDRIO ELEGANTE) */
+  /* 🖤 NEGRO PROFUNDO ELEGANTE */
   background:
     linear-gradient(
       180deg,
-      rgba(0,0,0,.05),
-      rgba(0,0,0,.3)
+      rgba(0,0,0,.65),
+      rgba(0,0,0,.85)
     ),
     radial-gradient(
       ellipse at center,
-      rgba(0,0,0,10),
-      transparent 60%
+      rgba(255,255,255,.04),
+      transparent 65%
     );
 
   border: none !important;
   outline: none !important;
 
   box-shadow:
-    0 10px 28px rgba(0,0,0,.75);
+    0 12px 35px rgba(0,0,0,.85);
 
-  backdrop-filter: blur(10px) saturate(115%);
-  -webkit-backdrop-filter: blur(10px) saturate(115%);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
 }
 
 /* =================================================
@@ -141,15 +134,19 @@ body::before {
   transform:translateX(-50%);
   width:84%;
   max-width:900px;
-  height:1.5px;
+  height:2.5px;
+
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(31,182,201,.9),
-      rgba(31,182,201,.9),
+      #C9A227,
+      #E6C35C,
+      #C9A227,
       transparent
     );
+
+  box-shadow: 0 0 10px rgba(201,162,39,3);
 }
 
 /* ORNAMENTO */
@@ -159,9 +156,8 @@ body::before {
   bottom:-7px;
   left:50%;
   transform:translateX(-50%);
-  font-size:11px;
-  color:#1fb6c9;
-  background: transparent;
+  font-size:12px;
+  color:#C9A227;
   padding:0 6px;
 }
 
@@ -557,8 +553,7 @@ footer{
   padding: 14px 10px 10px; /* más espacio arriba para la línea */
   font-family: Arial, sans-serif;
 }
-
-/* 🔵 LÍNEA DIVISORA SUPERIOR (ESTILO HEADER) */
+/* ✨ LÍNEA DIVISORA SUPERIOR DORADA */
 footer::before{
   content:"";
   position:absolute;
@@ -568,15 +563,20 @@ footer::before{
 
   width:84%;
   max-width:900px;
-  height:1.5px;
+  height:2px;
 
   background:linear-gradient(
     90deg,
     transparent,
-    rgba(31,182,201,.9),
-    rgba(31,182,201,.9),
+    #8f6b1a,
+    #d4af37,
+    #f4d67a,
+    #d4af37,
+    #8f6b1a,
     transparent
   );
+
+  box-shadow: 0 0 6px rgba(212,175,55,.45);
 }
 
 /* Redes flotantes */
@@ -1533,7 +1533,7 @@ LIBRO
   outline: none; /* ❌ sin contorno */
 }
 
-/* 🔵 LÍNEA INFERIOR (IGUAL AL HEADER) */
+/* 🔶 LÍNEA INFERIOR DORADA */
 #horario-compacto::after{
   content:"";
   position:absolute;
@@ -1543,13 +1543,16 @@ LIBRO
 
   width:100%;
   max-width:360px;
-  height:1.5px;
+  height:2px;
 
   background:linear-gradient(
     90deg,
     transparent,
-    rgba(31,182,201,.9),
-    rgba(31,182,201,.9),
+    #8f6b1a,
+    #d4af37,
+    #f4d67a,
+    #d4af37,
+    #8f6b1a,
     transparent
   );
 }
@@ -2132,41 +2135,112 @@ footer {
 /* =========================
    🏷️ TÍTULO SOBRE IMAGEN — EVENTOS
 ========================= */
-.titulo-imagen{
-  position:absolute;
-  top:14px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:5;
+/* =========================
+   🏷️ TÍTULO SOBRE IMAGEN — EVENTOS
+========================= */
+.titulo-imagen {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
 
-  padding:10px 22px;
-  border-radius:999px;
+  padding: 10px 22px;
+  border-radius: 999px;
 
-  /* 🖤 fondo SOLO del texto */
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  /* 🖤 Fondo un poco más oscuro (0.7) para dar contraste al dorado */
+  background: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
-  color:#ffffff;
-  font-family:'Inter', system-ui, Arial, sans-serif;
-  font-weight:800;
-  font-size:1.05rem;
-  letter-spacing:.4px;
-  text-align:center;
-  white-space:nowrap;
+  /* ✨ DORADO CON MÁXIMA VISTA */
+  background-image: linear-gradient(
+    to bottom,
+    #fff9ad 0%,   /* Más luz arriba */
+    #d2ac47 45%, 
+    #bf953f 55%, 
+    #8a6e2f 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #d2ac47;
+  
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem; /* Subimos un pelín el tamaño */
+  letter-spacing: 1px; /* Más espacio ayuda a la lectura */
+  text-align: center;
+  white-space: nowrap;
+
+  /* 🔍 TRUCO DE VISIBILIDAD: Doble sombra para despegarlo del fondo */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)) 
+          drop-shadow(0 0 1px rgba(0,0,0,1));
 
   box-shadow:
-    0 6px 18px rgba(0,0,0,.6),
-    inset 0 0 0 1px rgba(255,255,255,.25);
+    0 6px 18px rgba(0,0,0,0.6),
+    /* Cambiamos el brillo interno a dorado para que armonice */
+    inset 0 0 0 1px rgba(210, 172, 71, 0.3); 
 
-  pointer-events:none; /* no estorba al botón */
+  pointer-events: none;
 }
 
 /* 📱 MÓVIL — más compacto */
-@media (max-width:640px){
-  .titulo-imagen{
-    top:10px;
-    font-size:.9rem;
-    padding:8px 16px;
+@media (max-width: 640px) {
+  .titulo-imagen {
+    top: 10px;
+    font-size: .95rem;
+    padding: 8px 18px;
   }
 }
+
+.media {
+  position: relative;
+}
+
+.descripcion-imagen {
+  position: absolute;
+  top: 48%;            /* Un poco más abajo del centro para balancear con el título y botón */
+  left: 20px;
+  right: 20px;
+  transform: translateY(-50%);
+  
+  /* 🖋️ TIPOGRAFÍA Y LEGIBILIDAD */
+  color: #ffffff;
+  font-family: 'Inter', system-ui, Arial, sans-serif; /* Usamos una fuente nítida si la tienes */
+  font-size: 15px;
+  line-height: 1.65;    /* Aumentamos el espaciado para que no se canse la vista */
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7); /* Sombra para despegar el texto del fondo */
+  text-wrap: balance;   /* Evita palabras sueltas al final de las líneas */
+
+  /* 🌫️ EFECTO DE CRISTAL (GLASSMORPHISM) */
+  background: rgba(15, 15, 15, 0.7); /* Un poco más oscuro para que el blanco brille */
+  backdrop-filter: blur(10px);       /* Desenfoque del fondo (¡Clave para la visibilidad!) */
+  -webkit-backdrop-filter: blur(10px);
+  
+  /* ESTUCTURA Y DETALLES */
+  padding: 18px 22px;   /* Un poco más de aire */
+  border-radius: 12px;  /* Bordes más suaves */
+  
+  /* Borde fino y sombra para profundidad */
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  
+  box-sizing: border-box; /* Asegura que el padding no altere el tamaño */
+}
+
+/* 📱 AJUSTE PARA MÓVILES (Opcional pero recomendado) */
+@media (max-width: 640px) {
+  .descripcion-imagen {
+    font-size: 14px;
+    padding: 15px;
+    left: 15px;
+    right: 15px;
+  }
+}
+linear-gradient(
+  180deg,
+  rgba(0,0,0,var(--fondo-opacidad)),
+  rgba(0,0,0,var(--fondo-opacidad))
+),
+var(--fondo-img);
