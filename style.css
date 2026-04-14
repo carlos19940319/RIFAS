@@ -160,7 +160,6 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   color:#C9A227;
   padding:0 6px;
 }
-
 /* =================================================
    LOGO + TÍTULO
 ================================================= */
@@ -172,97 +171,101 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   width: 100%;
 }
 
+
+
 .header-unificado .header-top img.logo {
-  width: clamp(82px, 7.5vw, 104px);
+  width: clamp(70px, 6vw, 95px);
   height: auto;
   border-radius: 50%;
+
+  /* Borde suave moderno */
+  border: 2px solid rgba(255,255,255,0.25);
+
+  /* Efecto glow moderno */
   box-shadow:
-    0 10px 24px rgba(0,0,0,.85),
-    0 0 14px rgba(31,182,201,.35);
+    0 12px 30px rgba(0,0,0,0.7),
+    0 0 18px rgba(31,182,201,0.45),
+    0 0 35px rgba(31,182,201,0.20);
+
+  /* Suavidad */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+
+
+
 
 .header-unificado .header-top .titulo {
   margin: 0;
-  font-family: 'Playfair Display SC', serif;
-  font-size: clamp(2.3rem, 6vw, 3.2rem);
-  letter-spacing: .28em;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: #ffffff;
-  text-shadow:
-    0 3px 14px rgba(0,0,0,1),
-    0 0 22px rgba(0,0,0,.9);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+
+  letter-spacing: 0.12em;
+  font-weight: 600;
+
+  color: #f5f5f5;
+
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
+
 /* =================================================
-   NAV — AUTOADAPTATIVO / NO SE JUNTAN
+   NAV CONTENEDOR
 ================================================= */
 .header-unificado nav {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* 🔑 ajuste automático real */
   flex-wrap: wrap;
-  gap: clamp(8px, 2.5vw, 22px);
-
+  gap: clamp(8px, 2vw, 16px);
   width: 100%;
   max-width: 1100px;
+  margin: 0 auto;
 }
 
 /* =================================================
-   LINKS DEL NAV (AUTO TAMAÑO + ESPACIO)
+   LINKS — CONTORNO REDONDEADO PERMANENTE
 ================================================= */
 .header-unificado nav a {
   position: relative;
-
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-
-  /* 🔑 evita que se junten */
   min-width: max-content;
-
-  padding: clamp(4px, 0.8vw, 6px) clamp(2px, 0.6vw, 4px);
+  padding: 6px 16px; 
   text-decoration: none;
-
   font-family: 'Playfair Display', serif;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #fff;
 
-  /* 🔑 texto autoajustable */
-  font-size: clamp(0.95rem, 2.6vw, 1.45rem);
-  letter-spacing: clamp(0.08em, 0.6vw, 0.18em);
+  /* 🔥 CONTORNO FIJO */
+  /* Usamos un borde de 1px sólido siempre para que no cambie el tamaño del box-model */
+  border: 1px solid rgba(255, 255, 255, 0.35) !important; 
+  border-radius: 999px;
 
-  font-weight: 500;
-  color: #f5f5f5;
-
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.95),
-    0 0 16px rgba(0,0,0,.85);
-
-  transition: color .25s ease;
-
-  -webkit-tap-highlight-color: transparent;
-  -webkit-user-select: none;
-  user-select: none;
-  touch-action: manipulation;
-}
-
-/* 🔥 BLOQUEA SELECCIÓN VISUAL */
-.header-unificado nav a::selection,
-.header-unificado nav a::-moz-selection {
   background: transparent;
+  /* 🛠️ Eliminamos el cambio de escala para evitar el brinco */
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease; 
+  text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  
+  /* Asegura que el padding no cambie con el borde */
+  box-sizing: border-box; 
 }
 
-/* 🔥 ELIMINA FOCUS / ACTIVE */
-.header-unificado nav a:focus,
-.header-unificado nav a:focus-visible,
-.header-unificado nav a:active {
-  outline: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-  transform: none !important;
-  filter: none !important;
+/* =================================================
+   HOVER SUAVE (SIN BRINCO)
+================================================= */
+.header-unificado nav a:hover {
+  border-color: rgba(255, 255, 255, 0.75) !important;
+  /* 🛠️ Quitamos transform: scale para que no mueva la sección */
+  background: rgba(255, 255, 255, 0.1); 
+}
+
+/* =================================================
+   ACTIVO (ESTABLE Y LIMPIO)
+================================================= */
+.header-unificado nav a.active {
+  border-color: #fff !important;
+  background: rgba(255, 255, 255, 0.30) !important;
+  /* 🛠️ Forzamos que el tamaño de la fuente o escala no cambie aquí */
+  transform: none !important; 
 }
 
 /* =================================================
@@ -532,7 +535,7 @@ main {
   }
 
   .card{
-    border-radius:18px;
+    border-radius:10px;
   }
 
   .card-info{
@@ -637,27 +640,32 @@ footer::before{
   gap:22px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
-  padding:18px 0;
+  padding:15px 0;
 
   scrollbar-width:none;
 }
 .carousel::-webkit-scrollbar{ display:none; }
 
 /* =========================
-   SLIDE — TARJETA SÓLIDA
+   SLIDE — TARJETA SÓLIDA (CON CONTORNO PREMIUM)
 ========================= */
 .slide{
   min-width:90%;
-  background:#0e0e0e; /* 🔥 fondo real */
+  background:#0e0e0e;
   border-radius:22px;
   overflow:hidden;
   position:relative;
   scroll-snap-align:center;
 
-  border:2px solid rgba(255,255,255,.12);
+  /* ❌ quitamos el borde plano */
+  border: none;
 
+  /* 🔥 CONTORNO PRO */
   box-shadow:
-    0 28px 70px rgba(0,0,0,.85);
+    inset 0 0 0 0px rgba(255,255,255,.10),  /* línea interna sutil */
+    0 0 0 3px rgba(255,255,255,.25),      /* contorno principal */
+    0 0 20px rgba(255,255,255,.08),         /* glow suave */
+    0 28px 70px rgba(0,0,0,.85);            /* sombra base */
 
   transition:
     transform .35s cubic-bezier(.4,0,.2,1),
@@ -666,43 +674,55 @@ footer::before{
   transform:scale(.95);
 }
 
-/* Activo */
+/* =========================
+   ACTIVO — MÁS BRILLO
+========================= */
 .slide.active{
   transform:scale(1.04);
-  border-color:#ffffff;
 
   box-shadow:
+    inset 0 0 0 3px rgba(255,255,255,.18),
+    0 0 0 3px rgba(255,255,255,.55),       /* más fuerte */
+    0 0 35px rgba(255,255,255,.18),        /* glow activo */
     0 40px 95px rgba(0,0,0,.95);
 }
 
-/* ===== DESKTOP ===== */
-@media(min-width:900px){ .slide{ min-width:45%; } }
-@media(min-width:1200px){ .slide{ min-width:32%; } }
-
 /* =========================
-   MEDIA (IMAGEN) — SÓLIDA
+   DESKTOP
 ========================= */
-.media{
-  position:relative;
-  background:#000; /* 🔑 respaldo sólido */
-  aspect-ratio:4 / 5;
+@media(min-width:900px){
+  .slide{ min-width:45%; }
 }
 
-.media img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+@media(min-width:1200px){
+  .slide{ min-width:32%; }
+}
+/* =========================
+   MEDIA (IMAGEN) — SOMBRA BLANCA SUTIL
+========================= */
+.media {
+  position: relative;
+  background: #000;
+  aspect-ratio: 4 / 5;
+  
+  /* 🔥 RADIUS IGUAL A LA IMAGEN */
+  border-radius: 22px; 
+  overflow: hidden;
 
-  /* 🔥 SIN TRANSPARENCIA */
-  opacity:1;
-  filter:none;
+  /* ✨ SOMBRA BLANCA SUTIL ABAJO */
+  /* 0px (derecha/izquierda) 10px (hacia abajo) 20px (difuminado) */
+  box-shadow: 0 8px 18px rgba(255, 255, 255, 0.35); 
 
-  transition:transform .5s ease;
+  /* Opcional: Un borde casi invisible para definir la silueta */
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.slide.active img{
-  transform:scale(1.08);
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 22px;
 }
 
 /* =========================
@@ -718,7 +738,7 @@ footer::before{
 
  background:linear-gradient(
   180deg,
-  rgba(0,0,0,0) 35%,
+  rgba(0,0,0,0) 105%,
   rgba(0,0,0,.55) 70%,
   rgba(0,0,0,.75) 100%
 );
@@ -852,79 +872,6 @@ footer::before{
 }
 
 
-/* =========================
-   BOTÓN COTIZA TU EVENTO — ROJO 3D PREMIUM
-========================= */
-
-.overlay-content {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.btn-cotiza {
-  margin-bottom: 14px;
-  padding: 13px 28px;
-
-  /* 🔴 rojo elegante tipo marca */
-  background: linear-gradient(
-    180deg,
-    #ff5a4a 0%,
-    #f04a3a 55%,
-    #c93428 100%
-  );
-
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: .4px;
-  text-decoration: none;
-
-  border-radius: 999px;
-  border: none;
-
-  /* 🧱 efecto 3D real */
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.45),
-    inset 0 2px 0 rgba(255,255,255,.25),
-    inset 0 -3px 0 rgba(0,0,0,.25);
-
-  transition:
-    transform .2s ease,
-    box-shadow .25s ease,
-    filter .25s ease;
-}
-
-/* ✨ HOVER — SE ELEVA (PC) */
-@media (hover:hover){
-  .btn-cotiza:hover{
-    transform: translateY(-2px);
-    filter: brightness(1.05);
-    box-shadow:
-      0 16px 34px rgba(0,0,0,.55),
-      inset 0 2px 0 rgba(255,255,255,.35),
-      inset 0 -3px 0 rgba(0,0,0,.3);
-  }
-}
-
-/* 📱 ACTIVE — PRESIONADO REAL */
-.btn-cotiza:active{
-  transform: translateY(1px);
-  box-shadow:
-    0 6px 14px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.15),
-    inset 0 -1px 0 rgba(0,0,0,.45);
-}
-
-/* 📱 MOBILE */
-@media (max-width: 640px){
-  .btn-cotiza{
-    font-size: .95rem;
-    padding: 12px 24px;
-    letter-spacing: .3px;
-  }
-}
 
 /* =========================
    🎞️ ANIMACIÓN DE ENTRADA
@@ -1097,123 +1044,206 @@ footer::before{
     min-width:100px;
   }
 }
-/* =========================
-   MODAL COTIZADOR – LA CHONA
-========================= */
+ /* =================================================
+   MODAL COTIZADOR – PRO / SCROLL INTERNO
+================================================= */
 
-.modal-cotiza{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+.modal-cotiza {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(4px);
+
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 20px;
+  padding-top: 10px;
+
+  /* 🔥 scroll externo solo como respaldo */
+  overflow-y: auto;
+
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  z-index: 9999;
 }
 
-.modal-cotiza.activo{
-  display:flex;
+.modal-cotiza.activo {
+  display: flex;
 }
 
-.modal-box{
-  background:#1a1a1a;
-  color:#fff;
-  width:92%;
-  max-width:420px;
-  border-radius:20px;
-  padding:22px;
+/* =================================================
+   CAJA PRINCIPAL (AQUÍ ESTÁ LA MAGIA)
+================================================= */
+.modal-box {
+  background: #1a1a1a;
+  color: #fff;
+  width: 100%;
+  max-width: 420px;
 
-  box-shadow:
-    0 20px 45px rgba(0,0,0,.7),
-    inset 0 0 0 2px rgba(244,196,48,.35);
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  /* 🔥 CLAVES */
+  max-height: 95vh;
+  overflow: hidden;
 }
 
-.modal-box h3{
-  margin:0;
-  text-align:center;
-  font-family:'Pacifico', cursive;
-  font-size:1.7rem;
-  color:#f4c430;
-  text-shadow:2px 2px 0 #000;
+/* =================================================
+   CONTENIDO SCROLLEABLE
+================================================= */
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+
+  padding: 0 22px 10px;
+
+  -webkit-overflow-scrolling: touch;
 }
 
-.subtitulo{
-  text-align:center;
-  font-size:.9rem;
-  opacity:.85;
-  margin-bottom:14px;
+/* =================================================
+   HEADER FIJO
+================================================= */
+.modal-header-estatico {
+  padding: 22px 22px 10px;
+  background: #1a1a1a;
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-/* grupos */
-.grupo{
-  margin-bottom:12px;
+.modal-box h3 {
+  margin: 0;
+  text-align: center;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.7rem;
+  color: #f4c430;
+  text-shadow: 2px 2px 0 #000;
 }
 
-.grupo h4{
-  margin:6px 0;
-  font-size:1rem;
-  color:#f4c430;
+/* =================================================
+   LISTA
+================================================= */
+.grupo {
+  margin-bottom: 16px;
 }
 
-.modal-box label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 10px;
-  border-radius:10px;
-  font-size:.95rem;
-  cursor:pointer;
-  background:rgba(255,255,255,.04);
-  margin-bottom:6px;
+.grupo h4 {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #f4c430;
+  border-bottom: 1px dashed rgba(244,196,48,.3);
+  padding-bottom: 4px;
 }
 
-.modal-box input[type="checkbox"]{
-  accent-color:#f4c430;
+/* ITEMS */
+.modal-box label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px;
+  border-radius: 12px;
+
+  font-size: .95rem;
+  cursor: pointer;
+
+  background: rgba(255,255,255,.04);
+  margin-bottom: 8px;
+
+  transition: background 0.2s;
 }
 
-/* textarea */
-.modal-box textarea{
-  width:100%;
-  margin-top:10px;
-  padding:10px 12px;
-  border-radius:12px;
-  border:none;
-  resize:none;
-  min-height:70px;
-  background:#111;
-  color:#fff;
-  font-size:.9rem;
+.modal-box label:active {
+  background: rgba(244,196,48,.15);
 }
 
-/* botones */
-.modal-actions{
-  display:flex;
-  gap:12px;
-  margin-top:16px;
+.modal-box input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #f4c430;
 }
 
-.modal-actions button{
-  flex:1;
-  padding:12px;
-  border:none;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:800;
+/* =================================================
+   TEXTAREA
+================================================= */
+.modal-box textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.1);
+
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+
+  resize: none;
 }
 
-.modal-actions button:first-child{
-  background:#333;
-  color:#fff;
+/* =================================================
+   BOTONES FIJOS
+================================================= */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+
+  padding: 15px 22px 22px;
+
+  background: #1a1a1a;
+  border-top: 1px solid rgba(255,255,255,.1);
+
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
 }
 
-.modal-actions button:last-child{
-  background:linear-gradient(
-    180deg,
-    #34e17a 0%,
-    #1fa855 100%
-  );
-  color:#0b3d1d;
+.modal-actions button {
+  flex: 1;
+  padding: 16px;
+
+  border: none;
+  border-radius: 999px;
+
+  font-weight: 800;
+  cursor: pointer;
+
+  touch-action: manipulation;
 }
+
+.modal-actions button:active {
+  transform: scale(0.96);
+}
+
+.modal-actions button:first-child {
+  background: #333;
+  color: #fff;
+}
+
+.modal-actions button:last-child {
+  background: linear-gradient(180deg, #34e17a 0%, #1fa855 100%);
+  color: #0b3d1d;
+}
+
+/* =================================================
+   SCROLL BONITO
+================================================= */
+.modal-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #f4c430;
+  border-radius: 10px;
+}
+
+
 /* =========================
    ⏰ HORARIO / RELOJ — VISIBILIDAD UNIVERSAL
 ========================= */
@@ -1359,10 +1389,6 @@ footer::before{
 }
 
 /* =========================
-📖 LIBRO / CARTA VIRTUAL — HOJA REAL (ELEGANTE)
-========================= */
-
-/* =========================
 CONTENEDOR GENERAL
 ========================= */
 .menu-book{
@@ -1377,16 +1403,41 @@ CONTENEDOR GENERAL
 }
 
 /* =========================
-LIBRO
+📖 LIBRO / MENÚ (LUJO EDITORIAL)
 ========================= */
 .book{
-  width:clamp(350px, 82vw, 900px);
-  height:min(69vh, clamp(450px, 61vw, 580px));
-  position:relative;
-  max-width:100vw;
+  width: clamp(170px, 60vw, 480px);
+  aspect-ratio: 3 / 4;
 
-  transform-style:preserve-3d;
-  overflow:visible;
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+
+  transform-style: preserve-3d;
+
+
+
+  overflow: visible;
+
+  /* ❌ SIN SOMBRAS */
+  box-shadow: none !important;
+
+ outline: 2px solid rgba(255,255,255,.45);
+outline-offset: 1px;
+  border-radius: 12px;
+}
+
+
+
+/* 📱 MÓVIL */
+@media (max-width: 640px){
+  .book{
+    width: 79vw;
+    max-width: 340px;
+    aspect-ratio: 3 / 4;
+
+    border-radius: 12px; /* un poco más suave en móvil */
+  }
 }
 
 /* =========================
@@ -1405,43 +1456,32 @@ LIBRO
   transform-origin:left center;
   transform:rotateY(0deg);
 
-  transition:transform 1s cubic-bezier(.4,0,.2,1);
+  transition: transform 3.25s cubic-bezier(0.16, 1, 0.3, 1);
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
   transform-style:preserve-3d;
 
   will-change:transform;
+
 }
-
-/* =========================
-🖼️ IMAGEN — LIMPIA / CONTORNO SUTIL
-========================= */
+.page{
+  transform-origin: left center;
+}
+.page{
+  box-shadow: none !important;
+}
 .page img{
-  width:auto;
-  height:auto;
-
-  max-width:100%;
-  max-height:100%;
-
+  width:100%;
+  height:100%;
+  object-fit:fill;
   display:block;
-  object-fit:contain;
-
-  padding:0;
-  background:none;
   border-radius:12px;
 
-  /* 🤍 CONTORNO BLANCO MUY DELGADO (NO MARCO) */
-  outline: 0.5px solid rgba(255,255,255,.65);
-  outline-offset: -0.5px;
-
-  /* ❌ sin sombra (evita hojas apiladas) */
-  box-shadow:none;
-
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
+  /* ❌ SIN SOMBRA NI CONTORNO */
+  box-shadow: none !important;
+  outline: none;
+  filter: none;
 }
-
-
 
 
 /* =========================
@@ -1510,7 +1550,7 @@ LIBRO
   pointer-events: none;
   filter: grayscale(100%);
   box-shadow: none;
-  transform: translateY(-50%) scale(0.95);
+  transform: translateY(-10%) scale(0.95);
 }
 
 /* =========================
@@ -1548,11 +1588,9 @@ LIBRO
   background:linear-gradient(
     90deg,
     transparent,
-    #8f6b1a,
-    #d4af37,
-    #f4d67a,
-    #d4af37,
-    #8f6b1a,
+    #E6B8A9,
+    #F2C6B8,
+    #E6B8A9,
     transparent
   );
 }
@@ -1750,7 +1788,7 @@ LIBRO
       rgba(0,0,0,.55),
       rgba(0,0,0,.75)
     ),
-    url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg"); /* 👈 CAMBIA AQUÍ TU IMAGEN */
+    url("img/fondo44.jpg"); /* 👈 CAMBIA AQUÍ TU IMAGEN */
   background-size:cover;
   background-position:center;
 
@@ -1865,90 +1903,109 @@ LIBRO
 }
 
 /* ==============================
-   RESUMEN — LISTA PREMIUM
+   RESUMEN — LISTA PREMIUM (CORREGIDO)
 ============================== */
-.resumen.elegante{
-  margin-top:18px;
-  padding-top:14px;
-  border-top:1px solid rgba(255,255,255,.25);
+.resumen.elegante {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.25);
+  
+  /* 🔥 Esto permite que el contenido respire y no se trabe */
+  display: flex;
+  flex-direction: column;
+  max-height: 300px; 
 }
 
-.resumen.elegante h4{
-  font-size:.85rem;
-  margin-bottom:10px;
-  letter-spacing:.4px;
-  text-transform:uppercase;
-  color:#f4c430;
-  opacity:.9;
+.resumen.elegante h4 {
+  font-size: .85rem;
+  margin-bottom: 12px;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  color: #f4c430;
+  opacity: .9;
+  
+  /* 🔥 Fijamos el título para que nunca se tape */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-bottom: 5px;
 }
 
-/* LISTA */
-.resumen.elegante ul{
-  list-style:none;
-  padding:0;
-  margin:0;
+/* 🔥 CONTENEDOR DE LA LISTA (Aquí es donde ocurre la magia del scroll) */
+.resumen.elegante ul {
+  list-style: none;
+  padding: 0 8px 0 0; /* Espacio a la derecha para la barra */
+  margin: 0;
 
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  /* 🔥 Scroll suave y controlado */
+  overflow-y: auto; 
+  overflow-x: hidden;
+  overscroll-behavior: contain; /* Evita que el scroll "rebote" al fondo */
+}
+
+/* 🎨 BARRA DE SCROLL ESTILIZADA */
+.resumen.elegante ul::-webkit-scrollbar {
+  width: 5px;
+}
+.resumen.elegante ul::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+.resumen.elegante ul::-webkit-scrollbar-thumb {
+  background: #f4c430;
+  border-radius: 10px;
 }
 
 /* ITEM */
-.resumen.elegante li{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  padding:8px 12px;
-  border-radius:12px;
-
-  background:rgba(255,255,255,.06);
-  backdrop-filter: blur(4px);
-
-  font-size:.9rem;
-  color:#ffffff;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.12);
-
-  animation: itemIn .25s ease both;
+.resumen.elegante li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(8px);
+  font-size: .9rem;
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+  
+  /* Asegura que la animación no trabe el scroll */
+  animation: itemIn .3s ease forwards;
 }
 
 /* nombre producto */
-.resumen.elegante li span{
-  opacity:.95;
+.resumen.elegante li span {
+  opacity: .95;
+  padding-right: 10px;
 }
 
 /* cantidad */
-.resumen-elegante-cant{
-  font-weight:700;
-  font-size:.85rem;
-  color:#f4c430;
+.resumen-elegante-cant {
+  font-weight: 700;
+  font-size: .85rem;
+  color: #f4c430;
+  white-space: nowrap;
 }
 
-/* animación entrada */
-@keyframes itemIn{
-  from{
-    opacity:0;
-    transform:translateY(6px);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
+@keyframes itemIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
 }
-
 
 /* TOTAL */
-.total{
-  margin-top:10px;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,.25);
-  text-align:right;
-  font-size:1rem;
-  color:#fff;
+.total {
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.25);
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
 }
-
 /* ==============================
    BOTÓN WHATSAPP — ELEGANTE / SOBRIO
 ============================== */
@@ -2132,115 +2189,603 @@ footer {
     margin-bottom: clamp(14px, 2.5vh, 30px);
   }
 }
+
 /* =========================
-   🏷️ TÍTULO SOBRE IMAGEN — EVENTOS
-========================= */
-/* =========================
-   🏷️ TÍTULO SOBRE IMAGEN — EVENTOS
+   DESKTOP — ESTILO MENÚ ELEGANTE (DORADO)
 ========================= */
 .titulo-imagen {
   position: absolute;
-  top: 14px;
+  top: 18px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
 
-  padding: 10px 22px;
-  border-radius: 999px;
+  padding: 6px 12px;
 
-  /* 🖤 Fondo un poco más oscuro (0.7) para dar contraste al dorado */
-  background: rgba(0, 0, 0, 0.7); 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 
-  /* ✨ DORADO CON MÁXIMA VISTA */
-  background-image: linear-gradient(
-    to bottom,
-    #fff9ad 0%,   /* Más luz arriba */
-    #d2ac47 45%, 
-    #bf953f 55%, 
-    #8a6e2f 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: #d2ac47;
-  
-  font-family: 'Inter', system-ui, Arial, sans-serif;
-  font-weight: 800;
-  font-size: 1.1rem; /* Subimos un pelín el tamaño */
-  letter-spacing: 1px; /* Más espacio ayuda a la lectura */
+  font-size: clamp(0.9rem, 2.5vw, 1.6rem);
+  letter-spacing: clamp(1px, 0.4vw, 2px);
+
   text-align: center;
-  white-space: nowrap;
+  text-transform: uppercase;
 
-  /* 🔍 TRUCO DE VISIBILIDAD: Doble sombra para despegarlo del fondo */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)) 
-          drop-shadow(0 0 1px rgba(0,0,0,1));
+  color: #e6c35c;
 
-  box-shadow:
-    0 6px 18px rgba(0,0,0,0.6),
-    /* Cambiamos el brillo interno a dorado para que armonice */
-    inset 0 0 0 1px rgba(210, 172, 71, 0.3); 
+  width: 90%;
+  max-width: 90%;
+
+  white-space: normal;
+  line-height: 1.2;
+  word-break: keep-all;
+
+  /* 🔥 SOMBRA PRO (profundidad + brillo) */
+  text-shadow:
+    0 2px 3px rgba(0,0,0,0.9),     /* sombra base fuerte */
+    0 4px 10px rgba(0,0,0,0.8),    /* profundidad */
+    0 0 6px rgba(230,195,92,0.5),  /* glow dorado */
+    0 0 12px rgba(0,0,0,0.7);      /* refuerzo contraste */
+
+  /* 🔥 BORDE SUTIL (tipo stroke elegante) */
+  -webkit-text-stroke: 0.3px rgba(0,0,0,0.6);
 
   pointer-events: none;
 }
 
-/* 📱 MÓVIL — más compacto */
+/* ✨ LÍNEA DECORATIVA */
+.titulo-imagen::after {
+  content: "";
+  display: block;
+
+  width: 80%;
+  height: 2px;
+
+  margin: 10px auto 0;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #c9a227,
+    #e6c35c,
+    #c9a227,
+    transparent
+  );
+
+  box-shadow: 0 0 6px rgba(201,162,39,.6);
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.8));
+}
+/* =========================
+   📱 MÓVIL — BAJA Y SE INTEGRA
+========================= */
 @media (max-width: 640px) {
+
   .titulo-imagen {
-    top: 10px;
-    font-size: .95rem;
-    padding: 8px 18px;
+    position: static;
+    transform: none;
+
+    margin: 12px 0 6px;
+
+    /* mantiene estilo elegante */
+    color: #e6c35c;
+
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    letter-spacing: 1.5px;
+
+    white-space: normal;
+    max-width: 100%;
+
+    text-shadow:
+      0 2px 4px rgba(0,0,0,.8);
+
+    padding: 0;
+  }
+
+  /* 🔥 separa imagen del texto */
+  .media {
+    margin-bottom: 2px;
+  }
+
+  /* 🔥 centra bonito */
+  .info {
+    text-align: center;
+  }
+
+  /* línea un poco más compacta */
+  .titulo-imagen::after {
+    width: 70%;
+    margin-top: 8px;
   }
 }
 
-.media {
-  position: relative;
-}
 
-.descripcion-imagen {
-  position: absolute;
-  top: 48%;            /* Un poco más abajo del centro para balancear con el título y botón */
-  left: 20px;
-  right: 20px;
-  transform: translateY(-50%);
-  
-  /* 🖋️ TIPOGRAFÍA Y LEGIBILIDAD */
-  color: #ffffff;
-  font-family: 'Inter', system-ui, Arial, sans-serif; /* Usamos una fuente nítida si la tienes */
-  font-size: 15px;
-  line-height: 1.65;    /* Aumentamos el espaciado para que no se canse la vista */
-  text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.7); /* Sombra para despegar el texto del fondo */
-  text-wrap: balance;   /* Evita palabras sueltas al final de las líneas */
 
-  /* 🌫️ EFECTO DE CRISTAL (GLASSMORPHISM) */
-  background: rgba(15, 15, 15, 0.7); /* Un poco más oscuro para que el blanco brille */
-  backdrop-filter: blur(10px);       /* Desenfoque del fondo (¡Clave para la visibilidad!) */
-  -webkit-backdrop-filter: blur(10px);
-  
-  /* ESTUCTURA Y DETALLES */
-  padding: 18px 22px;   /* Un poco más de aire */
-  border-radius: 12px;  /* Bordes más suaves */
-  
-  /* Borde fino y sombra para profundidad */
-  border: 1px solid rgba(255, 255, 255, 0.15); 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  
-  box-sizing: border-box; /* Asegura que el padding no altere el tamaño */
-}
 
-/* 📱 AJUSTE PARA MÓVILES (Opcional pero recomendado) */
+/* =========================
+   📱 MÓVIL — LIMPIO Y MINIMALISTA
+========================= */
 @media (max-width: 640px) {
   .descripcion-imagen {
+    position: static; 
+    margin-top: 0;
+    
+    /* En móvil, el fondo es casi invisible para que luzca la foto */
+    background: transparent;
+    color: #f0f0f0;
     font-size: 14px;
-    padding: 15px;
-    left: 15px;
-    right: 15px;
+    padding: 10px 15px 15px;
+    
+    /* Sombra de texto para que no se pierda en fondos claros */
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
   }
 }
-linear-gradient(
-  180deg,
-  rgba(0,0,0,var(--fondo-opacidad)),
-  rgba(0,0,0,var(--fondo-opacidad))
-),
-var(--fondo-img);
+
+
+
+
+  /* separa bien los bloques */
+  .media {
+    margin-bottom: 8px;
+  }
+}
+
+/* 💰 PRECIO */
+.price {
+  color: #ff3a2d; 
+  font-weight: 800;
+  font-size: 1.1em;
+  text-shadow: 0 0 10px rgba(255, 58, 45, 0.3);
+}
+#listaProductos {
+  max-height: 220px; /* 🔥 ajusta a tu gusto */
+  overflow-y: auto;
+
+  margin-bottom: 10px;
+
+  -webkit-overflow-scrolling: touch;
+}
+#listaProductos:empty {
+  display: none;
+}
+#listaProductos::-webkit-scrollbar {
+  width: 4px;
+}
+
+#listaProductos::-webkit-scrollbar-thumb {
+  background: #f4c430;
+  border-radius: 10px;
+}
+.page {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.page {
+ transition: transform 4s cubic-bezier(0.36, 1, 0.36, 1),
+            opacity 4s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.info{
+  padding: 16px;
+  text-align: left;
+}
+
+/* 🔥 AJUSTE AL CONTENEDOR PARA QUE EL TEXTO BAJE */
+.media {
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Apila imagen arriba y texto abajo */
+  background: transparent;
+  overflow: visible; /* Para que el botón flotante pueda resaltar */
+}
+
+/* 📄 DESCRIPCIÓN JUSTO DEBAJO DE LA IMAGEN */
+.descripcion-imagen {
+  position: relative; /* 🔑 Cambiado de absolute a relative para que baje */
+  width: 100%;
+  
+  /* ❌ Quitamos el degradado porque ya no está sobre la foto */
+  background: transparent; 
+
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  text-align: center;
+  
+  /* Espaciado para que respire */
+  padding: 8px 5px; 
+  margin-top: 4px; /* Pequeña separación de la imagen */
+  
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  z-index: 2;
+}
+
+/* 🛒 EL BOTÓN SE QUEDA EN LA ESQUINA DE LA FOTO */
+.overlay-content {
+  position: absolute;
+  /* 🔑 Lo subimos un poco para que flote en la esquina inferior de la IMAGEN, no del texto */
+  bottom: 45px; 
+  right: 8px;
+  z-index: 10;
+}
+
+
+
+
+/* 🔥 CONTENEDOR RELATIVO (Asegúrate de que la imagen lo tenga) */
+.media {
+  position: relative;
+  overflow: hidden; /* Para que nada sobresalga de la tarjeta */
+}
+
+/* 🟢 BOTÓN WHATSAPP PREMIUM (Círculo Perfecto) */
+.btn-cotiza {
+  position: absolute;
+  bottom: 15px; /* Un poco más de aire desde abajo */
+  right: 15px;  /* Un poco más de aire desde la derecha */
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 📏 MEDIDAS IGUALES = CÍRCULO PERFECTO */
+  width: 38px; 
+  height: 38px;
+  border-radius: 50%; /* Siempre 50% para círculos */
+
+  /* 🛒 TAMAÑO DEL ICONO */
+  font-size: 1rem;
+  line-height: 1;
+  color: white;
+  text-decoration: none;
+
+  /* 🟢 GRADIENTE ESTILO "GEL" (Luz en la esquina superior) */
+  background: radial-gradient(
+    circle at 35% 35%,
+    #2eea7a 0%,
+    #1ebe5d 55%,
+    #128c4a 100%
+  );
+
+  /* ✨ EFECTO BURBUJA Y SOMBRA */
+  box-shadow:
+    0 8px 16px rgba(0,0,0,0.4),          /* Sombra proyectada */
+    0 0 12px rgba(37,211,102,0.4),       /* Resplandor verde */
+    inset 0 3px 6px rgba(255,255,255,0.4); /* Brillo interno tipo cristal */
+
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ✨ EFECTO AL PASAR EL MOUSE (PC) */
+@media (hover: hover) {
+  .btn-cotiza:hover {
+    transform: scale(1.15) rotate(5deg); /* Crece y gira un poco */
+    filter: brightness(1.1);
+    box-shadow:
+      0 12px 24px rgba(0,0,0,0.5),
+      0 0 20px rgba(37,211,102,0.6),
+      inset 0 2px 8px rgba(255,255,255,0.5);
+  }
+}
+
+.btn-cotiza {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Círculo perfecto */
+  width: 48px; 
+  height: 48px;
+  border-radius: 50%;
+
+  /* Tamaño del carrito */
+  font-size: 1.8rem; 
+  color: white;
+
+  /* 🍊 NARANJA DIDI FOOD (Saturación Máxima) */
+  background: linear-gradient(
+    135deg, 
+    #FF7A00 0%,   /* Naranja claro arriba */
+    #FF4D00 50%,  /* Naranja Didi oficial */
+    #FF4D00 100%
+  );
+
+  /* Sombras nítidas (Estilo App Moderna) */
+  box-shadow:
+    0 4px 12px rgba(255, 77, 0, 0.4),  /* Resplandor naranja */
+    0 8px 20px rgba(0, 0, 0, 0.25);    /* Sombra de elevación */
+
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 🛒 Sombra al carrito para que resalte sobre el naranja fuerte */
+.btn-cotiza i, .btn-cotiza span {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Animación de pulsación (le da vida) */
+.btn-cotiza:hover {
+  transform: scale(1.1);
+  background: #FF5E1A; /* Un poco más claro al pasar el mouse */
+}
+
+.btn-cotiza:active {
+  transform: scale(0.95);
+}
+
+.carousel-wrap {
+  max-width: 1180px;
+  margin: -10px auto 0;
+  position: relative;
+  padding: 26px 22px;
+
+  /* 🌑 Fondo Negro Mate / Carbón */
+  background-color: #0d0d0d; 
+  
+  /* Textura sutil: añade este gradiente para simular el grano de la imagen */
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 80%),
+    linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+
+  border-radius: 30px;
+
+  /* ✨ Borde sutil pero definido (dorado muy suave o gris oscuro) */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* 💎 Profundidad y sombra pesada como en la imagen */
+  box-shadow: 
+    0 40px 100px rgba(0,0,0,0.9), 
+    inset 0 1px 1px rgba(255,255,255,0.05);
+
+  overflow: hidden;
+}
+
+/* Capa de textura para dar ese aspecto de "papel o pizarra" */
+.carousel-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03; /* Muy sutil */
+  pointer-events: none;
+  /* Imagen de ruido para simular textura */
+  background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png'); 
+}
+
+/* El brillo superior ahora debe ser más tenue */
+.carousel-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg, 
+    rgba(255,255,255,0.05) 0%, 
+    transparent 40%
+  );
+  pointer-events: none;
+}
+
+.tabs-container{
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(12px);
+
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+
+/* BOTONES */
+.tabs{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.tab-btn{
+  padding:10px 18px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+
+  background:rgba(255,255,255,.08);
+  color:#fff;
+
+  font-weight:600;
+  transition:.3s;
+}
+
+.tab-btn.active{
+  background:#f4c430;
+  color:#000;
+  transform:scale(1.05);
+}
+
+/* CONTENIDO */
+.tab-content{
+  display:none;
+  animation: fade .4s ease;
+  color:#fff;
+  text-align:center;
+}
+
+.tab-content.active{
+  display:block;
+}
+
+.tab-content h2{
+  color:#f4c430;
+  margin-bottom:10px;
+}
+
+.tab-content ul{
+  list-style:none;
+  padding:0;
+  line-height:1.8;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+
+
+/* =================================================
+   SECCIÓN CORPORATIVA - LA CHONA 2026 (ULTRA LEGIBILIDAD)
+================================================= */
+.seccion-corporativa {
+  padding: 10px 20px 60px;
+  color: #ffffff;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  
+  /* Sombra base reforzada para todo el texto */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.contenedor-historia, 
+.contenedor-objetivo {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 35px;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dorado-titulo {
+  font-family: 'Playfair Display', serif;
+  color: #d4af37;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  letter-spacing: 4px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  /* Sombra profunda para resaltar el dorado */
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 1);
+}
+
+.texto-historia, .texto-enfasis {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #ffffff;
+  text-align: justify;
+}
+
+.texto-historia strong {
+  color: #d4af37;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+}
+
+/* Decoración dorada */
+.adorno-dorado {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 15px auto 0;
+}
+
+/* Grid de 3 columnas */
+.grid-mision-vision {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 25px;
+}
+
+.tarjeta-info {
+  /* Fondo más oscuro (0.6) y desenfoque para aislar el texto del fondo vivo */
+  background: rgba(0, 0, 0, 0.65); 
+  backdrop-filter: blur(10px); 
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 3px solid #d4af37;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tarjeta-info h3 {
+  color: #d4af37;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin: 0 0 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.tarjeta-info p {
+  line-height: 1.6;
+  color: #ffffff;
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+/* =========================
+   LISTA DE VALORES (PUNTOS REFORZADOS)
+========================= */
+.lista-valores {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.lista-valores li {
+  font-size: 0.9rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  font-weight: 600; /* Mayor grosor para legibilidad */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+}
+
+.lista-valores li::before {
+  content: "•";
+  color: #d4af37;
+  margin-right: 12px;
+  font-size: 1.8rem; /* Punto más grande */
+  line-height: 0;
+  /* Triple sombra para que el punto no se pierda nunca */
+  text-shadow: 
+    2px 2px 0px rgba(0, 0, 0, 1), 
+    0 0 10px rgba(0, 0, 0, 0.9),
+    0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+  .seccion-corporativa {
+    padding-top: 5px;
+  }
+  .texto-historia, .texto-enfasis {
+    text-align: center;
+    font-size: 1rem;
+  }
+  .lista-valores {
+    grid-template-columns: 1fr;
+  }
+  .dorado-titulo {
+    letter-spacing: 2px;
+  }
+}
