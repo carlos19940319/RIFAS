@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.classList.add('show');
 
+
+
   /* =====================================================
      VARIABLES GLOBALES
   ===================================================== */
@@ -76,139 +78,131 @@ document.addEventListener('DOMContentLoaded', () => {
     showSection(location.hash.replace('#', '') || defaultSection, false);
   });
 
-  /* =====================================================
-     📖 LIBRO / CARTA — RÁPIDO + SIN PARPADEO
+ /* =====================================================
+      📖 LIBRO / CARTA — RÁPIDO + SIN PARPADEO
   ===================================================== */
   function initLibro() {
+    // Buscamos todos los contenedores de libro
+    const containers = document.querySelectorAll('.menu-book');
 
-    const book = document.querySelector('.book');
-    const pages = [...document.querySelectorAll('.book .page')];
-    const nextBtn = document.querySelector('.nav.next');
-    const prevBtn = document.querySelector('.nav.prev');
+    containers.forEach(container => {
+      const book = container.querySelector('.book');
+      const pages = [...container.querySelectorAll('.page')];
+      const nextBtn = container.querySelector('.nav.next');
+      const prevBtn = container.querySelector('.nav.prev');
+      
 
-    if (!book || !pages.length || !nextBtn || !prevBtn) return;
+      if (!book || !pages.length || !nextBtn || !prevBtn) return;
 
-    /* 🔒 controla estado de botones */
-    function updateNavButtons(){
-      if (pageIndex === 0) {
-        prevBtn.classList.add('disabled');
-      } else {
-        prevBtn.classList.remove('disabled');
+      // Variable local para cada libro
+      let localPageIndex = 0;
+
+      function updateNavButtons(){
+        if (localPageIndex === 0) {
+          prevBtn.classList.add('disabled');
+        } else {
+          prevBtn.classList.remove('disabled');
+        }
+
+        if (localPageIndex === pages.length - 1) {
+          nextBtn.classList.add('disabled');
+        } else {
+          nextBtn.classList.remove('disabled');
+        }
       }
 
-      if (pageIndex === pages.length - 1) {
-        nextBtn.classList.add('disabled');
-      } else {
-        nextBtn.classList.remove('disabled');
-      }
-    }
-
-    /* ----- estado inicial ----- */
-    pages.forEach((page, i) => {
-      page.style.transform = 'translateZ(0) rotateY(0deg)';
-      page.style.zIndex = pages.length - i;
-      page.style.willChange = 'transform';
-
-      const img = page.querySelector('img');
-      if (img) {
-        img.loading = 'eager';
-        img.decoding = 'sync';
-        img.style.transform = 'translateZ(0)';
-      }
-    });
-
-    function updatePages() {
       pages.forEach((page, i) => {
-        if (i < pageIndex) {
-          page.style.zIndex = i;
-          page.style.transform = 'rotateY(-180deg)';
-        }
-        else if (i === pageIndex) {
-          page.style.zIndex = pages.length + 5;
-          page.style.transitionDuration = firstTurn ? '0.45s' : '0.55s';
-          firstTurn = false;
-          page.style.transform = 'rotateY(0deg)';
-        }
-        else {
-          page.style.zIndex = pages.length - i;
-          page.style.transform = 'rotateY(0deg)';
+        page.style.transform = 'translateZ(0) rotateY(0deg)';
+        page.style.zIndex = pages.length - i;
+        page.style.willChange = 'transform';
+
+        const img = page.querySelector('img');
+        if (img) {
+          img.loading = 'eager';
+          img.decoding = 'sync';
+          img.style.transform = 'translateZ(0)';
         }
       });
+
+
+updatePages();
+
+
+      function updatePages() {
+        pages.forEach((page, i) => {
+          if (i < localPageIndex) {
+            page.style.zIndex = i;
+            page.style.transform = 'rotateY(-260deg)';
+          }
+          else if (i === localPageIndex) {
+            page.style.zIndex = pages.length + 5;
+            page.style.transitionDuration = firstTurn ? '0.45s' : '0.55s';
+            page.style.transform = 'rotateY(0deg)';
+          }
+          else {
+            page.style.zIndex = pages.length - i;
+            page.style.transform = 'rotateY(0deg)';
+          }
+        });
+        updateNavButtons();
+      }
+
+      nextBtn.onclick = () => {
+        if (localPageIndex >= pages.length - 1) return;
+        const currentPage = pages[localPageIndex];
+        currentPage.style.transition = 'none';
+        currentPage.offsetHeight;
+        currentPage.style.transition = '';
+        currentPage.style.transform = 'rotateY(-180deg)';
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            localPageIndex++;
+            firstTurn = false;
+            updatePages();
+          });
+        });
+      };
+
+      prevBtn.onclick = () => {
+        if (localPageIndex <= 0) return;
+        const page = pages[localPageIndex - 1];
+        page.style.transition = 'none';
+        page.offsetHeight;
+        page.style.transition = '';
+        page.style.transform = 'rotateY(0deg)';
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            localPageIndex--;
+            updatePages();
+          });
+        });
+      };
+
+      let startX = 0;
+      book.ontouchstart = e => { startX = e.touches[0].clientX; };
+      book.ontouchend = e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (diff > 60) nextBtn.click();
+        if (diff < -60) prevBtn.click();
+      };
 
       updateNavButtons();
-    }
-
-    /* ▶️ NEXT */
-    nextBtn.onclick = () => {
-      if (pageIndex >= pages.length - 1) return;
-
-      const currentPage = pages[pageIndex];
-
-      currentPage.style.transition = 'none';
-      currentPage.offsetHeight;
-      currentPage.style.transition = '';
-      currentPage.style.transform = 'rotateY(-180deg)';
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          pageIndex++;
-          updatePages();
-        });
-      });
-    };
-
-    /* ◀️ PREV */
-    prevBtn.onclick = () => {
-      if (pageIndex <= 0) return;
-
-      const page = pages[pageIndex - 1];
-
-      page.style.transition = 'none';
-      page.offsetHeight;
-      page.style.transition = '';
-      page.style.transform = 'rotateY(0deg)';
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          pageIndex--;
-          updatePages();
-        });
-      });
-    };
-
-    /* 👉 SWIPE MÓVIL */
-    let startX = 0;
-
-    book.ontouchstart = e => {
-      startX = e.touches[0].clientX;
-    };
-
-    book.ontouchend = e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (diff > 60) nextBtn.click();
-      if (diff < -60) prevBtn.click();
-    };
-
-    /* estado inicial botones */
-    updateNavButtons();
+    });
   }
 
   function resetLibro() {
-    const pages = document.querySelectorAll('.book .page');
-    if (!pages.length) return;
-
-    pageIndex = 0;
-    firstTurn = true;
-
-    pages.forEach((page, i) => {
+    const allPages = document.querySelectorAll('.book .page');
+    allPages.forEach((page) => {
       page.style.transition = 'none';
       page.style.transform = 'rotateY(0deg)';
-      page.style.zIndex = pages.length - i;
     });
 
     requestAnimationFrame(() => {
-      pages.forEach(p => p.style.transition = '');
+      allPages.forEach(p => p.style.transition = '');
     });
+    firstTurn = true;
   }
 
   /* =====================================================
@@ -270,6 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 });
+
 
 /* =====================================================
    MODAL COTIZACIÓN (SIN CAMBIOS)
@@ -336,3 +331,5 @@ enviar.onclick = () => {
 };
 
 cerrar.onclick = () => modal.classList.remove("activo");
+
+
