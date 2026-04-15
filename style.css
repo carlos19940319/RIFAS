@@ -1620,7 +1620,7 @@ outline-offset: 1px;
   font-size: clamp(0.98rem, 2.2vw, 1.08rem);
 
   /* 🔑 MENOS ALTURA ENTRE LÍNEAS */
-  line-height: 1.45;
+  line-height: 1.4;
   letter-spacing: 0.008em;
 
   /* 🔑 MÁS HORIZONTAL */
@@ -1775,46 +1775,113 @@ outline-offset: 1px;
   display:flex;
 }
 
+
+
+
 /* ==============================
-   TARJETA PRINCIPAL
+   TARJETA PRINCIPAL - EVOLUCIÓN
 ============================== */
-.cotiza-box.elegante{
-  position:relative;
-  width:min(480px,94%);
-  border-radius:22px;
-  overflow:hidden;
+.cotiza-box.elegante {
+  position: relative;
+  width: min(480px, 94%);
+  margin: 20px auto;
+  border-radius: 28px;
+  overflow: hidden;
+  padding: 35px 25px;
+  background: #0b0f14; /* Un tono casi negro para que luzca el cristal */
 
-  /* 🖼️ IMAGEN DE FONDO */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.55),
-      rgba(0,0,0,.75)
+  /* 💎 CONTORNO CAPA 1: El borde físico de cristal */
+  border: 2px solid rgba(255, 255, 255, 0.5);
+
+  /* 💎 CONTORNO CAPA 2: Resplandor interno (define los bordes por dentro) */
+  box-shadow: 
+    0 40px 100px rgba(0,0,0,0.9),                /* Sombra externa */
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),   /* Línea de luz interna */
+    inset 0 0 40px rgba(201, 162, 39, 0.15);     /* Reflejo dorado tenue */
+
+  font-family: 'Libre Baskerville', serif;
+  color: #fff;
+  text-align: center;
+  
+  animation: modalEntrada 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+}
+
+/* 💎 CONTORNO CAPA 3: Marco ornamental "Dorado La Chona" */
+.cotiza-box.elegante::after {
+  content: "";
+  position: absolute;
+  /* El "inset" crea el espacio entre el borde exterior y el marco interno */
+  inset: 12px; 
+  border: 1px solid rgba(201, 162, 39, 0.3); /* Dorado translúcido elegante */
+  border-radius: 20px; /* Un poco más cerrado que el exterior */
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 🖼️ CAPA DE IMAGEN CON MÁSCARA */
+.cotiza-box.elegante::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  
+  background: 
+    linear-gradient(180deg, 
+      rgba(0,0,0,0.3) 0%, 
+      rgba(0,0,0,0.85) 100%
     ),
-    url("img/fondo44.jpg"); /* 👈 CAMBIA AQUÍ TU IMAGEN */
-  background-size:cover;
-  background-position:center;
-
-  padding:22px;
-  box-shadow:0 35px 90px rgba(0,0,0,.45);
-
-  font-family:'Libre Baskerville', serif;
-  color:#fff;
-
-  animation:modalEntrada .5s ease;
+    url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg");
+  
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6; /* La imagen no debe pelear con el texto */
+  transition: transform 1s ease;
 }
 
-/* Animación entrada */
-@keyframes modalEntrada{
-  from{
-    opacity:0;
-    transform:translateY(20px) scale(.96);
+/* 🏆 ORNAMENTO DORADO INTERNO */
+.cotiza-box.elegante::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(201, 162, 39, 0.25); /* Borde dorado muy sutil */
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Efecto Hover (Solo PC) */
+.cotiza-box.elegante:hover::before {
+  transform: scale(1.05);
+}
+
+/* Asegurar que el contenido esté sobre la imagen */
+.cotiza-box.elegante > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Estilo para el título interno */
+.cotiza-box.elegante h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #E6C35C; /* Dorado */
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+@keyframes modalEntrada {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    filter: blur(10px);
   }
-  to{
-    opacity:1;
-    transform:none;
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
   }
 }
+
 
 /* ==============================
    HEADER
@@ -2089,8 +2156,6 @@ outline-offset: 1px;
    🧩 NORMALIZADOR VERTICAL GLOBAL — LA CHONA
    (evita espacios fantasmas entre bloques)
 ================================================= */
-
-/* 🔑 Regla base: nada exagerado en vertical */
 section,
 main,
 .page-section,
@@ -2099,7 +2164,7 @@ main,
 .menu-book,
 .carousel-wrap,
 footer {
-  margin-top: clamp(6px, 1.2vh, 20px);
+  margin-top: 0; /* 🔥 quitamos espacio arriba */
   margin-bottom: clamp(10px, 2vh, 32px);
 }
 
@@ -2188,7 +2253,7 @@ footer {
 
   section,
   .page-section {
-    margin-top: clamp(8px, 1.5vh, 18px);
+    margin-top: 0; /* 🔥 quitamos el espacio arriba */
     margin-bottom: clamp(14px, 2.5vh, 30px);
   }
 }
