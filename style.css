@@ -97,7 +97,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   padding: 10px 18px;
 
   /* 🖤 NEGRO PROFUNDO ELEGANTE */
@@ -117,7 +117,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   outline: none !important;
 
   box-shadow:
-    0 12px 35px rgba(0,0,0,.85);
+    0 12px 35px rgba(0,0,0,.25);
 
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
@@ -192,9 +192,6 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
 }
 
 
-
-
-
 .header-unificado .header-top .titulo {
   margin: 0;
   font-family: 'Playfair Display', serif;
@@ -229,7 +226,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
 .header-unificado nav a {
   position: relative;
   min-width: max-content;
-  padding: 6px 16px; 
+  padding: 2px 6px; 
   text-decoration: none;
   font-family: 'Playfair Display', serif;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
@@ -237,13 +234,12 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
 
   /* 🔥 CONTORNO FIJO */
   /* Usamos un borde de 1px sólido siempre para que no cambie el tamaño del box-model */
-  border: 1px solid rgba(255, 255, 255, 0.35) !important; 
-  border-radius: 999px;
-
+  border: 0.5px solid rgba(255, 255, 255, .35) !important; 
+  border-radius: 5px;
   background: transparent;
   /* 🛠️ Eliminamos el cambio de escala para evitar el brinco */
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease; 
-  text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  transition: background 0.8s ease, border-color 0.2s ease, color 0.2s ease; 
+  text-shadow: 0 2px 3px rgba(0,0,0,.6);
   
   /* Asegura que el padding no cambie con el borde */
   box-sizing: border-box; 
@@ -253,7 +249,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
    HOVER SUAVE (SIN BRINCO)
 ================================================= */
 .header-unificado nav a:hover {
-  border-color: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
   /* 🛠️ Quitamos transform: scale para que no mueva la sección */
   background: rgba(255, 255, 255, 0.1); 
 }
@@ -262,10 +258,21 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
    ACTIVO (ESTABLE Y LIMPIO)
 ================================================= */
 .header-unificado nav a.active {
-  border-color: #fff !important;
-  background: rgba(255, 255, 255, 0.30) !important;
-  /* 🛠️ Forzamos que el tamaño de la fuente o escala no cambie aquí */
-  transform: none !important; 
+  border: none !important;
+
+  /* 🔥 fondo más pro */
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0.15)
+  ) !important;
+
+  color: #f04a3a !important;
+
+  /* 💎 profundidad */
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 /* =================================================
@@ -652,7 +659,7 @@ footer::before{
 .slide{
   min-width:90%;
   background:#0e0e0e;
-  border-radius:22px;
+  border-radius:12px;
   overflow:hidden;
   position:relative;
   scroll-snap-align:center;
@@ -660,12 +667,6 @@ footer::before{
   /* ❌ quitamos el borde plano */
   border: none;
 
-  /* 🔥 CONTORNO PRO */
-  box-shadow:
-    inset 0 0 0 0px rgba(255,255,255,.10),  /* línea interna sutil */
-    0 0 0 3px rgba(255,255,255,.25),      /* contorno principal */
-    0 0 20px rgba(255,255,255,.08),         /* glow suave */
-    0 28px 70px rgba(0,0,0,.85);            /* sombra base */
 
   transition:
     transform .35s cubic-bezier(.4,0,.2,1),
@@ -703,28 +704,30 @@ footer::before{
 .media {
   position: relative;
   background: #000;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 4.3;
   
   /* 🔥 RADIUS IGUAL A LA IMAGEN */
-  border-radius: 22px; 
+  border-radius: 15px; 
   overflow: hidden;
 
-  /* ✨ SOMBRA BLANCA SUTIL ABAJO */
-  /* 0px (derecha/izquierda) 10px (hacia abajo) 20px (difuminado) */
-  box-shadow: 0 8px 18px rgba(255, 255, 255, 0.35); 
 
-  /* Opcional: Un borde casi invisible para definir la silueta */
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* 🔥 BORDE */
+  border: 2.5px solid rgba(255, 255, 255, 0.8);
 }
 
 .media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+ object-fit: fill;
   display: block;
-  border-radius: 22px;
-}
 
+  /* 🔥 AJUSTE PRO */
+  transform: scale(1.02); /* llena más sin deformar */
+
+  border-radius: 13px;
+
+ 
+}
 /* =========================
    OVERLAY — FUERTE
 ========================= */
@@ -2193,70 +2196,74 @@ footer {
 /* =========================
    DESKTOP — ESTILO MENÚ ELEGANTE (DORADO)
 ========================= */
+/* =========================
+   TITULO — PEGADO A LA IMAGEN
+========================= */
 .titulo-imagen {
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
+  position: static; /* 🔥 clave */
+  transform: none;
 
-  padding: 6px 12px;
+  margin: -2px 0 0px; /* 🔥 casi pegado */
+
+  padding: 0;
 
   font-family: 'Playfair Display', serif;
   font-weight: 500;
 
-  font-size: clamp(0.9rem, 2.5vw, 1.6rem);
-  letter-spacing: clamp(1px, 0.4vw, 2px);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  letter-spacing: 1.2px;
 
   text-align: center;
   text-transform: uppercase;
 
   color: #e6c35c;
 
-  width: 90%;
-  max-width: 90%;
+  width: 100%;
+  max-width: 100%;
 
-  white-space: normal;
   line-height: 1.2;
-  word-break: keep-all;
 
-  /* 🔥 SOMBRA PRO (profundidad + brillo) */
   text-shadow:
-    0 2px 3px rgba(0,0,0,0.9),     /* sombra base fuerte */
-    0 4px 10px rgba(0,0,0,0.8),    /* profundidad */
-    0 0 6px rgba(230,195,92,0.5),  /* glow dorado */
-    0 0 12px rgba(0,0,0,0.7);      /* refuerzo contraste */
+    0 2px 4px rgba(0,0,0,.8),
+    0 0 6px rgba(230,195,92,0.4);
 
-  /* 🔥 BORDE SUTIL (tipo stroke elegante) */
-  -webkit-text-stroke: 0.3px rgba(0,0,0,0.6);
+  -webkit-text-stroke: 0.2px rgba(0,0,0,0.6);
 
   pointer-events: none;
 }
 
-/* ✨ LÍNEA DECORATIVA */
 .titulo-imagen::after {
   content: "";
   display: block;
 
-  width: 80%;
+  width: 70%;
   height: 2px;
 
-  margin: 10px auto 0;
+  margin: 6px auto 0;
 
   background: linear-gradient(
     90deg,
     transparent,
-    #c9a227,
     #e6c35c,
-    #c9a227,
     transparent
   );
 
-  box-shadow: 0 0 6px rgba(201,162,39,.6);
-  filter: drop-shadow(0 0 6px rgba(0,0,0,0.8));
+  position: relative;
+}
+
+.titulo-imagen::after::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 30px;
+  height: 2px;
+  background: #fff;
+  transform: translateX(-50%);
+  filter: blur(4px);
 }
 /* =========================
-   📱 MÓVIL — BAJA Y SE INTEGRA
+   📱 MÓVIL — PEGADO Y LIMPIO
 ========================= */
 @media (max-width: 640px) {
 
@@ -2264,9 +2271,8 @@ footer {
     position: static;
     transform: none;
 
-    margin: 12px 0 6px;
+    margin: 0; /* 🔥 SIN separación */
 
-    /* mantiene estilo elegante */
     color: #e6c35c;
 
     font-size: clamp(1.2rem, 5vw, 1.5rem);
@@ -2281,47 +2287,39 @@ footer {
     padding: 0;
   }
 
-  /* 🔥 separa imagen del texto */
+  /* 🔥 elimina espacio entre imagen y texto */
   .media {
-    margin-bottom: 2px;
+    margin-bottom: 0;
   }
 
-  /* 🔥 centra bonito */
+  /* 🔥 contenedor sin espacios */
   .info {
     text-align: center;
+    padding: 0;
   }
 
-  /* línea un poco más compacta */
+  /* 🔥 línea más pegada */
   .titulo-imagen::after {
     width: 70%;
-    margin-top: 8px;
+    margin-top: 4px;
   }
-}
 
-
-
-
-/* =========================
-   📱 MÓVIL — LIMPIO Y MINIMALISTA
-========================= */
-@media (max-width: 640px) {
+  /* =========================
+     📱 DESCRIPCIÓN — PEGADA
+  ========================= */
   .descripcion-imagen {
-    position: static; 
-    margin-top: 0;
-    
-    /* En móvil, el fondo es casi invisible para que luzca la foto */
+    position: static;
+
+    margin-top: 2px; /* 🔥 casi pegado */
+    padding: 6px 12px 10px; /* 🔥 menos espacio */
+
     background: transparent;
     color: #f0f0f0;
     font-size: 14px;
-    padding: 10px 15px 15px;
-    
-    /* Sombra de texto para que no se pierda en fondos claros */
+
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
   }
 }
-
-
-
 
   /* separa bien los bloques */
   .media {
@@ -2381,36 +2379,28 @@ footer {
 
 /* 📄 DESCRIPCIÓN JUSTO DEBAJO DE LA IMAGEN */
 .descripcion-imagen {
-  position: relative; /* 🔑 Cambiado de absolute a relative para que baje */
+  position: relative;
   width: 100%;
-  
-  /* ❌ Quitamos el degradado porque ya no está sobre la foto */
-  background: transparent; 
 
-  color: #ffffff;
+  background: transparent;
+
+  /* 🔥 TIPOGRAFÍA LIMPIA */
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  text-align: center;
-  
-  /* Espaciado para que respire */
-  padding: 8px 5px; 
-  margin-top: 4px; /* Pequeña separación de la imagen */
-  
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: rgba(255,255,255,0.95);
+
+  text-align: left; /* 🔥 IMPORTANTE (no centrado) */
+
+  padding: 10px 8px;
+  margin-top: 6px;
+
+  /* sombra muy sutil */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+
   z-index: 2;
 }
-
-/* 🛒 EL BOTÓN SE QUEDA EN LA ESQUINA DE LA FOTO */
-.overlay-content {
-  position: absolute;
-  /* 🔑 Lo subimos un poco para que flote en la esquina inferior de la IMAGEN, no del texto */
-  bottom: 45px; 
-  right: 8px;
-  z-index: 10;
-}
-
-
-
 
 /* 🔥 CONTENEDOR RELATIVO (Asegúrate de que la imagen lo tenga) */
 .media {
@@ -2482,12 +2472,12 @@ footer {
   justify-content: center;
 
   /* Círculo perfecto */
-  width: 48px; 
-  height: 48px;
+  width: 35px; 
+  height: 35px;
   border-radius: 50%;
 
   /* Tamaño del carrito */
-  font-size: 1.8rem; 
+  font-size: 1.4rem; 
   color: white;
 
   /* 🍊 NARANJA DIDI FOOD (Saturación Máxima) */
@@ -2500,8 +2490,8 @@ footer {
 
   /* Sombras nítidas (Estilo App Moderna) */
   box-shadow:
-    0 4px 12px rgba(255, 77, 0, 0.4),  /* Resplandor naranja */
-    0 8px 20px rgba(0, 0, 0, 0.25);    /* Sombra de elevación */
+    0 4px 12px rgba(255, 77, 0, 0.7),  /* Resplandor naranja */
+    0 8px 20px rgba(255, 77, 0, 0.25);    /* Sombra de elevación */
 
   border: none;
   cursor: pointer;
@@ -2513,10 +2503,17 @@ footer {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-/* Animación de pulsación (le da vida) */
 .btn-cotiza:hover {
-  transform: scale(1.1);
-  background: #FF5E1A; /* Un poco más claro al pasar el mouse */
+  transform: scale(1.2);
+
+  /* 🔥 mismo color pero más profundo */
+  filter: brightness(1);
+
+  /* 💎 sombra más elegante en lugar de aclarar */
+  box-shadow:
+    0 6px 16px rgba(255, 77, 0, 0.8),
+    0 10px 25px rgba(0, 0, 0, 0.4);
+}
 }
 
 .btn-cotiza:active {
@@ -2527,24 +2524,33 @@ footer {
   max-width: 1180px;
   margin: -10px auto 0;
   position: relative;
-  padding: 26px 22px;
+  padding: 5px 22px;
 
-  /* 🌑 Fondo Negro Mate / Carbón */
-  background-color: #0d0d0d; 
-  
-  /* Textura sutil: añade este gradiente para simular el grano de la imagen */
-  background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 80%),
-    linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  /* 🖤 NEGRO TRANSPARENTE PREMIUM */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.35),
+      rgba(0,0,0,0.95)
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255,255,255,0.03),
+      transparent 70%
+    );
+
+  /* 💎 EFECTO GLASS */
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
 
   border-radius: 30px;
 
-  /* ✨ Borde sutil pero definido (dorado muy suave o gris oscuro) */
+  /* ✨ BORDE SUAVE */
   border: 1px solid rgba(255, 255, 255, 0.08);
 
-  /* 💎 Profundidad y sombra pesada como en la imagen */
+  /* 🌑 SOMBRA PROFUNDA */
   box-shadow: 
-    0 40px 100px rgba(0,0,0,0.9), 
+    0 30px 80px rgba(0,0,0,0.85),
     inset 0 1px 1px rgba(255,255,255,0.05);
 
   overflow: hidden;
@@ -2789,3 +2795,7 @@ footer {
     letter-spacing: 2px;
   }
 }
+
+
+
+
