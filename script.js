@@ -263,6 +263,28 @@ updatePages();
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+
+
+    /* =====================================================
+     🍔 MENÚ HAMBURGUESA
+  ===================================================== */
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.header-unificado nav');
+  const linksMenu = document.querySelectorAll('.header-unificado nav a');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    // cerrar al tocar opción
+    linksMenu.forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+      });
+    });
+  }
+
 });
 
 
