@@ -179,7 +179,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   border-radius: 50%;
 
   /* Borde suave moderno */
-  border: 2px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.25);
 
   /* Efecto glow moderno */
   box-shadow:
@@ -1425,7 +1425,7 @@ CONTENEDOR GENERAL
   /* ❌ SIN SOMBRAS */
   box-shadow: none !important;
 
- outline: 2px solid rgba(255,255,255,.45);
+ outline: 3px solid rgba(255,255,255,.55);
 outline-offset: 1px;
   border-radius: 12px;
 }
