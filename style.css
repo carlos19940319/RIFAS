@@ -15,7 +15,7 @@
   --fondo-header-img: url("img/tituloo.pn");
   --fondo-nav-img: url("img/tituloo.png");
   --fondo-opacidad: 0.2;
-  --header-height: 64px;
+  --header-height: 60px;
   --nav-height: 60px;
 }
 /* =========================
@@ -215,7 +215,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   align-items: center;
   flex-wrap: wrap;
   gap: clamp(8px, 2vw, 16px);
-  width: 100%;
+  width: 90%;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -239,7 +239,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   background: transparent;
   /* 🛠️ Eliminamos el cambio de escala para evitar el brinco */
   transition: background 0.8s ease, border-color 0.2s ease, color 0.2s ease; 
-  text-shadow: 0 2px 3px rgba(0,0,0,.6);
+  text-shadow: 0 1px 1px rgba(0,0,0,.6);
   
   /* Asegura que el padding no cambie con el borde */
   box-sizing: border-box; 
