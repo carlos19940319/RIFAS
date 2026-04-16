@@ -297,6 +297,10 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   color: #f04a3a !important;
 }
 
+
+
+
+
 /* =================================================
    MAIN
 ================================================= */
@@ -615,268 +619,432 @@ footer::before{
 * { -webkit-tap-highlight-color: transparent; }
 
 /* =================================================
-   ✨ CARRUSEL EVENTOS / CARTA — SÓLIDO & PREMIUM
+   EVENTOS / CATERING — APP PREMIUM MODERNA
 ================================================= */
 
 /* =========================
-   SECCIÓN EVENTOS
+   SECCIÓN
 ========================= */
 #eventos,
 #empresa{
-  width:100%;
-  font-family:Inter, system-ui, Roboto, Arial;
-  padding-top:12px;
-  padding-bottom:48px;
+  width: 100%;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 14px 0 52px;
 }
 
 /* =========================
-   CONTENEDOR
+   CONTENEDOR GENERAL
 ========================= */
 .carousel-wrap{
-  max-width:1180px;
-  margin:-10px auto 0;
-  position:relative;
-  padding:0 16px;
+  position: relative;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 18px 16px 14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.08) 0%,
+      rgba(255,255,255,0.02) 100%
+    ),
+    rgba(10,10,10,0.34);
+
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 30px;
+
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  overflow: hidden;
+}
+
+/* capa de brillo superior */
+.carousel-wrap::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08) 0%,
+    rgba(255,255,255,0.01) 18%,
+    rgba(255,255,255,0) 40%
+  );
 }
 
 /* =========================
    CARRUSEL
 ========================= */
 .carousel{
-  display:flex;
-  gap:22px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  padding:15px 0;
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 6px 2px 14px;
 
-  scrollbar-width:none;
+  scrollbar-width: none;
 }
-.carousel::-webkit-scrollbar{ display:none; }
+.carousel::-webkit-scrollbar{
+  display: none;
+}
 
 /* =========================
-   SLIDE — TARJETA SÓLIDA (CON CONTORNO PREMIUM)
+   TARJETA
 ========================= */
 .slide{
-  min-width:90%;
-  background:#0e0e0e;
-  border-radius:12px;
-  overflow:hidden;
-  position:relative;
-  scroll-snap-align:center;
-
-  /* ❌ quitamos el borde plano */
-  border: none;
-
-
-  transition:
-    transform .35s cubic-bezier(.4,0,.2,1),
-    box-shadow .35s ease;
-
-  transform:scale(.95);
-}
-
-/* =========================
-   ACTIVO — MÁS BRILLO
-========================= */
-.slide.active{
-  transform:scale(1.04);
-
-  box-shadow:
-    inset 0 0 0 3px rgba(255,255,255,.18),
-    0 0 0 3px rgba(255,255,255,.55),       /* más fuerte */
-    0 0 35px rgba(255,255,255,.18),        /* glow activo */
-    0 40px 95px rgba(0,0,0,.95);
-}
-
-/* =========================
-   DESKTOP
-========================= */
-@media(min-width:900px){
-  .slide{ min-width:45%; }
-}
-
-@media(min-width:1200px){
-  .slide{ min-width:32%; }
-}
-/* =========================
-   MEDIA (IMAGEN) — SOMBRA BLANCA SUTIL
-========================= */
-.media {
+  min-width: 88%;
   position: relative;
-  background: #000;
-  aspect-ratio: 4 / 4.3;
-  
-  /* 🔥 RADIUS IGUAL A LA IMAGEN */
-  border-radius: 15px; 
   overflow: hidden;
+  scroll-snap-align: center;
 
+  border-radius: 28px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.02)
+    ),
+    #111214;
 
-/* 🔥 BORDE */
-  border: 2.5px solid rgba(255, 255, 255, 0.8);
-}
+  border: 1px solid rgba(255,255,255,0.08);
 
-.media img {
-  width: 100%;
-  height: 100%;
- object-fit: fill;
-  display: block;
-
-  /* 🔥 AJUSTE PRO */
-  transform: scale(1.02); /* llena más sin deformar */
-
-  border-radius: 13px;
-
- 
-}
-/* =========================
-   OVERLAY — FUERTE
-========================= */
-.overlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:26px;
-
- background:linear-gradient(
-  180deg,
-  rgba(0,0,0,0) 105%,
-  rgba(0,0,0,.55) 70%,
-  rgba(0,0,0,.75) 100%
-);
-
-
-  color:#fff;
-  text-align:center;
-}
-
-/* =========================
-   TEXTO
-========================= */
-.title{
-  font-size:1.4rem;
-  font-weight:900;
-  letter-spacing:.4px;
-  margin:4px 0;
-}
-
-.desc{
-  font-size:.95rem;
-  line-height:1.45;
-  opacity:1;
-}
-
-/* =========================
-   CONTROLES — CARRUSEL
-========================= */
-.controls{
-  position:absolute;
-  inset:0;
-  z-index:30;
-  pointer-events:none;
-}
-
-/* =========================
-   BOTÓN IZQ / DER
-========================= */
-.btn{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  pointer-events:auto;
-
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  border:none;
-  cursor:pointer;
-
-  /* 🖤 NEGRO DIFUMINADO (VIDRIO) */
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  /* ✨ profundidad premium */
   box-shadow:
-    0 12px 30px rgba(0,0,0,.85),
-    inset 0 0 0 1.5px rgba(255,255,255,.25);
+    0 14px 34px rgba(0,0,0,0.34),
+    inset 0 1px 0 rgba(255,255,255,0.04);
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  /* 🔑 FLECHA DE TEXTO */
-  color:#ffffff;            /* 👈 flecha blanca */
-  font-size:26px;
-  font-weight:600;
-  line-height:1;
-
+  transform: scale(.965);
   transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    background .25s ease;
+    transform .35s cubic-bezier(.22,.61,.36,1),
+    box-shadow .35s ease,
+    border-color .35s ease,
+    filter .35s ease;
 }
 
-/* =========================
-   FLECHA SVG (SI EXISTE)
-========================= */
-.btn svg{
-  width:22px;
-  height:22px;
-  stroke:#ffffff;           /* 👈 flecha SVG blanca */
-  stroke-width:3;
-  fill:none;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+/* acento luminoso */
+.slide::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.75),
+    transparent
+  );
+  opacity: .65;
+  z-index: 3;
 }
 
-/* =========================
-   POSICIÓN
-========================= */
-.btn.left{ left:10px; }
-.btn.right{ right:10px; }
+/* estado activo */
+.slide.active{
+  transform: scale(1);
+  border-color: rgba(255,255,255,0.13);
 
-/* =========================
-   HOVER (PC)
-========================= */
+  box-shadow:
+    0 24px 54px rgba(0,0,0,0.50),
+    0 0 0 1px rgba(255,255,255,0.03),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* hover pc */
 @media (hover:hover){
-  .btn:hover{
-    background:rgba(0,0,0,.75);
-    transform:translateY(-50%) scale(1.1);
+  .slide:hover{
+    transform: translateY(-4px) scale(.99);
     box-shadow:
-      0 18px 42px rgba(0,0,0,.95),
-      inset 0 0 0 1.5px rgba(255,255,255,.35);
+      0 24px 54px rgba(0,0,0,0.44),
+      inset 0 1px 0 rgba(255,255,255,0.05);
   }
 }
 
 /* =========================
-   ACTIVE (TOQUE)
+   RESPONSIVE TARJETAS
 ========================= */
+@media (min-width: 900px){
+  .slide{
+    min-width: 46%;
+  }
+}
+
+@media (min-width: 1200px){
+  .slide{
+    min-width: 31.8%;
+  }
+}
+
+/* =========================
+   ÁREA DE IMAGEN
+========================= */
+.media{
+  position: relative;
+  margin: 10px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 4 / 4.15;
+
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* capa elegante sobre imagen */
+.media::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(255,255,255,0) 18%,
+      rgba(0,0,0,0.14) 100%
+    );
+}
+
+.media img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.03);
+  transition: transform .6s ease;
+}
+
+.slide:hover .media img{
+  transform: scale(1.07);
+}
+
+/* =========================
+   OVERLAY
+========================= */
+.overlay{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px 20px 18px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0) 34%,
+    rgba(0,0,0,0.14) 54%,
+    rgba(0,0,0,0.70) 82%,
+    rgba(0,0,0,0.92) 100%
+  );
+
+  color: #fff;
+  text-align: left;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+.title{
+  margin: 0;
+  font-size: clamp(1.10rem, 2vw, 1.34rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #ffffff;
+
+  text-shadow: 0 2px 12px rgba(0,0,0,.65);
+}
+
+/* subtira premium */
+.title::after{
+  content: "";
+  display: block;
+  width: 58px;
+  height: 3px;
+  margin-top: 9px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    rgba(255,255,255,0.18)
+  );
+  opacity: .9;
+}
+
+/* =========================
+   DESCRIPCIÓN
+========================= */
+.desc{
+  margin-top: 10px;
+  font-size: .93rem;
+  line-height: 1.52;
+  color: rgba(255,255,255,0.90);
+  max-width: 95%;
+
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+}
+
+/* =========================
+   CONTROLES
+========================= */
+.controls{
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* =========================
+   BOTONES MODERNOS
+========================= */
+.btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 50%;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.10),
+      rgba(255,255,255,0.03)
+    ),
+    rgba(15,15,15,0.72);
+
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.btn.left{ left: 12px; }
+.btn.right{ right: 12px; }
+
+.btn svg{
+  width: 20px;
+  height: 20px;
+  stroke: #ffffff;
+  stroke-width: 2.6;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover:hover){
+  .btn:hover{
+    transform: translateY(-50%) scale(1.08);
+    border-color: rgba(255,255,255,0.18);
+    box-shadow:
+      0 16px 34px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.07);
+  }
+}
+
 .btn:active{
-  transform:translateY(-50%) scale(.96);
+  transform: translateY(-50%) scale(.95);
 }
 
 /* =========================
    MOBILE
 ========================= */
-@media(max-width:640px){
-  .btn{
-    width:40px;
-    height:40px;
-    font-size:22px;
+@media (max-width: 640px){
+  #eventos,
+  #empresa{
+    padding-bottom: 38px;
   }
 
-  .btn svg{
-    width:20px;
-    height:20px;
-    stroke-width:2.6;
+  .carousel-wrap{
+    padding: 12px 10px 10px;
+    border-radius: 22px;
   }
+
+  .carousel{
+    gap: 14px;
+    padding-bottom: 12px;
+  }
+
+  .slide{
+    min-width: 92%;
+    border-radius: 22px;
+  }
+
+  .media{
+    margin: 8px;
+    border-radius: 18px;
+  }
+
+  .overlay{
+    padding: 18px 16px 16px;
+  }
+
+  .title{
+    font-size: 1.08rem;
+  }
+
+  .desc{
+    font-size: .89rem;
+    line-height: 1.45;
+    max-width: 100%;
+  }
+
+  .btn{
+    width: 42px;
+    height: 42px;
+    font-size: 21px;
+  }
+
+  .btn.left{ left: 8px; }
+  .btn.right{ right: 8px; }
 }
 
 
+.title-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  margin-bottom:10px;
+  border-radius:999px;
 
-/* =========================
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.10);
+
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  color: rgba(255,255,255,0.92);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}/* =========================
    🎞️ ANIMACIÓN DE ENTRADA
 ========================= */
 
@@ -2716,151 +2884,300 @@ footer {
 }
 
 
-
 /* =================================================
-   SECCIÓN CORPORATIVA - LA CHONA 2026 (ULTRA LEGIBILIDAD)
+   SECCIÓN CORPORATIVA — LA CHONA 2026 PRO
 ================================================= */
 .seccion-corporativa {
-  padding: 10px 20px 60px;
-  color: #ffffff;
+  position: relative;
+  padding: clamp(18px, 3vw, 32px) 20px 70px;
   max-width: 1200px;
   margin: 0 auto;
+  color: #ffffff;
   font-family: 'Inter', sans-serif;
-  
-  /* Sombra base reforzada para todo el texto */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.6);
+  z-index: 1;
 }
 
-.contenedor-historia, 
+/* Fondo elegante opcional dentro de la sección */
+.seccion-corporativa::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.18) 0%,
+      rgba(0,0,0,0.28) 100%
+    );
+  border-radius: 28px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* =================================================
+   BLOQUES SUPERIORES
+================================================= */
+.contenedor-historia,
 .contenedor-objetivo {
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 35px;
-  max-width: 850px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 900px;
+  margin: 0 auto 42px;
+  padding: 0 6px;
 }
 
+/* =================================================
+   TÍTULOS
+================================================= */
 .dorado-titulo {
+  position: relative;
+  display: inline-block;
   font-family: 'Playfair Display', serif;
-  color: #d4af37;
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  letter-spacing: 4px;
-  margin-top: 0;
-  margin-bottom: 15px;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  /* Sombra profunda para resaltar el dorado */
-  text-shadow: 3px 3px 8px rgba(0, 0, 0, 1);
-}
-
-.texto-historia, .texto-enfasis {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #ffffff;
-  text-align: justify;
-}
-
-.texto-historia strong {
+  line-height: 1.1;
+  margin: 0 0 14px;
   color: #d4af37;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(212, 175, 55, 0.08);
 }
 
-/* Decoración dorada */
+/* Línea decorativa más premium */
 .adorno-dorado {
-  width: 120px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
-  margin: 15px auto 0;
+  width: 140px;
+  height: 2px;
+  margin: 14px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.2) 10%,
+    #d4af37 50%,
+    rgba(212, 175, 55, 0.2) 90%,
+    transparent 100%
+  );
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.18);
 }
 
-/* Grid de 3 columnas */
+/* =================================================
+   TEXTOS
+================================================= */
+.texto-historia,
+.texto-enfasis {
+  font-size: 1.04rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.95);
+  text-align: justify;
+  margin: 0;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.35);
+}
+
+.texto-historia strong,
+.texto-enfasis strong {
+  color: #d4af37;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+}
+
+/* =================================================
+   GRID PRINCIPAL
+================================================= */
 .grid-mision-vision {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  margin-top: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+  align-items: stretch;
 }
 
+/* =================================================
+   TARJETAS
+================================================= */
 .tarjeta-info {
-  /* Fondo más oscuro (0.6) y desenfoque para aislar el texto del fondo vivo */
-  background: rgba(0, 0, 0, 0.65); 
-  backdrop-filter: blur(10px); 
-  padding: 25px;
-  border-radius: 12px;
-  border-left: 3px solid #d4af37;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  padding: 26px 24px;
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.08) 0%,
+      rgba(255,255,255,0.03) 100%
+    ),
+    rgba(10, 10, 10, 0.68);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 14px 40px rgba(0,0,0,0.30),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+/* Línea dorada elegante lateral */
+.tarjeta-info::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 0;
+  width: 4px;
+  height: calc(100% - 36px);
+  border-radius: 0 999px 999px 0;
+  background: linear-gradient(180deg, #f4d67a 0%, #d4af37 100%);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.28);
+}
+
+/* brillo suave superior */
+.tarjeta-info::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(212,175,55,0.10), transparent 70%);
+  pointer-events: none;
+}
+
+.tarjeta-info:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212,175,55,0.22);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.38),
+    0 0 0 1px rgba(212,175,55,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
 .tarjeta-info h3 {
-  color: #d4af37;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  margin: 0 0 15px 0;
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
 }
 
 .tarjeta-info p {
-  line-height: 1.6;
-  color: #ffffff;
-  font-size: 0.98rem;
   margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.94);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.30);
 }
 
-/* =========================
-   LISTA DE VALORES (PUNTOS REFORZADOS)
-========================= */
+/* =================================================
+   LISTA DE VALORES
+================================================= */
 .lista-valores {
   list-style: none;
   padding: 0;
+  margin: 14px 0 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
 }
 
 .lista-valores li {
-  font-size: 0.9rem;
-  color: #ffffff;
   display: flex;
   align-items: center;
-  font-weight: 600; /* Mayor grosor para legibilidad */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.96);
+  line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.28);
 }
 
 .lista-valores li::before {
-  content: "•";
-  color: #d4af37;
-  margin-right: 12px;
-  font-size: 1.8rem; /* Punto más grande */
-  line-height: 0;
-  /* Triple sombra para que el punto no se pierda nunca */
-  text-shadow: 
-    2px 2px 0px rgba(0, 0, 0, 1), 
-    0 0 10px rgba(0, 0, 0, 0.9),
-    0 0 5px rgba(212, 175, 55, 0.5);
+  content: "";
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: #d4af37;
+  box-shadow:
+    0 0 0 4px rgba(212,175,55,0.10),
+    0 0 12px rgba(212,175,55,0.30);
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
+/* =================================================
+   RESPONSIVE
+================================================= */
 @media (max-width: 768px) {
   .seccion-corporativa {
-    padding-top: 5px;
+    padding: 10px 14px 55px;
   }
-  .texto-historia, .texto-enfasis {
+
+  .contenedor-historia,
+  .contenedor-objetivo {
+    margin-bottom: 32px;
+  }
+
+  .dorado-titulo {
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
+    letter-spacing: 1.8px;
+  }
+
+  .texto-historia,
+  .texto-enfasis {
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.98rem;
+    line-height: 1.8;
   }
+
+  .grid-mision-vision {
+    gap: 18px;
+  }
+
+  .tarjeta-info {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .tarjeta-info h3 {
+    font-size: 1.28rem;
+  }
+
   .lista-valores {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
-  .dorado-titulo {
-    letter-spacing: 2px;
+
+  .adorno-dorado {
+    width: 110px;
   }
 }
 
+.historia-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.flecha {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4af37;
+  font-size: 1.4rem;
+  margin-right: 8px;
+  line-height: 1;
+}
 
 
