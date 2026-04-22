@@ -97,7 +97,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 12px;
   padding: 10px 18px;
 
   /* 🖤 NEGRO PROFUNDO ELEGANTE */
@@ -124,7 +124,7 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
 }
 
 /* =================================================
-   LÍNEA DIVISORA INFERIOR
+   LÍNEA DIVISORA INFERIOR — DELGADA PERO MÁS FIRME
 ================================================= */
 .header-unificado::after{
   content:"";
@@ -132,32 +132,35 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  width:84%;
-  max-width:900px;
-  height:2.5px;
+  width:70%;
+  max-width:800px;
+  height:1px; /* 🔥 delgada */
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #C9A227,
-      #E6C35C,
-      #C9A227,
-      transparent
-    );
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201,162,39,0.55),  /* 🔥 más visible */
+    rgba(230,195,92,0.75),  /* 🔥 centro más fuerte */
+    rgba(201,162,39,0.55),
+    transparent
+  );
 
-  box-shadow: 0 0 10px rgba(201,162,39,3);
+  /* 🔥 glow controlado (no exagerado) */
+  box-shadow:
+    0 0 4px rgba(201,162,39,0.25);
 }
 
-/* ORNAMENTO */
+/* =================================================
+   ORNAMENTO — AJUSTADO
+================================================= */
 .header-unificado::before{
   content:"✦";
   position:absolute;
-  bottom:-7px;
+  bottom:-6px;
   left:50%;
   transform:translateX(-50%);
-  font-size:12px;
-  color:#C9A227;
+  font-size:10px;
+  color:rgba(201,162,39,0.75); /* 🔥 más visible */
   padding:0 6px;
 }
 /* =================================================
@@ -207,52 +210,42 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
 
 
 /* =================================================
-   NAV CONTENEDOR
+   BOTONES NAV — CONTORNO INDIVIDUAL
 ================================================= */
-.header-unificado nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: clamp(8px, 2vw, 16px);
-  width: 90%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* =================================================
-   LINKS — CONTORNO REDONDEADO PERMANENTE
-================================================= */
-.header-unificado nav a {
+.header-unificado nav a{
   position: relative;
   min-width: max-content;
-  padding: 2px 6px; 
+  box-sizing: border-box;
+  white-space: nowrap;
+
   text-decoration: none;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
+
+  /* 🔥 MÁS GRANDE EN PC */
+  font-size: clamp(1.05rem, 1.2vw, 1.5rem);
+  letter-spacing: clamp(0.02em, 0.5vw, 0.08em);
+
   color: #fff;
 
-  /* 🔥 CONTORNO FIJO */
-  /* Usamos un borde de 1px sólido siempre para que no cambie el tamaño del box-model */
-  border: 0.5px solid rgba(255, 255, 255, .35) !important; 
-  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 6px;
+
+  /* 🔥 MÁS PRESENCIA */
+  padding: 5px 15px;
+
   background: transparent;
-  /* 🛠️ Eliminamos el cambio de escala para evitar el brinco */
-  transition: background 0.8s ease, border-color 0.2s ease, color 0.2s ease; 
+
+  transition:
+    border-color .25s ease,
+    background .25s ease,
+    box-shadow .25s ease,
+    color .25s ease;
+
   text-shadow: 0 1px 1px rgba(0,0,0,.6);
-  
-  /* Asegura que el padding no cambie con el borde */
-  box-sizing: border-box; 
 }
 
-/* =================================================
-   HOVER SUAVE (SIN BRINCO)
-================================================= */
-.header-unificado nav a:hover {
-  border-color: rgba(255, 255, 255, 0.25) !important;
-  /* 🛠️ Quitamos transform: scale para que no mueva la sección */
-  background: rgba(255, 255, 255, 0.1); 
-}
+
+
 
 /* =================================================
    ACTIVO (ESTABLE Y LIMPIO)
@@ -290,29 +283,6 @@ filter: brightness(1.05) contrast(1.20) saturate(1.30);
   transition:width .3s ease;
 }
 
-/* =================================================
-   LINK ACTIVO
-================================================= */
-.header-unificado nav a.active{
-  color: #f04a3a !important;
-}
-
-
-
-
-
-/* =================================================
-   MAIN
-================================================= */
-main {
-  max-width: 1100px;
-  margin: 20px auto;
-  padding: 0 14px;
-  padding-top: calc(var(--header-height) + var(--nav-height) + 22px);
-}
-
-
-
 
 /* =================================================
    RESPONSIVE
@@ -338,6 +308,19 @@ main {
   }
 }
 
+
+
+/* =================================================
+   MAIN — AJUSTADO A HEADER REAL
+================================================= */
+main {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 14px;
+
+  /* 🔥 espacio real para tu header + nav */
+  padding-top: 150px;
+}
 
 
 
@@ -567,7 +550,9 @@ footer{
   padding: 14px 10px 10px; /* más espacio arriba para la línea */
   font-family: Arial, sans-serif;
 }
-/* ✨ LÍNEA DIVISORA SUPERIOR DORADA */
+/* =================================================
+   ✨ LÍNEA DIVISORA SUPERIOR — FOOTER PREMIUM
+================================================= */
 footer::before{
   content:"";
   position:absolute;
@@ -575,24 +560,25 @@ footer::before{
   left:50%;
   transform:translateX(-50%);
 
-  width:84%;
-  max-width:900px;
-  height:2px;
+  width:70%;            /* 🔥 más contenida */
+  max-width:800px;
+  height:1px;           /* 🔥 más delgada */
 
-  background:linear-gradient(
+  background: linear-gradient(
     90deg,
     transparent,
-    #8f6b1a,
-    #d4af37,
-    #f4d67a,
-    #d4af37,
-    #8f6b1a,
+    rgba(143,107,26,0.5),
+    rgba(212,175,55,0.75),
+    rgba(244,214,122,0.85), /* 🔥 punto de luz */
+    rgba(212,175,55,0.75),
+    rgba(143,107,26,0.5),
     transparent
   );
 
-  box-shadow: 0 0 6px rgba(212,175,55,.45);
+  /* 🔥 glow elegante (no exagerado) */
+  box-shadow:
+    0 0 4px rgba(212,175,55,0.25);
 }
-
 /* Redes flotantes */
 .redes-flotantes {
   position: fixed;
@@ -607,13 +593,7 @@ footer::before{
 .redes-flotantes img { width: 48px; height: 48px; object-fit: contain; filter: none; border-radius: 50%; transition: transform 0.2s ease-in-out; }
 .redes-flotantes img:hover { transform: scale(1.15); }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .header-unificado .header-top img.logo { width: 48px; }
-  .header-unificado .header-top .titulo { font-size: clamp(0.9rem, 4vw, 1.6rem); }
-  .header-unificado nav a { font-size: clamp(0.7rem, 2.5vw, 0.95rem); padding: 8px 10px; }
-  .img-bienvenida { width: 95%; }
-}
+
 
 /* Quitar tap highlight para móviles */
 * { -webkit-tap-highlight-color: transparent; }
@@ -1080,26 +1060,6 @@ footer::before{
 
   animation: activeGlow 1.8s ease-in-out infinite;
 }
-
-
-/* brillo suave */
-.header-unificado nav a.active::after{
-  content:"";
-  position:absolute;
-  inset:-6px;
-  border-radius:inherit;
-  pointer-events:none;
-
-  background: radial-gradient(
-    circle at center,
-    rgba(244,196,48,.35) 0%,
-    rgba(244,196,48,.15) 35%,
-    rgba(244,196,48,0) 70%
-  );
-
-  animation: activeGlow 1.8s ease-in-out infinite;
-}
-
 
 /* =========================
    BOTONES DELIVERY — ESTILO PREMIUM (COMPACTO)
@@ -1744,7 +1704,9 @@ outline-offset: 1px;
   outline: none; /* ❌ sin contorno */
 }
 
-/* 🔶 LÍNEA INFERIOR DORADA */
+/* =================================================
+   🔶 LÍNEA INFERIOR — HORARIO (CONSISTENTE GOLD)
+================================================= */
 #horario-compacto::after{
   content:"";
   position:absolute;
@@ -1752,24 +1714,27 @@ outline-offset: 1px;
   left:50%;
   transform:translateX(-50%);
 
-  width:100%;
-  max-width:360px;
-  height:2px;
+  width:85%;
+  max-width:320px;
+  height:1px;
 
-  background:linear-gradient(
+  background: linear-gradient(
     90deg,
     transparent,
-    #E6B8A9,
-    #F2C6B8,
-    #E6B8A9,
+    rgba(201,162,39,0.5),
+    rgba(230,195,92,0.75), /* 🔥 mismo dorado central */
+    rgba(201,162,39,0.5),
     transparent
   );
-}
 
+  box-shadow:
+    0 0 4px rgba(201,162,39,0.25);
+}
 /* =================================================
-   TEXTO CORPORATIVO — ANCHO REAL / FLUIDO
+   TEXTO CORPORATIVO — ANCHO REAL / FLUIDO (PRO SUAVE)
 ================================================= */
 .texto-corporativo{
+  position: relative;
   color:#ffffff;
 
   /* 🔑 OCUPA CASI TODO EL ANCHO REAL */
@@ -1777,35 +1742,149 @@ outline-offset: 1px;
   max-width: min(1200px, 96vw);
   margin: 0 auto 18px;
 
-  /* menos aire lateral */
-  padding: 0 clamp(12px, 2.5vw, 24px);
+  /* 🔥 CUERPO DEL BLOQUE */
+  padding: 14px clamp(16px, 3vw, 28px);
 
   /* tipografía */
   font-family: 'Inter', system-ui, Arial, sans-serif;
   font-weight: 400;
 
-  /* tamaño correcto (ya aprobado) */
+  /* tamaño */
   font-size: clamp(0.98rem, 2.2vw, 1.08rem);
 
-  /* 🔑 MENOS ALTURA ENTRE LÍNEAS */
+  /* texto */
   line-height: 1.4;
   letter-spacing: 0.008em;
-
-  /* 🔑 MÁS HORIZONTAL */
   text-align: center;
-  text-wrap: normal;   /* 👈 CLAVE: permite líneas largas */
+  text-wrap: normal;
 
-  /* contraste elegante */
+  /* =================================================
+     🔥 FONDO PREMIUM
+  ================================================= */
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.75)
+  );
+
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+
+  /* =================================================
+     🔥 CONTORNO DESVANECIDO (SIN BORDE DURO)
+  ================================================= */
+  border: none;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 0 25px rgba(255,255,255,0.04),
+    0 0 20px rgba(201,162,39,0.08), /* glow dorado sutil */
+    inset 0 0 12px rgba(255,255,255,0.03);
+
+  /* contraste texto */
   text-shadow:
-    0 1px 2px rgba(0,0,0,.85),
-    0 0 6px rgba(0,0,0,.4);
+    0 1px 2px rgba(0,0,0,.9),
+    0 0 6px rgba(0,0,0,.6);
 
-  /* entrada suave */
+  /* animación */
   opacity: 0;
   transform: translateY(6px);
   animation: textoFade .6s ease-out forwards;
 }
 
+
+/* =================================================
+   TEXTO CORPORATIVO — ANCHO REAL / FLUIDO (PRO)
+================================================= */
+.texto-corporativo{
+  position: relative;
+  color:#ffffff;
+
+  width: 100%;
+  max-width: min(1200px, 96vw);
+  margin: 0 auto 18px;
+
+  padding: 14px clamp(16px, 3vw, 28px);
+
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  font-weight: 400;
+
+  font-size: clamp(0.98rem, 2.2vw, 1.08rem);
+
+  line-height: 1.4;
+  letter-spacing: 0.008em;
+
+  text-align: center;
+  text-wrap: normal;
+
+  /* 🔥 FONDO BASE */
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.75)
+  );
+
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+
+  /* 🔥 SOMBRA SUAVE (SIN BORDE DURO) */
+  border: none;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55),
+    0 0 20px rgba(0,0,0,0.25),
+    inset 0 0 12px rgba(255,255,255,0.03);
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.9),
+    0 0 6px rgba(0,0,0,.6);
+
+  opacity: 0;
+  transform: translateY(6px);
+  animation: textoFade .6s ease-out forwards;
+}
+
+/* =================================================
+   ✨ CAPA DESVANECIDA REAL (CENTRO → ORILLAS)
+================================================= */
+.texto-corporativo::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+
+  /* 🔥 LUZ CENTRAL */
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.10) 0%,
+    rgba(255,255,255,0.06) 35%,
+    rgba(255,255,255,0.02) 60%,
+    transparent 85%
+  );
+
+  /* 🔥 DESVANECIDO REAL HACIA BORDES */
+  mask-image: radial-gradient(
+    circle at center,
+    rgba(0,0,0,1) 55%,
+    rgba(0,0,0,0.6) 75%,
+    rgba(0,0,0,0.2) 90%,
+    transparent 100%
+  );
+
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    rgba(0,0,0,1) 55%,
+    rgba(0,0,0,0.6) 75%,
+    rgba(0,0,0,0.2) 90%,
+    transparent 100%
+  );
+
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* =================================================
+   ANIMACIÓN
+================================================= */
 @keyframes textoFade{
   to{
     opacity: 1;
@@ -1814,12 +1893,12 @@ outline-offset: 1px;
 }
 
 /* =================================================
-   📱 MÓVIL — CASI ANCHO COMPLETO
+   📱 MÓVIL
 ================================================= */
 @media (max-width: 768px){
   .texto-corporativo{
     max-width: 100%;
-    padding: 0 14px;
+    padding: 12px 16px;
 
     font-size: 0.96rem;
     line-height: 1.42;
@@ -1830,99 +1909,13 @@ outline-offset: 1px;
 }
 
 /* =================================================
-   💻 DESKTOP — SE VE MÁS “LARGO”
+   💻 DESKTOP
 ================================================= */
 @media (min-width: 1024px){
   .texto-corporativo{
     text-align: justify;
-    text-align-last: center; /* mantiene elegancia */
+    text-align-last: center;
   }
-}
-
-
-/* =================================================
-   FIX DEFINITIVO — PARPADEO AMARILLO (FOCUS / TAP)
-================================================= */
-
-/* 🔥 elimina highlight móvil (Chrome / Android / iOS) */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 🔥 elimina foco visual del navegador */
-.header-unificado a,
-.header-unificado a:focus,
-.header-unificado a:active,
-.header-unificado a:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* 🔥 evita flash por estado active */
-.header-unificado nav a:active {
-  background: transparent !important;
-  color: inherit;
-}
-
-/* 🔥 refuerzo extra para Chrome / Edge */
-.header-unificado nav a {
-  -webkit-user-select: none;
-  user-select: none;
-}
-/* =================================================
-   FIX DEFINITIVO — ACTIVE SIN ZOOM EN MÓVIL
-================================================= */
-@media (max-width: 768px) {
-  .header-unificado nav a.active {
-    animation: none !important;
-    transform: none !important;
-    box-shadow:
-      0 0 0 2px rgba(244,196,48,.4),
-      0 6px 16px rgba(0,0,0,.55);
-  }
-
-  .header-unificado nav a.active::after {
-    animation: none !important;
-  }
-}
-/* =================================================
-   FIX DEFINITIVO — ACTIVE SIN ZOOM EN MÓVIL
-   (NO reemplaza nada, solo corrige móviles)
-================================================= */
-@media (max-width: 768px) {
-  .header-unificado nav a.active {
-    animation: none !important;
-    transform: none !important;
-
-    /* mantenemos brillo elegante sin zoom */
-    box-shadow:
-      0 0 0 2px rgba(244,196,48,.4),
-      0 6px 16px rgba(0,0,0,.55);
-  }
-
-  .header-unificado nav a.active::after {
-    animation: none !important;
-  }
-}
-/* =================================================
-   FIX — NAV NO BAJA HASTA EL ÚLTIMO MOMENTO
-   (solo refina, no reemplaza)
-================================================= */
-.header-unificado nav {
-  gap: clamp(4px, 1.2vw, 22px); /* el espacio se reduce más */
-}
-
-/* =================================================
-   FIX — TEXTO SE REDUCE MÁS ANTES DE BAJAR
-================================================= */
-.header-unificado nav a {
-  white-space: nowrap;        /* nunca se parte el texto */
-  min-width: max-content;     /* no se aplasta */
-
-  /* ↓ deja que el texto baje MÁS antes de wrap */
-  font-size: clamp(0.78rem, 2.1vw, 1.45rem);
-  letter-spacing: clamp(0.05em, 0.45vw, 0.18em);
 }
 
 /* ==============================
@@ -2320,28 +2313,7 @@ outline-offset: 1px;
 
 }
 
-/* =================================================
-   🧩 NORMALIZADOR VERTICAL GLOBAL — LA CHONA
-   (evita espacios fantasmas entre bloques)
-================================================= */
-section,
-main,
-.page-section,
-.hero,
-.grid,
-.menu-book,
-.carousel-wrap,
-footer {
-  margin-top: 0; /* 🔥 quitamos espacio arriba */
-  margin-bottom: clamp(10px, 2vh, 32px);
-}
 
-/* =================================================
-   HEADER → CONTENIDO (AJUSTE FINO)
-================================================= */
-main {
-  padding-top: calc(var(--header-height) + var(--nav-height) + clamp(10px, 2vh, 20px));
-}
 
 
 
@@ -2381,21 +2353,8 @@ footer {
 ================================================= */
 @media (max-width: 640px) {
 
-  section,
-  main,
-  .page-section,
-  .hero,
-  .grid,
-  .menu-book,
-  .carousel-wrap {
-    margin-top: 4px !important;
-    margin-bottom: 10px !important;
-  }
-
-  main {
-    padding-top: calc(var(--header-height) + var(--nav-height) + 6px);
-  }
-
+ 
+  
   .
    {
     margin-top: 2px !important;
@@ -3179,5 +3138,3 @@ footer {
   margin-right: 8px;
   line-height: 1;
 }
-
-
