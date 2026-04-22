@@ -8,13 +8,23 @@
    ✔ Reset limpio
    ✔ Carrusel funcional
    ✔ Reloj / Estado
+   ✔ Autoajuste header → main
 ===================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   document.body.classList.add('show');
 
+  /* =====================================================
+     AUTO AJUSTE HEADER → MAIN
+  ===================================================== */
+  function ajustarHeaderHeight(){
+    const header = document.querySelector('.header-unificado');
+    if(!header) return;
 
+    const altura = header.offsetHeight;
+    document.documentElement.style.setProperty('--header-real-height', `${altura + 10}px`);
+  }
 
   /* =====================================================
      VARIABLES GLOBALES
@@ -63,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(initLibro);
       libroInit = true;
     }
+
+    /* 🔥 reajusta por si cambia la altura del header/nav */
+    requestAnimationFrame(ajustarHeaderHeight);
   }
 
   links.forEach(link => {
@@ -78,11 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
     showSection(location.hash.replace('#', '') || defaultSection, false);
   });
 
- /* =====================================================
+  /* =====================================================
       📖 LIBRO / CARTA — RÁPIDO + SIN PARPADEO
   ===================================================== */
   function initLibro() {
-    // Buscamos todos los contenedores de libro
     const containers = document.querySelectorAll('.menu-book');
 
     containers.forEach(container => {
@@ -90,11 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const pages = [...container.querySelectorAll('.page')];
       const nextBtn = container.querySelector('.nav.next');
       const prevBtn = container.querySelector('.nav.prev');
-      
 
       if (!book || !pages.length || !nextBtn || !prevBtn) return;
 
-      // Variable local para cada libro
       let localPageIndex = 0;
 
       function updateNavButtons(){
@@ -124,9 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-
-updatePages();
-
+      updatePages();
 
       function updatePages() {
         pages.forEach((page, i) => {
@@ -263,9 +271,7 @@ updatePages();
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-
-
-    /* =====================================================
+  /* =====================================================
      🍔 MENÚ HAMBURGUESA
   ===================================================== */
   const toggle = document.querySelector('.menu-toggle');
@@ -275,19 +281,24 @@ updatePages();
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
       nav.classList.toggle('active');
+      requestAnimationFrame(ajustarHeaderHeight);
     });
 
-    // cerrar al tocar opción
     linksMenu.forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('active');
+        requestAnimationFrame(ajustarHeaderHeight);
       });
     });
   }
 
+  /* =====================================================
+     EJECUTAR AJUSTE AUTOMÁTICO
+  ===================================================== */
+  ajustarHeaderHeight();
+  window.addEventListener('resize', ajustarHeaderHeight);
+
 });
-
-
 /* =====================================================
    MODAL COTIZACIÓN (SIN CAMBIOS)
 ===================================================== */
@@ -353,5 +364,3 @@ enviar.onclick = () => {
 };
 
 cerrar.onclick = () => modal.classList.remove("activo");
-
-
