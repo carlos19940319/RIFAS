@@ -318,7 +318,12 @@ document.querySelectorAll(".btn-cotiza").forEach(btn=>{
     e.preventDefault();
 
     eventoActual = btn.dataset.evento;
-    tituloEvento.textContent = eventoActual;
+ const descripcion = btn.dataset.descripcion || "";
+
+tituloEvento.innerHTML = `
+  <span class="titulo-modal">${eventoActual}</span>
+  <span class="desc-modal">${descripcion}</span>
+`;
     carrito = {};
     listaProductos.innerHTML = "";
     resumenLista.innerHTML = "";
