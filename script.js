@@ -359,13 +359,47 @@ document.addEventListener("click", e=>{
 });
 
 enviar.onclick = () => {
-  let msg = `Hola, quiero cotizar el evento:%0A${eventoActual}%0A%0A`;
-  let ok=false;
-  for(let p in carrito){
-    if(carrito[p]>0){ ok=true; msg+=`• ${p} — ${carrito[p]}%0A`; }
+
+  const nombreInput = document.getElementById("nombreCliente");
+  const telefonoInput = document.getElementById("telefonoCliente");
+
+  const nombre = nombreInput.value.trim();
+  const telefono = telefonoInput.value.trim();
+
+  if(!nombre){
+    alert("Ingrese su nombre");
+    nombreInput.focus();
+    return;
   }
-  if(!ok){ alert("Agrega productos"); return; }
-  window.open(`https://wa.me/5217223943462?text=${msg}`,"_blank");
+
+  if(!telefono){
+    alert("Ingrese su teléfono");
+    telefonoInput.focus();
+    return;
+  }
+
+  let msg = `Hola, quiero cotizar el evento:\n${eventoActual}\n\n`;
+  msg += `Nombre: ${nombre}\n`;
+  msg += `Teléfono: ${telefono}\n\n`;
+
+  let ok = false;
+
+  for(let p in carrito){
+    if(carrito[p] > 0){
+      ok = true;
+      msg += `• ${p} — ${carrito[p]}\n`;
+    }
+  }
+
+  if(!ok){
+    alert("Agrega productos");
+    return;
+  }
+
+  window.open(
+    `https://wa.me/5217223943462?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 };
 
 cerrar.onclick = () => modal.classList.remove("activo");
