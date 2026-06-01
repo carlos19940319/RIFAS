@@ -1177,29 +1177,21 @@ footer::before{
    MODAL COTIZADOR – PRO / SCROLL INTERNO
 ================================================= */
 
-.modal-cotiza {
+.modal-cotiza{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.75);
-  backdrop-filter: blur(4px);
-
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(3px);
   display: none;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-
-  padding: 20px;
-  padding-top: 10px;
-
-  /* 🔥 scroll externo solo como respaldo */
-  overflow-y: auto;
-
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-
   z-index: 9999;
+
+  padding: 8px;
+  overflow: hidden;
 }
 
-.modal-cotiza.activo {
+.modal-cotiza.activo{
   display: flex;
 }
 
@@ -1918,36 +1910,45 @@ outline-offset: 1px;
 
 /* ==============================
    MODAL COTIZACIÓN — PREMIUM
+   ✅ Ajustado para que NO se salga arriba ni abajo
+   ✅ Scroll interno oculto
+   ✅ Compatible móvil / PC
 ============================== */
 
 .modal-cotiza{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,.7);
   backdrop-filter: blur(3px);
-  display:none;
-  align-items:flex-start;
-  justify-content:center;
-  z-index:9999;
+  -webkit-backdrop-filter: blur(3px);
 
-  padding:8px;
-  overflow:hidden;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+
+  padding: 8px;
+  overflow: hidden;
+
+  overscroll-behavior: contain;
 }
+
 .modal-cotiza.activo{
-  display:flex;
+  display: flex;
 }
-
-
-
 
 /* ==============================
    TARJETA PRINCIPAL - EVOLUCIÓN
 ============================== */
 .cotiza-box.elegante {
   position: relative;
-  width: min(480px, 94%);
-  margin: 20px auto;
 
+  width: min(480px, 94vw);
+  max-height: calc(100svh - 16px);
+
+  margin: 0 auto;
   border-radius: 28px;
 
   overflow-y: auto;
@@ -1963,29 +1964,22 @@ outline-offset: 1px;
   /* 💎 CONTORNO CAPA 1: El borde físico de cristal */
   border: 2px solid rgba(255, 255, 255, 0.5);
 
-  /* 💎 CONTORNO CAPA 2: Resplandor interno (define los bordes por dentro) */
-  box-shadow: 
-    0 40px 100px rgba(0,0,0,0.9),                /* Sombra externa */
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05),   /* Línea de luz interna */
-    inset 0 0 40px rgba(201, 162, 39, 0.15);     /* Reflejo dorado tenue */
+  /* 💎 CONTORNO CAPA 2: Resplandor interno */
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.9),
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    inset 0 0 40px rgba(201,162,39,0.15);
 
   font-family: 'Libre Baskerville', serif;
   color: #fff;
   text-align: center;
-  
-  animation: modalEntrada 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+
+  animation: modalEntrada 0.45s cubic-bezier(0.2, 1, 0.2, 1) forwards;
 }
 
-/* 💎 CONTORNO CAPA 3: Marco ornamental "Dorado La Chona" */
-.cotiza-box.elegante::after {
-  content: "";
-  position: absolute;
-  /* El "inset" crea el espacio entre el borde exterior y el marco interno */
-  inset: 12px; 
-  border: 1px solid rgba(201, 162, 39, 0.3); /* Dorado translúcido elegante */
-  border-radius: 20px; /* Un poco más cerrado que el exterior */
-  pointer-events: none;
-  z-index: 1;
+/* Oculta barra del modal en Chrome / Edge / Safari */
+.cotiza-box.elegante::-webkit-scrollbar{
+  display: none;
 }
 
 /* 🖼️ CAPA DE IMAGEN CON MÁSCARA */
@@ -1994,17 +1988,18 @@ outline-offset: 1px;
   position: absolute;
   inset: 0;
   z-index: 0;
-  
-  background: 
-    linear-gradient(180deg, 
-      rgba(0,0,0,0.3) 0%, 
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.3) 0%,
       rgba(0,0,0,0.85) 100%
     ),
     url("img/diferentes-tipos-pasta-varios-tipos-verduras_134731-230.jpg");
-  
+
   background-size: cover;
   background-position: center;
-  opacity: 0.6; /* La imagen no debe pelear con el texto */
+  opacity: 0.6;
   transition: transform 1s ease;
 }
 
@@ -2013,15 +2008,19 @@ outline-offset: 1px;
   content: "";
   position: absolute;
   inset: 12px;
-  border: 1px solid rgba(201, 162, 39, 0.25); /* Borde dorado muy sutil */
+
+  border: 1px solid rgba(201,162,39,0.25);
   border-radius: 20px;
+
   pointer-events: none;
   z-index: 1;
 }
 
-/* Efecto Hover (Solo PC) */
-.cotiza-box.elegante:hover::before {
-  transform: scale(1.05);
+/* Efecto Hover Solo PC */
+@media (hover:hover){
+  .cotiza-box.elegante:hover::before {
+    transform: scale(1.05);
+  }
 }
 
 /* Asegurar que el contenido esté sobre la imagen */
@@ -2035,15 +2034,15 @@ outline-offset: 1px;
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
   margin-bottom: 10px;
-  color: #E6C35C; /* Dorado */
+  color: #E6C35C;
   text-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 @keyframes modalEntrada {
   from {
     opacity: 0;
-    transform: scale(0.9) translateY(30px);
-    filter: blur(10px);
+    transform: scale(0.94) translateY(20px);
+    filter: blur(8px);
   }
   to {
     opacity: 1;
@@ -2051,7 +2050,6 @@ outline-offset: 1px;
     filter: blur(0);
   }
 }
-
 
 /* ==============================
    HEADER
@@ -2082,6 +2080,7 @@ outline-offset: 1px;
   color:#fff;
   transition:.25s;
 }
+
 .cerrar:hover{
   background:rgba(255,255,255,.3);
 }
@@ -2143,17 +2142,69 @@ outline-offset: 1px;
 }
 
 /* ==============================
-   RESUMEN — LISTA PREMIUM (CORREGIDO)
+   LISTA DEL MODAL
+   ✅ Hace scroll pero sin mostrar barra
+============================== */
+#listaProductos {
+  max-height: 210px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  margin-bottom: 10px;
+
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#listaProductos:empty {
+  display: none;
+}
+
+#listaProductos::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==============================
+   TÍTULOS PAQUETE / ADICIONALES
+============================== */
+.categoria-productos{
+  margin:15px 0;
+  padding:10px;
+  text-align:center;
+  font-weight:700;
+  font-size:18px;
+  color:#d4af37;
+  border-top:1px solid rgba(255,255,255,.2);
+  border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+/* ==============================
+   RESUMEN — LISTA PREMIUM
 ============================== */
 .resumen.elegante {
   margin-top: 15px;
   padding-top: 10px;
   border-top: 1px solid rgba(255,255,255,.25);
-  
-  /* 🔥 Esto permite que el contenido respire y no se trabe */
+
   display: flex;
   flex-direction: column;
-  max-height: 300px; 
+
+  max-height: 230px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.resumen.elegante::-webkit-scrollbar{
+  display:none;
 }
 
 .resumen.elegante h4 {
@@ -2163,41 +2214,22 @@ outline-offset: 1px;
   text-transform: uppercase;
   color: #f4c430;
   opacity: .9;
-  
-  /* 🔥 Fijamos el título para que nunca se tape */
+
   position: sticky;
   top: 0;
   z-index: 10;
   padding-bottom: 5px;
 }
 
-/* 🔥 CONTENEDOR DE LA LISTA (Aquí es donde ocurre la magia del scroll) */
+/* CONTENEDOR DE LA LISTA */
 .resumen.elegante ul {
   list-style: none;
-  padding: 0 8px 0 0; /* Espacio a la derecha para la barra */
+  padding: 0;
   margin: 0;
 
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  /* 🔥 Scroll suave y controlado */
-  overflow-y: auto; 
-  overflow-x: hidden;
-  overscroll-behavior: contain; /* Evita que el scroll "rebote" al fondo */
-}
-
-/* 🎨 BARRA DE SCROLL ESTILIZADA */
-.resumen.elegante ul::-webkit-scrollbar {
-  width: 5px;
-}
-.resumen.elegante ul::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-.resumen.elegante ul::-webkit-scrollbar-thumb {
-  background: #f4c430;
-  border-radius: 10px;
 }
 
 /* ITEM */
@@ -2205,15 +2237,19 @@ outline-offset: 1px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 10px 12px;
   border-radius: 12px;
+
   background: rgba(255,255,255,.08);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
   font-size: .9rem;
   color: #ffffff;
+
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
-  
-  /* Asegura que la animación no trabe el scroll */
+
   animation: itemIn .3s ease forwards;
 }
 
@@ -2235,6 +2271,62 @@ outline-offset: 1px;
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
+
+/* ==============================
+   MÓVIL
+============================== */
+@media (max-width:640px){
+
+  .modal-cotiza{
+    padding: 6px;
+    align-items: center;
+  }
+
+  .cotiza-box.elegante{
+    width: 96vw;
+    max-height: calc(100svh - 12px);
+    padding: 28px 18px;
+    border-radius: 24px;
+  }
+
+  .cotiza-box.elegante h2{
+    font-size: 1.65rem;
+  }
+
+  #listaProductos{
+    max-height: 205px;
+  }
+
+  .resumen.elegante{
+    max-height: 210px;
+  }
+
+  .controles button{
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* ==============================
+   MÓVIL MUY BAJO
+============================== */
+@media (max-height:720px){
+
+  .cotiza-box.elegante{
+    max-height: calc(100svh - 10px);
+    padding-top: 24px;
+    padding-bottom: 20px;
+  }
+
+  #listaProductos{
+    max-height: 180px;
+  }
+
+  .resumen.elegante{
+    max-height: 170px;
+  }
+}
+
 
 /* TOTAL */
 .total {
@@ -2536,18 +2628,22 @@ footer {
   text-shadow: 0 0 10px rgba(255, 58, 45, 0.3);
 }
 #listaProductos {
-  max-height: 220px; /* 🔥 ajusta a tu gusto */
+  max-height: 210px;
   overflow-y: auto;
-
+  overflow-x: hidden;
   margin-bottom: 10px;
-
   -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
 #listaProductos:empty {
   display: none;
 }
+
 #listaProductos::-webkit-scrollbar {
-  width: 4px;
+  display: none;
 }
 
 #listaProductos::-webkit-scrollbar-thumb {
