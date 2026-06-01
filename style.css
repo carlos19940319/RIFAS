@@ -1926,9 +1926,12 @@ outline-offset: 1px;
   background:rgba(0,0,0,.7);
   backdrop-filter: blur(3px);
   display:none;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
   z-index:9999;
+
+  padding:8px;
+  overflow:hidden;
 }
 .modal-cotiza.activo{
   display:flex;
@@ -1944,10 +1947,18 @@ outline-offset: 1px;
   position: relative;
   width: min(480px, 94%);
   margin: 20px auto;
+
   border-radius: 28px;
-  overflow: hidden;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* Edge */
+
   padding: 35px 25px;
-  background: #0b0f14; /* Un tono casi negro para que luzca el cristal */
+
+  background: #0b0f14;
 
   /* 💎 CONTORNO CAPA 1: El borde físico de cristal */
   border: 2px solid rgba(255, 255, 255, 0.5);
@@ -3148,4 +3159,14 @@ footer {
   font-size: 0.8rem; /* 🔥 más pequeño */
   line-height: 1.4;
   color: rgba(255,255,255,0.8);
+}
+.categoria-productos{
+  margin:15px 0;
+  padding:10px;
+  text-align:center;
+  font-weight:700;
+  font-size:18px;
+  color:#d4af37;
+  border-top:1px solid rgba(255,255,255,.2);
+  border-bottom:1px solid rgba(255,255,255,.2);
 }
