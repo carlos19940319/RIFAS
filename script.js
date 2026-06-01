@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 /* =====================================================
-   MODAL COTIZACIÓN (SIN CAMBIOS)
+   MODAL COTIZACIÓN
 ===================================================== */
 
 const modal = document.getElementById("modalCotiza");
@@ -313,48 +313,124 @@ const resumenLista = document.getElementById("resumenLista");
 let carrito = {};
 let eventoActual = "";
 
-document.querySelectorAll(".btn-cotiza").forEach(btn=>{
+document.querySelectorAll(".btn-cotiza").forEach(btn => {
   btn.onclick = e => {
     e.preventDefault();
 
     eventoActual = btn.dataset.evento;
- const descripcion = btn.dataset.descripcion || "";
+    const descripcion = btn.dataset.descripcion || "";
 
-tituloEvento.innerHTML = `
-  <span class="titulo-modal">${eventoActual}</span>
-  <span class="desc-modal">${descripcion}</span>
-`;
+    tituloEvento.innerHTML = `
+      <span class="titulo-modal">${eventoActual}</span>
+      <span class="desc-modal">${descripcion}</span>
+    `;
+
     carrito = {};
     listaProductos.innerHTML = "";
     resumenLista.innerHTML = "";
 
-    JSON.parse(btn.dataset.productos).forEach(p=>{
-      carrito[p] = 0;
-      listaProductos.innerHTML += `
-        <div class="producto">
-          <span>${p}</span>
-          <div class="controles">
-            <button class="menos" data-p="${p}">−</button>
-            <span id="c-${p}">0</span>
-            <button class="mas" data-p="${p}">+</button>
-          </div>
-        </div>`;
-    });
+   const productos = JSON.parse(btn.dataset.productos);
 
-    modal.classList.add("activo");
+const paquete = productos.filter(p => p.tipo === "personas");
+const adicionales = productos.filter(p => p.tipo === "complemento");
+
+/* PAQUETE POR PERSONA */
+if (paquete.length) {
+
+  listaProductos.innerHTML += `
+    <div class="categoria-productos">
+      👥 PAQUETE POR PERSONA
+    </div>
+  `;
+
+  paquete.forEach(producto => {
+
+    carrito[producto.nombre] = 0;
+
+    listaProductos.innerHTML += `
+      <div class="producto personas">
+        <span>${producto.nombre}</span>
+        <div class="controles">
+          <button class="menos" data-p="${producto.nombre}">−</button>
+          <span id="c-${producto.nombre}">0</span>
+          <button class="mas" data-p="${producto.nombre}">+</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+/* ADICIONALES */
+if (adicionales.length) {
+
+  listaProductos.innerHTML += `
+    <div class="categoria-productos">
+      🍽️ ADICIONALES
+    </div>
+  `;
+
+  adicionales.forEach(producto => {
+
+    carrito[producto.nombre] = 0;
+
+    listaProductos.innerHTML += `
+      <div class="producto complemento">
+        <span>${producto.nombre}</span>
+        <div class="controles">
+          <button class="menos" data-p="${producto.nombre}">−</button>
+          <span id="c-${producto.nombre}">0</span>
+          <button class="mas" data-p="${producto.nombre}">+</button>
+        </div>
+      </div>
+    `;
+  });
+}
+modal.classList.add("activo");
+
+/* SIEMPRE INICIAR ARRIBA */
+setTimeout(() => {
+  modal.scrollTop = 0;
+
+  const caja = document.querySelector(".cotiza-box.elegante");
+  if (caja) caja.scrollTop = 0;
+
+  if (listaProductos) listaProductos.scrollTop = 0;
+  if (resumenLista) resumenLista.scrollTop = 0;
+
+  const primerProducto = listaProductos.querySelector(".categoria-productos");
+  if (primerProducto) {
+    primerProducto.scrollIntoView({
+      behavior: "auto",
+      block: "start"
+    });
+  }
+}, 0);
+
+document.body.style.overflow = "hidden";
   };
 });
 
-document.addEventListener("click", e=>{
-  if(e.target.classList.contains("mas")) carrito[e.target.dataset.p]++;
-  if(e.target.classList.contains("menos") && carrito[e.target.dataset.p] > 0)
-    carrito[e.target.dataset.p]--;
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("mas")) {
+    carrito[e.target.dataset.p]++;
+  }
 
-  resumenLista.innerHTML="";
-  for(let p in carrito){
-    document.getElementById(`c-${p}`).textContent = carrito[p];
-    if(carrito[p]>0)
+  if (
+    e.target.classList.contains("menos") &&
+    carrito[e.target.dataset.p] > 0
+  ) {
+    carrito[e.target.dataset.p]--;
+  }
+
+  resumenLista.innerHTML = "";
+
+  for (let p in carrito) {
+    const contador = document.getElementById(`c-${p}`);
+    if (contador) contador.textContent = carrito[p];
+
+    if (carrito[p] > 0) {
       resumenLista.innerHTML += `<li>• ${p} — ${carrito[p]}</li>`;
+    }
   }
 });
 
@@ -366,13 +442,13 @@ enviar.onclick = () => {
   const nombre = nombreInput.value.trim();
   const telefono = telefonoInput.value.trim();
 
-  if(!nombre){
+  if (!nombre) {
     alert("Ingrese su nombre");
     nombreInput.focus();
     return;
   }
 
-  if(!telefono){
+  if (!telefono) {
     alert("Ingrese su teléfono");
     telefonoInput.focus();
     return;
@@ -384,15 +460,40 @@ enviar.onclick = () => {
 
   let ok = false;
 
-  for(let p in carrito){
-    if(carrito[p] > 0){
-      ok = true;
-      msg += `• ${p} — ${carrito[p]}\n`;
-    }
-  }
+ let personasTxt = "";
+let adicionalesTxt = "";
 
-  if(!ok){
-    alert("Agrega productos");
+for (let p in carrito) {
+
+  if (carrito[p] <= 0) continue;
+
+  ok = true;
+
+  if (p.toLowerCase().includes("personas")) {
+
+    personasTxt += `• ${p} — ${carrito[p]}\n`;
+
+  } else {
+
+    adicionalesTxt += `• ${p} — ${carrito[p]}\n`;
+
+  }
+}
+
+if(personasTxt){
+  msg += "PAQUETE POR PERSONA\n";
+  msg += "--------------------------\n";
+  msg += personasTxt + "\n";
+}
+
+if(adicionalesTxt){
+  msg += "ADICIONALES\n";
+  msg += "--------------------------\n";
+  msg += adicionalesTxt;
+}
+
+  if (!ok) {
+    alert("Agrega personas o complementos");
     return;
   }
 
@@ -402,4 +503,15 @@ enviar.onclick = () => {
   );
 };
 
-cerrar.onclick = () => modal.classList.remove("activo");
+cerrar.onclick = () => {
+  modal.classList.remove("activo");
+  document.body.style.overflow = "";
+
+  modal.scrollTop = 0;
+
+  const caja = document.querySelector(".cotiza-box.elegante");
+  if (caja) caja.scrollTop = 0;
+
+  if (listaProductos) listaProductos.scrollTop = 0;
+  if (resumenLista) resumenLista.scrollTop = 0;
+};
